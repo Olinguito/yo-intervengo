@@ -1,0 +1,29 @@
+form
+    fieldset(ng-show="step==1")
+        label Nombre completo
+            input(type="text", placeholder="Nombre completo",ng-model="usuarioNuevo.name")
+        label Cédula
+            input(type="text", placeholder="Cédula",,ng-model="usuarioNuevo.id")
+        label Fecha de Nacimiento
+            input(type="date", placeholder="MM/DD/AAAA",ng-model="usuarioNuevo.birthday")
+        label Genero
+            input(type="radio", name="gender", value="Male", ng-model="usuarioNuevo.sex")
+            input(type="radio", name="gender", value="Female", ng-model="usuarioNuevo.sex")
+    fieldset(ng-show="step==2")
+        label Departamento
+            select(): option() Ningun Departamento
+        label Municipio
+            select(): option() Ningun Municipio
+        label Zona, Vereda, Barrio
+            input(type="text", placeholder="")
+        label Rol
+            select(): option() Selecciona un Rol
+    fieldset(ng-show="step==3")
+        label E-Mail
+            input(type="email", placeholder="ejemplo@algo.com",ng-model="usuarioNuevo.email")
+        label Teléfono
+            input(type="email", placeholder="Teléfono",ng-model="usuarioNuevo.phone")
+        label Contraseña
+            input(type="password")
+        label Confirmar Contraseña
+            input(type="password")

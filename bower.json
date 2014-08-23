@@ -1,0 +1,26 @@
+{
+  "name": "yo-intervengo-webapp",
+  "version": "0.0.1",
+  "homepage": "",
+  "authors": [
+    "Daniel Olano <danielolanoc@gmail.com>",
+    "Roberto Sarmiento <robjalkh@gmail.com>"
+  ],
+  "description": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0",
+    "angular-route": "~1.3.0",
+    "angular-touch": "~1.3.0",
+    "angular-animate": "~1.3.0",
+    "angular-promise-tracker": "~1.5.1",
+    "angular-leaflet-directive": "~0.7.7"
+  }
+}

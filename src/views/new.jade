@@ -1,0 +1,39 @@
+form
+
+    fieldset
+        p Desea crear una
+        input(type="radio",id="req_check", name="type")
+        label.small(for="req_check") Solicitud
+        input(type="radio",id="comp_check",name="type")
+        label.small.right(for="comp_check") Queja
+        input(placeholder="Nombre del Reporte")
+
+        textarea(placeholder="Descripción")
+
+        .photos
+
+    fieldset
+        h3 Ubicación
+        p Seleccionar en el mapa
+        input(placeholder="Dirección")
+        input.small(placeholder="Departamento")
+        input.small.right(placeholder="Municipio")
+
+    fieldset
+        input(placeholder="Proceso de Contratación #")
+        p.info.
+            La queja debe estar asociada a una obra civil pública.
+            Si conoce el número del proceso de contratación ingreselo
+            en el siguiente campo, de lo contrario ingrese solo la
+            información que conoce. Este numero autocompletará algunos
+            campos descargando información de www.contratos.gov.co
+        input.small(type="date",placeholder="Fecha de Inicio")
+        input.small.right(type="date",placeholder="Fecha de Finalización")
+        input(placeholder="Monto de Contrato")
+        input(placeholder="Contratista")
+        input(placeholder="Contratante")
+
+        button(type="submit") crear
+
+
+

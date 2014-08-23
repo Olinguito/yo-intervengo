@@ -1,0 +1,38 @@
+doctype html
+html(ng-app="yo-intervengo")
+    head
+        title Yo Intervengo
+        meta(charset="utf-8")
+        meta(name="viewport",content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi")
+
+        if env == 'dev'
+            each file in css
+                link(rel="stylesheet",href="#{file}")
+            each file in lib
+                script(type="text/javascript",src="#{file}")
+            each file in js
+                script(type="text/javascript",src="#{file}")
+        else
+            link(rel="stylesheet",href="style.css")
+            script(type="text/javascript",src="lib.js")
+            script(type="text/javascript",src="app.js")
+
+        script(type="text/ng-template", id="buttons-")
+
+    body
+        header
+            .title-bar
+                button(ng-click="back()").back Atras
+            .search(ng-if="inHome()")
+                tabs(active="")
+                label: input(type="search", placeholder="{{ 'Selecciona una o mas pestañas' }}")
+                .options
+                    button() Filtrar
+                    button(ng-click="show.list=!show.list") {{list?'Mapa':'Lista'}}
+
+        #loading(ng-show="loading") Cargando ...
+        section.content(ng-view)
+        footer(ng-if="inHome()")
+            a.button(href="#/new") Nuevo Reporte
+            a.button(href="#/profile") Mi Perfil
+            a.button(href="#/info") Informacion
