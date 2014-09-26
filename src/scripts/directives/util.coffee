@@ -14,8 +14,17 @@ angular.module('util.directives', ['ngRoute'])
             <h1>{{ title }}</h1>
             <div class='l-btns' ng-transclude></div>
         </div>"""
-    compile: (element) ->
-        (scope, ele, attrs, ctrl) ->
-            scope.$on '$routeChangeSuccess', (e,current) ->
-                scope.title = null
-                scope.title = current.title if current.title?
+    link: (scope) ->
+        scope.$on '$routeChangeSuccess', (e,current) ->
+            scope.title = null
+            scope.title = current.title if current.title?
+
+.directive "match", ->
+  restrict: "A"
+  require: "ngModel"
+  link: (scope, elem, attrs, control) ->
+#    control.$$setOptions allowInvalid: on
+    scope.$watchGroup [attrs.ngModel,attrs.match], (n) ->
+      valid = n[0] is n[1]
+      console.log n
+      control.$setValidity 'match', valid

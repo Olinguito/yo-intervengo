@@ -1,9 +1,10 @@
 .banner
-    figure: img()
-    h2 Pepito Perez
-    p email@domain.com
+    figure: img(ng-src="{{ user.picture }}")
+    h2 {{ user.name }}
+    p {{ user.email }}
     button modificar perfil
 
-tabs(active="")
-ul: li(ng-repeat="i in items", item="i")
-p(ng-hide="items") No hay reportes o obras seguidas por tí
+tabs(active="type")
+ul: li(ng-repeat="i in filteredItems = (user.followed | filter:byType) track by i.id", item="i")
+p.info(ng-hide="user.followed.length") No hay reportes u obras seguidas por tí.
+p.info(ng-show="filteredItems.length==0&&user.followed.length!=0") Cambia tu criterio de selección

@@ -1,25 +1,23 @@
-form
-
+form(name="rForm",ng-submit="saveReport()", novalidate)
     fieldset
         p Desea crear una
-        input(type="radio",id="req_check", name="type")
+        input(type="radio",id="req_check", ng-model="report.type", value="request")
         label.small(for="req_check") Solicitud
-        input(type="radio",id="comp_check",name="type")
+        input(type="radio",id="comp_check",ng-model="report.type", value="complain")
         label.small.right(for="comp_check") Queja
-        input(placeholder="Nombre del Reporte")
-
-        textarea(placeholder="Descripción")
-
+        input(placeholder="Nombre del Reporte",ng-model="report.name", required)
+        textarea(placeholder="Descripción",ng-model="report.description", required)
         .photos
 
     fieldset
         h3 Ubicación
         p Seleccionar en el mapa
-        input(placeholder="Dirección")
-        input.small(placeholder="Departamento")
-        input.small.right(placeholder="Municipio")
+        leaflet.map(center="mapCenter", defaults="mapDefaults", markers="marker")
+        input(title="Dirección", placeholder="Dirección", ng-model="report.loc.addr", required)
+        input.small(title="Departamento", placeholder="Departamento", ng-model="report.loc.state", required)
+        input.small.right(title="Municipio", placeholder="Municipio", ng-model="report.loc.city", required)
 
-    fieldset
+    fieldset(ng-if="report.type=='complain'")
         input(placeholder="Proceso de Contratación #")
         p.info.
             La queja debe estar asociada a una obra civil pública.
@@ -33,7 +31,5 @@ form
         input(placeholder="Contratista")
         input(placeholder="Contratante")
 
-        button(type="submit") crear
-
-
-
+    .error(ng-show="submited&&rForm.$invalid") revisa los campos requeridos
+    button(ng-class="report.type",type="submit") crear

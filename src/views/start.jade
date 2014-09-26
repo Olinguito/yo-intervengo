@@ -1,0 +1,14 @@
+.logo: h1 ¡Yo Intervengo!
+form(name="lrForm",novalidate, ng-submit="send()")
+    label(ng-hide="login") Nombre
+        input(ng-model="data.name",type="text",placeholder="Tu Nombre", ng-required="!login")
+    label E-Mail
+        input(ng-model="data.email",type="email",placeholder="ejemplo@email.com", required)
+    label Contraseña
+        input(ng-model="data.pwd",type="password",placeholder="Contraseña", required)
+    label(ng-hide="login") Repetir Contraseña
+        input(ng-model="match",type="password",placeholder="Repetir Contraseña", ng-required="!login")
+    .error(ng-show="error") {{error}}
+    a.switch(ng-click="login=!login") {{ login?'Quiero registrarme':'Quiero loguearme' }}
+
+    button {{ login?'Login':'Registro' }}

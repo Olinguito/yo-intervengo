@@ -9,12 +9,14 @@ module.exports = (grunt) ->
     outDir: 'out'
     distDir: '<%= outDir %>/dist'
     libDir: '<%= tmpDir %>'
+    assetsDir: 'assets'
 
     connect:
       dev:
         options:
           base: ['<%= srcDir %>', '<%= tmpDir %>']
           livereload: yes
+#          keepalive: yes
           hostname: '*'
           port: 8080
           middleware: (connect, options) ->
@@ -39,11 +41,19 @@ module.exports = (grunt) ->
         cwd: '<%= srcDir %>'
         src: 'views/**/*.html'
         dest: '<%= distDir %>'
+      assets:
+        expand: true
+        cwd: '<%= srcDir %>'
+        src: '**/*.{json,png,jpg,svg}'
+        dest: '<%= distDir %>'
 
     concat:
       dist:
         src: [] # injected programaticaly
         dest: '<%= distDir %>/lib.js'
+      fixCss:
+        src: ['<%= tmpDir %>/lib/**/*.css', '<%= distDir %>/styles/style.css']
+        dest: '<%= distDir %>/styles/style.css'
 
     clean:
       dev:
@@ -78,8 +88,8 @@ module.exports = (grunt) ->
 
     stylus:
       options:
-        use: [ require 'nib' ]
-        import: [ 'nib' ]
+        use: [require 'nib']
+        import: ['nib']
       dev:
         options:
           compress: false
@@ -90,7 +100,7 @@ module.exports = (grunt) ->
         ext: '.css'
       dist:
         src: '<%= srcDir %>/**/*.styl'
-        dest: '<%= distDir %>/style.css'
+        dest: '<%= distDir %>/styles/style.css'
 
     jade:
       dev:
@@ -103,7 +113,9 @@ module.exports = (grunt) ->
             if path.basename(dest, '.html') is 'index'
               data.lib = grunt.file.expand cwd: grunt.config('libDir'), ['**/angular.js', '**/*.js']
               data.css = grunt.file.expand(cwd: grunt.config('tmpDir'), '**/*.css')
-              data.js = Array::concat grunt.file.expand(cwd: grunt.config('tmpDir'), ['**/*.js', '!lib/**/*.js']),
+              data.js = Array::concat grunt.file.expand(cwd: grunt.config('tmpDir'), [
+                  '**/*.js', '!lib/**/*.js'
+                ]),
                 grunt.file.expand(cwd: grunt.config('srcDir'), ['**/*.js'])
             data
         expand: true
@@ -165,6 +177,35 @@ module.exports = (grunt) ->
         configFile: 'test/karma.conf.coffee'
         singleRun: yes
 
+  # PhoneGap
+    phonegap:
+      config:
+        root: '<%= distDir %>'
+        path: '<%= outDir %>/app'
+        platforms: ['android']
+        name: -> pkg.name.replace /[-_]/g, ' '
+        config:
+          template: 'phonegap_config.xml'
+          data: pkg: pkg, name: pkg.name.replace /[-_]/g, ' '
+        plugins: [
+          'org.apache.cordova.splashscreen'
+          'org.apache.cordova.geolocation'
+          ]
+        icons:
+          android:
+            ldpi: '<%= assetsDir %>/android_icons/icon-36.png'
+            mdpi: '<%= assetsDir %>/android_icons/icon-48.png'
+            hdpi: '<%= assetsDir %>/android_icons/icon-72.png'
+            xhdpi: '<%= assetsDir %>/android_icons/icon-96.png'
+        key:
+          store: '<%= outDir %>/release-key.keystore'
+          alias: 'release'
+          aliasPassword: -> 'olinguitolab123'
+          storePassword: -> 'olinguitolab123'
+        versionCode: -> 1
+
+
+
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -178,16 +219,17 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-ngmin'
   grunt.loadNpmTasks 'grunt-bower-task'
   grunt.loadNpmTasks 'grunt-newer'
-  grunt.loadNpmTasks 'grunt-karma'
+  grunt.loadNpmTasks 'grunt-phonegap'
+  #  grunt.loadNpmTasks 'grunt-karma'
   #  grunt.loadNpmTasks 'grunt-bump'
 
   grunt.registerTask 'prodlib', 'Concat production only libraries', ->
     grunt.log.writeln 'Gathering javascript libraries'
-    testLibs = Object.keys grunt.file.readJSON('bower.json').devDependencies
+    #    testLibs = Object.keys grunt.file.readJSON('bower.json').devDependencies
     libDir = grunt.config 'libDir'
     distLibs = grunt.file.expand ["#{libDir}/**/angular.js", "#{libDir}/**/*.js"]
-    distLibs = distLibs.filter (file) ->
-      path.basename(file, '.js') not in testLibs
+    #    distLibs = distLibs.filter (file) ->
+    #      path.basename(file, '.js') not in testLibs
     grunt.config 'concat.dist.src', distLibs
     grunt.task.run 'concat:dist'
 
@@ -199,13 +241,20 @@ module.exports = (grunt) ->
     'watch'
   ]
 
+  grunt.registerTask 'phone', [
+    'dist'
+    'phonegap:build'
+    'phonegap:run:android'
+  ]
+
   grunt.registerTask 'dist', [
     'clean:dist'
     'copy'
     'concurrent:dist'
     'ngmin'
     'prodlib'
-    'uglify'
+#    'uglify'
+    'concat:fixCss'
     'clean:dist2'
   ]
 
@@ -213,4 +262,4 @@ module.exports = (grunt) ->
     'karma'
   ]
 
-  grunt.registerTask 'default', [ 'dev' ]
+  grunt.registerTask 'default', ['dev']

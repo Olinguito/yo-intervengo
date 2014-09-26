@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="<%= pkg.id %>"
+        version="<%= pkg.version %>"
+        versionCode="1"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0"
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name><%= name %></name>
+
+    <description><%= pkg.description %></description>
+
+    <author email="<%= pkg.contributors[0].email %>" href="<%= pkg.contributors[0].url %>"><%= pkg.contributors[0].name %></author>
+
+    <content src="index.html"/>
+
+    <preference name="phonegap-version" value="3.5.0" />
+    <preference name="orientation" value="portrait"/>
+    <preference name="DisallowOverscroll" value="true"/>
+
+    <preference name="android-minSdkVersion" value="14" />
+
+    <icon src="icon.png" />
+
+    <access origin="*"/>
+</widget>

@@ -1,0 +1,22 @@
+article
+    h3 {{r.name}}
+    button.follow(ng-class="r.type",ng-click="user.follow(r)") {{ user.follows(r) ? 'abandonar':'seguir' }}
+    p.info \#{{r.id}}
+    p {{r.description}}
+    ul.photos
+        li(ng-repeat="p in r.photos"): img(ng-src="")
+
+article
+    h3 Ubicación
+    p {{r.loc.addr}},{{r.loc.city}},{{r.loc.state}}
+    leaflet.map(center="center", defaults="mapDefaults", markers="marker")
+
+article.work(ng-if="r.type=='complain'")
+    h3 Obra asociada
+    p(ng-hide="r.pubwork") Esta queja actualmente no tiene ninguna obra asociada.
+    p(ng-show="r.pubwork")
+        strong ID Contrato
+        strong Fecha de Finalización
+        strong Fecha de Inicio
+        strong VALOR
+        output {{r.value}}

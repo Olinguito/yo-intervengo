@@ -3,7 +3,7 @@ html(ng-app="yo-intervengo")
     head
         title Yo Intervengo
         meta(charset="utf-8")
-        meta(name="viewport",content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=medium-dpi")
+        meta(name="viewport",content="initial-scale=1, width=device-width")
 
         if env == 'dev'
             each file in css
@@ -13,26 +13,21 @@ html(ng-app="yo-intervengo")
             each file in js
                 script(type="text/javascript",src="#{file}")
         else
-            link(rel="stylesheet",href="style.css")
+            link(rel="stylesheet",href="styles/style.css")
+            script(type="text/javascript",src="cordova.js")
             script(type="text/javascript",src="lib.js")
             script(type="text/javascript",src="app.js")
 
-        script(type="text/ng-template", id="buttons-")
-
     body
-        header
+        header(ng-if="l.path()!='/start'")
             .title-bar
-                button(ng-click="back()").back Atras
+                button.back(ng-click="back()") Atras
             .search(ng-if="inHome()")
-                tabs(active="")
-                label: input(type="search", placeholder="{{ 'Selecciona una o mas pestañas' }}")
+                tabs(active="q.type")
+                label: input(ng-model="q.name", ng-change="show.list=true", type="search", placeholder="{{ searchMessage() }}")
                 .options
-                    button() Filtrar
-                    button(ng-click="show.list=!show.list") {{list?'Mapa':'Lista'}}
+                    button() Filtro
+                    button(ng-click="show.list=!show.list") {{show.list?'Mapa':'Lista'}}
 
-        #loading(ng-show="loading") Cargando ...
+        #loading(ng-show="show.loading") Cargando ...
         section.content(ng-view)
-        footer(ng-if="inHome()")
-            a.button(href="#/new") Nuevo Reporte
-            a.button(href="#/profile") Mi Perfil
-            a.button(href="#/info") Informacion

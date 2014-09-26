@@ -1,0 +1,9 @@
+h2 {{item.name}}
+i {{item.name}}
+button(ng-click="user.follow(item)") {{ user.follows(item) ? 'abandonar':'seguir' }}
+ul.photos
+    li(ng-repeat="p in item.photos"): img(ng-src="")
+article.work
+    p
+        strong VALOR
+        output {{item.value}}
