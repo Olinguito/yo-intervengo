@@ -1,6 +1,7 @@
 module.exports = (grunt) ->
   path = require 'path'
   pkg = grunt.file.readJSON 'package.json'
+  verCode = +require('execSync').exec('git tag | wc -l').stdout.trim()
 
   grunt.initConfig
     pkg: pkg
@@ -186,25 +187,28 @@ module.exports = (grunt) ->
         name: -> pkg.name.replace /[-_]/g, ' '
         config:
           template: 'phonegap_config.xml'
-          data: pkg: pkg, name: pkg.name.replace /[-_]/g, ' '
+          data:
+            pkg: pkg, ver: verCode, name: pkg.name.replace /[-_]/g, ' '
         plugins: [
           'org.apache.cordova.splashscreen'
           'org.apache.cordova.geolocation'
-          ]
+        ]
         icons:
           android:
             ldpi: '<%= assetsDir %>/android_icons/icon-36.png'
             mdpi: '<%= assetsDir %>/android_icons/icon-48.png'
             hdpi: '<%= assetsDir %>/android_icons/icon-72.png'
             xhdpi: '<%= assetsDir %>/android_icons/icon-96.png'
+        minSdkVersion: 14
+        targetSdkVersion: 19
+        permissions: ['INTERNET', 'ACCESS_COARSE_LOCATION']
         key:
           store: '<%= outDir %>/release-key.keystore'
           alias: 'release'
           aliasPassword: -> 'olinguitolab123'
           storePassword: -> 'olinguitolab123'
-        versionCode: -> 1
-
-
+        releases: '<%= outDir %>/releases'
+        versionCode: verCode
 
   grunt.loadNpmTasks 'grunt-contrib-connect'
   grunt.loadNpmTasks 'grunt-contrib-copy'
