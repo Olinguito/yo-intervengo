@@ -2,8 +2,8 @@
   "name": "yo-intervengo",
   "id": "co.olinguito.yointervengo",
   "version": "0.0.1",
-  "description": "",
-  "homepage": "",
+  "description": "Application that allows citizens to make complains, requests and keep track of public works.",
+  "homepage": "http://yointervengo.olinguito.com.co",
   "directories": {
     "test": "test"
   },

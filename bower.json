@@ -1,12 +1,12 @@
 {
-    "name": "yointervengo-webapp",
+    "name": "yo-intervengo",
     "version": "0.0.1",
-    "homepage": "",
+    "homepage": "http://yointervengo.olinguito.com.co",
+    "description": "Application that allows citizens to make complains, requests and keep track of public works.",
     "authors": [
         "Daniel Olano <danielolanoc@gmail.com>",
         "Roberto Sarmiento <robjalkh@gmail.com>"
     ],
-    "description": "",
     "private": true,
     "ignore": [
         "**/.*",

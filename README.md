@@ -1,6 +1,7 @@
-Yo Intervengo WebApp
-====================
+Yo Intervengo
+=============
 Application that allows citizens to make complains, requests and keep track of public works.  
+
 ![yo intervengo main screen](http://yointervengo.olinguito.com.co/assets/img/cell1.png)
 
 Install
