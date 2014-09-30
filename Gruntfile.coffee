@@ -9,7 +9,6 @@ module.exports = (grunt) ->
     srcDir: 'src'
     outDir: 'out'
     distDir: '<%= outDir %>/dist'
-    libDir: '<%= tmpDir %>'
     assetsDir: 'assets'
 
     connect:
@@ -108,16 +107,13 @@ module.exports = (grunt) ->
         options:
         #pretty: true
           data: (dest) ->
-            data =
-              env: 'dev'
+            data = env: 'dev'
             # send static files list to layout as arrays
             if path.basename(dest, '.html') is 'index'
-              data.lib = grunt.file.expand cwd: grunt.config('libDir'), ['**/angular.js', '**/*.js']
+              data.lib = grunt.file.expand cwd: grunt.config('tmpDir'), ['lib/**/angular.js', 'lib/**/*.js']
               data.css = grunt.file.expand(cwd: grunt.config('tmpDir'), '**/*.css')
-              data.js = Array::concat grunt.file.expand(cwd: grunt.config('tmpDir'), [
-                  '**/*.js', '!lib/**/*.js'
-                ]),
-                grunt.file.expand(cwd: grunt.config('srcDir'), ['**/*.js'])
+              data.js = grunt.file.expand(cwd: grunt.config('tmpDir'), [ '**/*.js', '!lib/**/*.js' ])
+                .concat grunt.file.expand(cwd: grunt.config('srcDir'), ['**/*.js'])
             data
         expand: true
         cwd: '<%= srcDir %>'
