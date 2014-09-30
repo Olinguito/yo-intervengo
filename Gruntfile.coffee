@@ -163,6 +163,11 @@ module.exports = (grunt) ->
         options:
           cleanup: yes
           targetDir: '<%= libDir %>/lib'
+          bowerOptions:
+            forceLatest: yes
+            production: no
+          layout: 'byComponent'
+
     ngmin:
       dist:
         src: '<%= distDir %>/scripts/**/*.js'

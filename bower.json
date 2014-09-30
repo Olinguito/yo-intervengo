@@ -1,29 +1,38 @@
 {
-  "name": "yointervengo-webapp",
-  "version": "0.0.1",
-  "homepage": "",
-  "authors": [
-    "Daniel Olano <danielolanoc@gmail.com>",
-    "Roberto Sarmiento <robjalkh@gmail.com>"
-  ],
-  "description": "",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular": "~1.3.0",
-    "angular-route": "~1.3.0",
-    "angular-touch": "~1.3.0",
-    "angular-animate": "~1.3.0",
-    "angular-promise-tracker": "~2.0.0",
-    "angular-leaflet-directive": "~0.7.8",
-    "angular-local-storage": "~0.0.7",
-    "Array.prototype.findIndex": "~1.0.0",
-    "Array.prototype.find": "~1.0.0"
-  }
+    "name": "yointervengo-webapp",
+    "version": "0.0.1",
+    "homepage": "",
+    "authors": [
+        "Daniel Olano <danielolanoc@gmail.com>",
+        "Roberto Sarmiento <robjalkh@gmail.com>"
+    ],
+    "description": "",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "^1.3.0",
+        "angular-route": "^1.3.0",
+        "angular-touch": "^1.3.0",
+        "angular-animate": "^1.3.0",
+        "angular-promise-tracker": "^2.0.0",
+        "angular-leaflet-directive": "^0.7.8",
+        "angular-local-storage": "^0.0.7",
+        "Array.prototype.findIndex": "^1.0.0",
+        "Array.prototype.find": "^1.0.0"
+    },
+    "resolutions": {
+        "angular": "^1.3.0"
+    },
+    "exportsOverride": {
+        "leaflet": {
+            "js": "dist/leaflet-src.js",
+            "css": "dist/*.css"
+        }
+    }
 }
