@@ -1,6 +1,5 @@
 angular.module('util.services', [])
-
-.factory "geolocation", ($q, $window, $rootScope) ->
+.factory "geolocation", ($q, $window) ->
   get: ->
     d = $q.defer()
     unless "geolocation" of $window.navigator

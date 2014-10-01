@@ -76,7 +76,7 @@ module.exports = (grunt) ->
           sourceRoot: ''
         expand: yes
         cwd: '<%= srcDir %>'
-        src: 'scripts/**/*.coffee'
+        src: ['scripts/**/*.coffee', 'lib/**/*.coffee']
         dest: '<%= tmpDir %>'
         ext: '.js'
       dist:

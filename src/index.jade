@@ -19,10 +19,10 @@ html(ng-app="yo-intervengo")
             script(type="text/javascript",src="app.js")
 
     body
-        header(ng-if="l.path()!='/start'")
+        header(ng-if="!in('start')")
             .title-bar
                 button.back(ng-click="back()") Atras
-            .search(ng-if="inHome()")
+            .search(ng-if="in('home')")
                 tabs(active="q.type")
                 label: input(ng-model="q.name", ng-change="show.list=true", type="search", placeholder="{{ searchMessage() }}")
                 .options
