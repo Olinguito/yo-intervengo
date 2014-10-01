@@ -1,3 +1,15 @@
+###
+  Manual app bootstraping
+###
+angular.element(document).ready ->
+  start = -> angular.bootstrap document, ['yo-intervengo']
+  if document.URL.match(/^https?:/)
+  then do start
+  else document.addEventListener 'deviceready', start
+
+###
+  App module
+###
 angular.module('yo-intervengo', [
   'ngRoute'
   'ngTouch'
@@ -75,4 +87,3 @@ angular.module('yo-intervengo', [
     tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
     tileLayerOptions: attribution: '© Olinguito', detectRetina: yes
   $rootScope.mapCenter = lat: 4.624009, lng: -74.079673, zoom: 5
-
