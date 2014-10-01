@@ -19,7 +19,7 @@ html(ng-app="yo-intervengo")
             script(type="text/javascript",src="app.js")
 
     body
-        header(ng-if="!in('start')")
+        header(ng-if="!in('start')",ng-cloak)
             .title-bar
                 button.back(ng-click="back()") Atras
             .search(ng-if="in('home')")
@@ -30,4 +30,4 @@ html(ng-app="yo-intervengo")
                     button(ng-click="show.list=!show.list") {{show.list?'Mapa':'Lista'}}
 
         #loading(ng-show="show.loading") Cargando ...
-        section.content(ng-view)
+        section.content(ng-view,ng-cloak)
