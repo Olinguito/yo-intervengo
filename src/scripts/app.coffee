@@ -80,6 +80,8 @@ angular.module('yo-intervengo', [
 .value('ApiUrl', 'http://api.yointervengo.olinguito.com.co')
 
 .run ($rootScope, $location, $window) ->
+  $rootScope.$on '$routeChangeSuccess', (e,cur) ->
+    do $window.navigator.splashscreen?.hide
   $rootScope.$on '$routeChangeError', (e,cur,nxt,rejection) ->
     $location.path('/start').replace() if rejection.reason is 'no-user'
     $location.path('/').replace() if rejection is 'logged-in'

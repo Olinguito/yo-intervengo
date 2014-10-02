@@ -8,6 +8,7 @@ module.exports = (grunt) ->
     tmpDir: '.tmp'
     srcDir: 'src'
     outDir: 'out'
+    gapAndroidDir: '<%= outDir %>/app/platforms/android'
     distDir: '<%= outDir %>/dist'
     assetsDir: 'assets'
 
@@ -46,6 +47,12 @@ module.exports = (grunt) ->
         cwd: '<%= srcDir %>'
         src: '**/*.{json,png,jpg,svg}'
         dest: '<%= distDir %>'
+      splash:
+        src: '<%= assetsDir %>/splash.9.png'
+        dest: '<%= gapAndroidDir %>/res/drawable/splash.9.png'
+      icon:
+        src: '<%= assetsDir %>/icon.png'
+        dest: '<%= gapAndroidDir %>/res/drawable/icon.png'
 
     concat:
       dist:
@@ -66,6 +73,8 @@ module.exports = (grunt) ->
         src: '<%= distDir %>'
       dist2:
         src: '<%= distDir %>/scripts'
+      andDrawable:
+        src: '<%= gapAndroidDir %>/res/drawable-*'
 
     coffee:
       options:
@@ -194,12 +203,6 @@ module.exports = (grunt) ->
           'org.apache.cordova.splashscreen'
           'org.apache.cordova.geolocation'
         ]
-        icons:
-          android:
-            ldpi: '<%= assetsDir %>/android_icons/icon-36.png'
-            mdpi: '<%= assetsDir %>/android_icons/icon-48.png'
-            hdpi: '<%= assetsDir %>/android_icons/icon-72.png'
-            xhdpi: '<%= assetsDir %>/android_icons/icon-96.png'
         minSdkVersion: 14
         targetSdkVersion: 19
         permissions: ['INTERNET', 'ACCESS_COARSE_LOCATION']
@@ -246,7 +249,19 @@ module.exports = (grunt) ->
   grunt.registerTask 'phone', [
     'dist'
     'phonegap:build'
+    'clean:andDrawable'
+    'copy:icon'
+    'copy:splash'
     'phonegap:run:android'
+  ]
+
+  grunt.registerTask 'release', [
+    'dist'
+    'phonegap:build'
+    'clean:andDrawable'
+    'copy:icon'
+    'copy:splash'
+    'phonegap:release'
   ]
 
   grunt.registerTask 'dist', [

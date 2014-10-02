@@ -17,9 +17,13 @@
     <preference name="orientation" value="portrait"/>
     <preference name="DisallowOverscroll" value="true"/>
 
-    <preference name="android-minSdkVersion" value="14" />
+    <preference name="SplashScreen" value="splash" />
+    <preference name="SplashScreenDelay" value="10000" />
 
     <icon src="icon.png" />
+
+    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-targetSdkVersion" value="19" />
 
     <access origin="*"/>
 </widget>
