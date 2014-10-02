@@ -5,7 +5,7 @@ form(name="lrForm",novalidate, ng-submit="send()")
     label E-Mail
         input(ng-model="data.email",type="email",placeholder="ejemplo@email.com", required)
     label Contraseña
-        input(ng-model="data.pwd",type="password",placeholder="Contraseña", required)
+        input(ng-model="data.password",type="password",placeholder="Contraseña", required)
     label(ng-hide="login") Repetir Contraseña
         input(ng-model="match",type="password",placeholder="Repetir Contraseña", ng-required="!login")
     .error(ng-show="error") {{error}}

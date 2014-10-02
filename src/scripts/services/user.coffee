@@ -1,27 +1,26 @@
 angular.module 'yo-intervengo'
 
-.service 'User', ($http, $q, localStorageService, Report) ->
+.service 'User', ($http, $q, localStorageService, ApiUrl, Report) ->
   new class User
     # used to set initial data, eje. from http req or local storage
     setData = (user, data) -> user[prop] = data[prop] for own prop of user when data[prop]?; return
+    authString = (token) -> "Basic #{btoa token}"
+    deferred = $q.defer()
 
     constructor: ->
       @id = null
       @email = null
       @name = null
       @photo = null
-      @loggedIn = no
       @followed = []
       @liking = {}
+      @loggedIn = deferred.promise
       Object.defineProperty @, 'storage', {value: localStorageService}
-      Object.defineProperty @, '_deferred', {value: $q.defer(), writable: yes}
-      # TODO remove when backend available
-      @pwd = null
-      if user = @storage.get('user')
-        setData @, user
-      else
-        @storage.set('user', {})
-      @storage.set('users', []) unless @storage.get('users')
+      # auto login if credentials exist
+      if token = @storage.get('user')
+        @useToken token
+        do @updateProfile
+      else @clearToken reason: 'no-user'
 
     newReport: (data) ->
       data.creator = @id
@@ -55,47 +54,39 @@ angular.module 'yo-intervengo'
       @liking[item.id] = false
       @storage.set 'user',@
 
-    ready: (fn) ->
-      @_deferred.promise.then => do fn
-      return @
-    error: (fn) ->
-      @_deferred.promise.catch (status) => fn(status)
-      return @
-
-    # TODO change when backend available
-    login: (data) ->
-      user = @storage.get('users').find((u)-> (u.email is data.email) and (u.pwd is btoa(data.pwd)))
-      !!user
     ###
-    login: (data) ->
-      @_deferred = $q.defer()
-      $http.post("#{Conf.api}/login", data, {cache: no}).then (res) =>
-        setData @, res.data.result
-        @loggedIn = yes
-        @_deferred.resolve()
-      , (res) =>
-        @loggedIn = no
-        @_deferred.reject res.status
-      return @
-     ###
-
-    # TODO change when backend available
-    register: (data) ->
-      user = angular.copy data
-      user.id = Date.now().toString(36)
-      user.pwd = btoa(data.pwd)
-      user.loggedIn = yes
-      setData @,user
-      users = @storage.get('users')
-      users.push @
-      @storage.set 'users', users
-      @storage.set 'user', @
+      Saves token in storage and sets http auth headers
+    ###
+    useToken: (token) ->
+      @storage.set 'user', token
+      $http.defaults.headers.common['Authorization'] = authString token
 
     ###
-    register: (data) ->
-      $http.post("#{Conf.api}/register", data).success =>
-        setData @, data
-        @loggedIn = yes
-        @_deferred.resolve()
-      return @
+      Delete token from storage, reject login promise, and unset headers
     ###
+    clearToken: (reason = null) ->
+      deferred.reject(reason)
+      @storage.remove 'user'
+      delete $http.defaults.headers.common.Authorization
+
+    ###
+      doRequest (private)
+      resets loggedIn promise and handles the request success/failure
+      same workflow for login, profile, register
+    ###
+    doRequest = (self,httpPromise, setToken = yes) ->
+      deferred = $q.defer()
+      self.loggedIn = deferred.promise
+      httpPromise.success (data) ->
+        setData self, data #fill object with user data
+        self.useToken "#{self.email}:#{data.token}" if setToken
+        deferred.resolve(self)
+      .error (data,status) ->
+        self.clearToken {reason: 'no-user', status: status, msg: data.msg}
+      self.loggedIn 
+
+    updateProfile: -> doRequest @, $http.get("#{ApiUrl}/user/me"), no
+
+    login: (data) -> doRequest @, $http.post("#{ApiUrl}/login", data, {cache: no})
+
+    register: (data) -> doRequest @, $http.post("#{ApiUrl}/register", data)

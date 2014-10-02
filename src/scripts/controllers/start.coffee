@@ -4,17 +4,18 @@ angular.module 'yo-intervengo'
   $scope.login = true
   $scope.error = null
   $scope.data = {}
-  pwdDontMatch = -> !$scope.login and ($scope.data.pwd isnt $scope.match)
+  pwdDontMatch = -> !$scope.login and ($scope.data.password isnt $scope.match)
   $scope.$watch 'login', -> $scope.error = null
   $scope.send = ->
     if $scope.lrForm.$invalid or pwdDontMatch()
-      $scope.error = "Revisa que tus datos de #{$scope.login?'login':'registro'} sean validos"
+      $scope.error = "Revisa que tus datos de #{if $scope.login then 'login' else 'registro'} sean validos"
       return
     $scope.error = null
     if $scope.login
-      if User.login $scope.data
-        $location.path '/'
-      else $scope.error = "Email o contraseña invalidos"
+      User.login($scope.data).then ->
+        $location.path('/').replace()
+      , -> $scope.error = "Email o contraseña invalidos"
     else
-      User.register $scope.data
-      $location.path '/'
+      User.register($scope.data).then ->
+        $location.path('/').replace()
+      , -> $scope.error = "Datos de registro invalidos"
