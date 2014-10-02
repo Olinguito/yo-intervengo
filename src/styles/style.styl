@@ -109,6 +109,9 @@ header
     line-height 1
     font-size 1.1em
     font-weight normal
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
   >i
     color white - 30%
     font-size .9em
@@ -192,10 +195,13 @@ header
 button
   &.request
     background cblue
-  &.complain
+  &.complaint
     background corange
+  &.pub-work
+    background cpurple
 
-#new, #detail
+
+#new, #detail, #pub-work
   h3
     text-transform capitalize
   p
@@ -214,7 +220,7 @@ button
     > p, .photos, input, textarea, h3
       text-align left
       width 85%
-      margin .3em auto
+      margin .5em auto
   .photos
     margin-top 1em
     background linear-gradient(top, cgray+40%,cgray+20%)
@@ -236,7 +242,20 @@ button
     height 25vh
     min-height 16em
     margin-bottom 1em
-#detail
+
+  .work
+    p
+      line-height 1.1em
+    .val
+      color cgray
+      float right
+      font-style normal
+    strong
+      font-weight bold
+      font-size 0.9em
+      &.important
+        font-size 1.2em
+#detail, #pub-work
   button.follow
     float right
     font-size .9em
@@ -264,11 +283,17 @@ button
       float left
     h2
       font-size 1.7em
+    p
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
     button
       padding .2em .5em
       border-radius 5px
       background corange
       margin .5em 0 .2em
+      &:disabled
+        background-color cgray+50%
   .tabs
     width 100%
     background fade-out(cgray,5%)

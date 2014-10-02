@@ -26,8 +26,8 @@ html
                 tabs(active="q.type")
                 label: input(ng-model="q.name", ng-change="show.list=true", type="search", placeholder="{{ searchMessage() }}")
                 .options
-                    button() Filtro
-                    button(ng-click="show.list=!show.list") {{show.list?'Mapa':'Lista'}}
+                    button(ng-click="show.filter=!show.filter;show.list=false") {{show.filter?'Mapa':'Filtro'}}
+                    button(ng-click="show.list=!show.list;show.filter=false") {{show.list?'Mapa':'Lista'}}
 
         #loading(ng-show="show.loading") Cargando ...
         section.content(ng-view,ng-cloak)

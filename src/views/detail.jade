@@ -8,15 +8,23 @@ article
 
 article
     h3 Ubicación
-    p {{r.loc.addr}},{{r.loc.city}},{{r.loc.state}}
+    p {{r.location.address}},{{r.location.city}},{{r.location.state}}
     leaflet.map(center="center", defaults="mapDefaults", markers="marker")
 
-article.work(ng-if="r.type=='complain'")
+article.work(ng-if="r.type=='complaint'")
     h3 Obra asociada
     p(ng-hide="r.pubwork") Esta queja actualmente no tiene ninguna obra asociada.
-    p(ng-show="r.pubwork")
-        strong ID Contrato
-        strong Fecha de Finalización
-        strong Fecha de Inicio
-        strong VALOR
-        output {{r.value}}
+    div(ng-show="r.pubwork")
+        p ID Contrato
+            i.val {{w.CIIU}}
+        p VALOR
+            strong.val.important {{w.value_contract | currency}}
+        p Contratista
+            strong.val {{w.employer}}
+        p Contratante
+            strong.val {{w.contractor}}
+        p Fecha de Inicio
+            i.val {{w.date_start | date}}
+        p Fecha de Finalización
+            i.val {{w.date_end | date}}
+

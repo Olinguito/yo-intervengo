@@ -3,7 +3,7 @@ form(name="rForm",ng-submit="saveReport()", novalidate)
         p Desea crear una
         input(type="radio",id="req_check", ng-model="report.type", value="request")
         label.small(for="req_check") Solicitud
-        input(type="radio",id="comp_check",ng-model="report.type", value="complain")
+        input(type="radio",id="comp_check",ng-model="report.type", value="complaint")
         label.small.right(for="comp_check") Queja
         input(placeholder="Nombre del Reporte",ng-model="report.name", required)
         textarea(placeholder="Descripción",ng-model="report.description", required)
@@ -13,12 +13,12 @@ form(name="rForm",ng-submit="saveReport()", novalidate)
         h3 Ubicación
         p Seleccionar en el mapa
         leaflet.map(center="mapCenter", defaults="mapDefaults", markers="marker")
-        input(title="Dirección", placeholder="Dirección", ng-model="report.loc.addr", required)
-        input.small(title="Departamento", placeholder="Departamento", ng-model="report.loc.state", required)
-        input.small.right(title="Municipio", placeholder="Municipio", ng-model="report.loc.city", required)
+        input(title="Dirección", placeholder="Dirección", ng-model="report.location.address", required)
+        input.small(title="Departamento", placeholder="Departamento", ng-model="report.location.state", required)
+        input.small.right(title="Municipio", placeholder="Municipio", ng-model="report.location.city", required)
 
-    fieldset(ng-if="report.type=='complain'")
-        input(placeholder="Proceso de Contratación #")
+    fieldset(ng-if="report.type=='complaint'")
+        input(placeholder="Proceso de Contratación #", ng-model="report.CIIU")
         p.info.
             La queja debe estar asociada a una obra civil pública.
             Si conoce el número del proceso de contratación ingreselo

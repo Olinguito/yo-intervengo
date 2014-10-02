@@ -51,21 +51,21 @@ angular.module('yo-intervengo', [
     name: 'pub-work'
     title: 'Obra Pública'
     templateUrl: 'views/pubwork.html'
-    resolve: user: ['User', (User) -> User.loggedIn ]
-    controller: () ->
+    resolve:
+      user: ['User', (User) -> User.loggedIn ]
+      work: ['PubWork','$route', (PubWork,$route) -> PubWork.get($route.current.params.id) ]
+    controller: 'PubWorkCtrl'
   .when '/:type/:id',
     name: 'detail'
     templateUrl: 'views/detail.html'
     controller: 'DetailCtrl'
     resolve:
       user: ['User', (User) -> User.loggedIn ]
-      report: ['Report','$route', (Report,$route) ->
-        Report.get($route.current.params.id)
-      ]
+      report: ['Report','$route', (Report,$route) -> Report.get($route.current.params.id) ]
       title: [
         '$route', ($route) ->
           type =
-            complain: 'Queja', request: 'Petición'
+            complaint: 'Queja', request: 'Petición'
           $route.current.$$route.title = "#{type[$route.current.params.type]}"
       ]
   .otherwise
@@ -86,7 +86,7 @@ angular.module('yo-intervengo', [
     $location.path('/start').replace() if rejection.reason is 'no-user'
     $location.path('/').replace() if rejection is 'logged-in'
 
-  $rootScope.show = list: no, loading: no
+  $rootScope.show = list: no, filter: no, loading: no
   $rootScope.q = name: '', type: [] # search
   # map config
   $rootScope.mapDefaults =

@@ -1,10 +1,15 @@
 angular.module 'yo-intervengo'
 
-.service 'User', ($http, $q, localStorageService, ApiUrl, Report) ->
+.service 'User', ($http, $q, localStorageService, ApiUrl) ->
   new class User
     # used to set initial data, eje. from http req or local storage
-    setData = (user, data) -> user[prop] = data[prop] for own prop of user when data[prop]?; return
+    setData = (user, data) ->
+      user[prop] = data[prop] for own prop of user when data[prop]?
+      user.followed = data.reports.concat data.pub_works
+      user.likes = angular.extend data.like_reports or {}, data.like_pub_works or {}
+      return
     authString = (token) -> "Basic #{btoa token}"
+    typeOf = (item) -> if item.type is 'pub-work' then 'pub-work' else 'report'
     deferred = $q.defer()
 
     constructor: ->
@@ -12,47 +17,45 @@ angular.module 'yo-intervengo'
       @email = null
       @name = null
       @photo = null
+      @likes = {}
       @followed = []
-      @liking = {}
       @loggedIn = deferred.promise
       Object.defineProperty @, 'storage', {value: localStorageService}
+
       # auto login if credentials exist
       if token = @storage.get('user')
         @useToken token
         do @updateProfile
       else @clearToken reason: 'no-user'
 
-    newReport: (data) ->
-      data.creator = @id
-      data = Report.new data
-      @follow data
-
     follows: (item) -> @followed.find((e) -> e.id is item.id)?
     # TODO dislike
     follow: (item) ->
       if @follows item
+        $http.delete("#{ApiUrl}/#{typeOf item}/#{item.id}/follow")
         index = @followed.findIndex((e) -> e.id is item.id)
         @followed.splice index,1
-      else @followed.push item
-      @storage.set 'user',@
-    likes: (item) -> @liking[item.id] is true
+      else
+        $http.post("#{ApiUrl}/#{typeOf item}/#{item.id}/follow")
+        @followed.push item
+    doesLike: (item) -> @likes[item.id] is true
     like: (item) ->
-      if not @liking[item.id]? or @dislikes item
-        substract = if @liking[item.id] is false then 1 else 0
-        item.stats.like += 1
-        item.stats.dislike -= substract
-        Report.update item.id, stats: like: item.stats.like, dislike: item.stats.like
-      @liking[item.id] = true
-      @storage.set 'user',@
-    dislikes: (item) -> @liking[item.id] is false
+      if not @likes[item.id]? or @doesNotLike item
+        substract = if @likes[item.id] is false then 1 else 0
+        item.likes += 1
+        item.dislikes -= substract
+#        Report.update item.id, stats: like: item.stats.like, dislike: item.stats.like
+      $http.put "#{ApiUrl}/#{typeOf item}/#{item.id}/like"
+      @likes[item.id] = true
+    doesNotLike: (item) -> @likes[item.id] is false
     dislike: (item) ->
-      if not @liking[item.id]? or @likes item
-        substract = if @liking[item.id] is true then 1 else 0
-        item.stats.like -= substract
-        item.stats.dislike += 1
-        Report.update item.id, stats: like: item.stats.like, dislike: item.stats.like
-      @liking[item.id] = false
-      @storage.set 'user',@
+      if not @likes[item.id]? or @doesLike item
+        substract = if @likes[item.id] is true then 1 else 0
+        item.likes -= substract
+        item.dislikes += 1
+#        Report.update item.id, stats: like: item.stats.like, dislike: item.stats.like
+      $http.put "#{ApiUrl}/#{typeOf item}/#{item.id}/dislike"
+      @likes[item.id] = false
 
     ###
       Saves token in storage and sets http auth headers
@@ -75,9 +78,17 @@ angular.module 'yo-intervengo'
       same workflow for login, profile, register
     ###
     doRequest = (self,httpPromise, setToken = yes) ->
+      # NOTE to self: this reassigns the promise losing then initial reference, doing @loggedIn.then from outside fails
       deferred = $q.defer()
       self.loggedIn = deferred.promise
       httpPromise.success (data) ->
+        #fix reports/pub-works #TODO ask backend to fix
+        for type in ['reports','pub_works']
+          data[type].map (e) ->
+            e.id = e._id
+            delete e._id
+            e.type = unless e.type? then 'pub-work' else if e.type is 'Q' then 'complaint' else 'request'
+            return e
         setData self, data #fill object with user data
         self.useToken "#{self.email}:#{data.token}" if setToken
         deferred.resolve(self)

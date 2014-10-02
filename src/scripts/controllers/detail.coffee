@@ -2,11 +2,11 @@ angular.module 'yo-intervengo'
 
 .controller 'DetailCtrl', ($scope, report, MARKER_HTML) ->
     $scope.r = report
-    $scope.center = lat: report.loc.lat, lng: report.loc.lon, zoom: 15
+    $scope.center = lat: report.geo_location[0], lng: report.geo_location[1], zoom: 15
     $scope.marker =
       point:
-        lat: report.loc.lat
-        lng: report.loc.lon
+        lat: report.geo_location[0]
+        lng: report.geo_location[1]
         icon:
           type: 'div'
           iconSize: [36, 50]

@@ -1,9 +1,26 @@
-h2 {{item.name}}
-i {{item.name}}
-button(ng-click="user.follow(item)") {{ user.follows(item) ? 'abandonar':'seguir' }}
-ul.photos
-    li(ng-repeat="p in item.photos"): img(ng-src="")
+article
+    h3 {{w.name}}
+    button.follow(ng-class="w.type",ng-click="user.follow(r)") {{ user.follows(r) ? 'abandonar':'seguir' }}
+    p.info \#{{w.id}}
+    p {{w.description}}
+    ul.photos
+        li(ng-repeat="p in w.photos"): img(ng-src="")
 article.work
-    p
-        strong VALOR
-        output {{item.value}}
+    h3 Datos de la obra
+    p ID Contrato
+        i.val {{w.CIIU}}
+    p VALOR
+        strong.val.important {{w.value_contract | currency}}
+    p Contratista
+        strong.val {{w.employer}}
+    p Contratante
+        strong.val {{w.contractor}}
+    p Fecha de Inicio
+        i.val {{w.date_start | date}}
+    p Fecha de Finalización
+        i.val {{w.date_end | date}}
+
+article
+    h3 Ubicación
+    p {{w.location.address}},{{w.location.city}},{{w.location.state}}
+    leaflet.map(center="center", defaults="mapDefaults", markers="marker")

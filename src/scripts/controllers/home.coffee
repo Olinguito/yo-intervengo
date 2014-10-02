@@ -1,16 +1,23 @@
 angular.module 'yo-intervengo'
 
-.controller 'HomeCtrl', ($scope, $compile, Report, geolocation, MARKER_HTML) ->
+.controller 'HomeCtrl', ($scope, $compile, Report, PubWork, geolocation, MARKER_HTML) ->
   $scope.markers = {}
-  # fetch data from server/file
-  $scope.items = Report.list()
+  $scope.near = false
+  # fetch data from server
+  $scope.fetchData = ->
+    $scope.items = []
+    Report.list($scope.near).then (data) ->
+      Array::push.apply $scope.items, data
+    PubWork.list($scope.near).then (data) ->
+      Array::push.apply $scope.items, data
+  do $scope.fetchData
   # get markers in the format needed by leaflet-directive
   getMarkers = (items) ->
     markers = {}
     for item,i in items
-      markers[item.id] =
-        lat: item.loc.lat
-        lng: item.loc.lon
+      markers[item.type[0]+item.id] =
+        lat: item.geo_location[0]
+        lng: item.geo_location[1]
         message: "<div item='items[#{i}]'></div>"
         icon:
           type: 'div'
@@ -34,11 +41,20 @@ angular.module 'yo-intervengo'
   geolocation.get().then (pos) ->
     angular.extend $scope.mapCenter, lat: pos.coords.latitude, lng: pos.coords.longitude, zoom: 13
   # search message
-  $scope.$root.searchMessage = ->
-    return "No hay reportes ni obras en tu zona" if $scope.items.length is 0
-    return "Selecciona una o más pestañas" if $scope.q.type.length is 0
-    n = 'request': 'peticiones', 'complain': 'quejas', 'pub-work': 'obras'
+  tabsToString = ->
+    n = 'request': 'solicitudes', 'complaint': 'quejas', 'pub-work': 'obras'
     list = n[$scope.q.type[0]]
     for t, i in slice = $scope.q.type[1...]
       list += "#{if i is slice.length-1 then ' y' else ','} #{n[t]}"
-    "Busca #{list} en tu zona"
+    list
+  $scope.$root.searchMessage = ->
+    return "No hay reportes ni obras en tu zona" if $scope.items.length is 0
+    return "Selecciona una o más pestañas" if $scope.q.type.length is 0
+    "Busca #{tabsToString()} en tu zona"
+  $scope.filterText = ->
+    [tabsToString()].join '; '
+
+  # info
+  $scope.showInfo = ->
+    # TODO info
+    alert "Yo Intervengo beta\nCrea o busca reportes de obras publicas en tu zona"

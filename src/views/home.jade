@@ -1,10 +1,18 @@
 leaflet.map(center="mapCenter", defaults="mapDefaults", markers="markers")
 
-ul.list(ng-show="show.list && filteredItems.length")
+ul.overlay(ng-show="show.list && filteredItems.length")
     li(ng-repeat="it in filteredItems = ( items | filter:byType | filter:{name:q.name}) track by it.id", item="it")
-p.list(ng-show="show.list && !filteredItems.length") No se encontro ningún elemento
+p.overlay(ng-show="show.list && !filteredItems.length") No se encontro ningún elemento
+.overlay(ng-show="show.filter")
+    .fRow: .center Filtros: {{filterText()}}
+    .fRow: label.center Cerca de mí
+        input(type="checkbox",ng-model="near",ng-change="fetchData()")
+    .fRow: label.center Estado de la obra
+        select(): option(selected) Celebrado
+    .fRow: label.center Monto del contrato
+        select(): option(selected) de 0 a 900'000.000
 
 footer(ng-if="in('home')")
     a.button(href="#/new", title="Nuevo") Nuevo Reporte
     a.button(href="#/profile", title="Perfil") Mi Perfil
-    a.button(href="#/info", title="Información") Informacion
+    a.button(ng-click="showInfo()", title="Información") Informacion

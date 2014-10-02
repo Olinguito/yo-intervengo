@@ -1,25 +1,53 @@
 angular.module 'yo-intervengo'
 
-.factory 'PubWork', ($http) ->
-  get: (id) -> $http.get ""
+.factory 'PubWork', ($http, ApiUrl, localStorageService) ->
+  storage = localStorageService
+  storage.set('pub-works', []) unless storage.get('pub-works')
+  get: (id) ->
+    $http.get("#{ApiUrl}/pub-work/#{id}", cache:on)
+    .then (res) ->
+      pw = res.data
+      pw.id = pw._id
+      delete pw._id
+      pw.type = 'pub-work'
+      res.data
+  list: (near = false) ->
+    $http.get("#{ApiUrl}/pub-work#{if near then '/near' else ''}", cache: on)
+    .then (res) ->
+      data = res.data.map (e) ->
+        e.id = e._id
+        delete e._id
+        e.type = 'pub-work'
+        return e
+      storage.set 'pub-works', data
+      data
 
-.factory 'Report', ($http, $q, localStorageService) ->
+.factory 'Report', ($http, $q, localStorageService, ApiUrl) ->
+  # TODO: data offline
   storage = localStorageService
   storage.set('reports', []) unless storage.get('reports')
   new: (data) ->
-    # add missing data
-    data.stats = like: 0, dislike: 0
-    data.id = Date.now().toString(36) # new unique? id
-    # get localStorage data
-    reports = storage.get('reports')
-    reports.push data
-    # save array
-    storage.set 'reports', reports
-    data # newly created item should be returned
-  list: -> storage.get 'reports'
+    $http.post "#{ApiUrl}/report/#{data.type}", data
+  list: (near = false) ->
+#    storage.get 'reports'
+    $http.get("#{ApiUrl}/report#{if near then '/near' else ''}", cache: on)
+    .then (res) ->
+      data = res.data.map (e) ->
+        e.id = e._id
+        delete e._id
+        e.type = if e.type is 'Q' then 'complaint' else 'request'
+        return e
+      storage.set 'reports', data
+      data
+
   get: (id) ->
-    reports = storage.get('reports')
-    reports.find((e) -> e.id is id)
+    $http.get("#{ApiUrl}/report/#{id}")
+    .then (res) ->
+      rep = res.data
+      rep.id = rep._id
+      delete rep._id
+      rep.type = if rep.type is 'Q' then 'complaint' else 'request'
+      res.data
   update: (id, data) ->
     reports = storage.get('reports')
     if (index = reports.findIndex((e) -> e.id is id)) >= 0

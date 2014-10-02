@@ -27,15 +27,15 @@ angular.module('yo-intervengo')
     template: """
         <div class="item">
             <a ng-href="#/{{ item.type }}/{{ item.id }}"><img ng-src="" alt="" /></a>
-            <a ng-href="#/{{ item.type }}/{{ item.id }}"><h3>{{ item.name }}</h3></a>
+            <a ng-href="#/{{ item.type }}/{{ item.id }}"><h3 title="{{ item.name }}">{{ item.name }}</h3></a>
             <i>\#{{ item.id }}</i>
             <div class='buttons'>
                 <button class="join" ng-click="user.follow(item)">{{user.follows(item)?'abandonar':'seguir'}}
-                </button><button title="Me gusta" class="like" ng-click="user.like(item)">{{ item.stats.like || 0}}
-                </button><button title="No me gusta" class="dislike" ng-click="user.dislike(item)">{{ item.stats.dislike || 0 }}</button>
+                </button><button title="Me gusta" class="like" ng-click="user.like(item)">{{ item.likes || 0}}
+                </button><button title="No me gusta" class="dislike" ng-click="user.dislike(item)">{{ item.dislikes || 0 }}</button>
             </div>
         </div>
         """
-    controller: ($scope, $rootScope) ->
+    controller: ($scope, User) ->
         # expose user inside the isolated scope
-        $scope.user = $rootScope.user
+        $scope.user = User

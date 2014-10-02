@@ -2,7 +2,7 @@
     figure: img(ng-src="{{ user.picture }}")
     h2 {{ user.name }}
     p {{ user.email }}
-    button modificar perfil
+    button(disabled) modificar perfil
 
 tabs(active="type")
 ul: li(ng-repeat="i in filteredItems = (user.followed | filter:byType) track by i.id", item="i")

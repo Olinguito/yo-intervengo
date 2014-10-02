@@ -57,7 +57,7 @@ header
   .options
     absolute top 100% left 7.5%
     width 85%
-    height 4rem
+    height 2rem
     text-align center
     button
       width 50%
@@ -76,12 +76,25 @@ header
     bottom 0
     z-index 0
     width 100%
-  p.list
+  div.overlay
+    .fRow
+      border-bottom 1px solid white - 10%
+      padding 1.5em 0
+      text-align center
+      .center
+        margin auto
+        display block
+        width 85%
+        max-width 650px
+        text-align left
+    input, select
+      float right
+  p.overlay
     padding-top 7em
     font-size 1.1em
     text-align center
     color cgray
-  .list
+  .overlay
     absolute top 0 bottom 0
     width 100%
     background fade-out(white, 20%)
@@ -117,7 +130,7 @@ header
   width 100%
   &.marker-request
     fill cblue
-  &.marker-complain
+  &.marker-complaint
     fill corange
   &.marker-pub-work
     fill cpurple

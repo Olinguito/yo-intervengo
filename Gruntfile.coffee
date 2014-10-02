@@ -175,8 +175,9 @@ module.exports = (grunt) ->
 
     ngmin:
       dist:
-        src: '<%= distDir %>/scripts/**/*.js'
-        dest: '<%= distDir %>/app.js'
+        files:
+          '<%= distDir %>/app.js': '<%= distDir %>/scripts/**/*.js'
+          '<%= distDir %>/lib.js': '<%= distDir %>/lib.js'
 
     uglify:
       dist:
@@ -266,11 +267,13 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'dist', [
     'clean:dist'
-    'copy'
+    'copy:js'
+    'copy:html'
+    'copy:assets'
     'concurrent:dist'
-    'ngmin'
     'prodlib'
-#    'uglify'
+    'ngmin'
+    'uglify'
     'concat:fixCss'
     'clean:dist2'
   ]

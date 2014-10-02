@@ -1,7 +1,7 @@
 angular.module 'yo-intervengo'
 
 .controller 'NewCtrl', ($scope, Report, geolocation, $http, MARKER_HTML, leafletEvents, $compile,$timeout) ->
-  $scope.report = type: 'request', loc: {}
+  $scope.report = type: 'request', location: {}, geo_location: []
   $scope.submited = no
   # marker config
   $scope.marker =
@@ -26,8 +26,8 @@ angular.module 'yo-intervengo'
       .success (res) ->
         doc = angular.element res
         # parse address data
-        angular.extend $scope.report.loc,
-          addr: doc.find('road').text()
+        angular.extend $scope.report.location,
+          address: doc.find('road').text()
           state: doc.find('state').text()
           city: doc.find('city').text()
 
@@ -43,7 +43,7 @@ angular.module 'yo-intervengo'
   $scope.saveReport = ->
     $scope.submited = yes
     if $scope.rForm.$valid
-      $scope.report.loc.lat = $scope.marker.loc.lat
-      $scope.report.loc.lon = $scope.marker.loc.lng
-      $scope.user.newReport $scope.report
+      $scope.report.geo_location[0] = $scope.marker.loc.lat
+      $scope.report.geo_location[1] = $scope.marker.loc.lng
+      Report.new $scope.report
       $scope.back()
