@@ -1,6 +1,6 @@
 angular.module('yo-intervengo')
 
-.directive 'tabs', ->
+.directive 'tabs', (localStorageService) ->
     restrict: 'E'
     scope: active: '=' # will contain an array with the selected options ['request','complain','pub-work']
     replace: yes
@@ -10,14 +10,15 @@ angular.module('yo-intervengo')
         </div>
         """
     link: (scope) ->
-        options = 1: 'request', 2: 'complain', 4: 'pub-work'
-        selection = 3 # default selection, 3 => 011 => ['request', 'complain']
+        options = 1: 'request', 2: 'complaint', 4: 'pub-work'
+        selection = +localStorageService.get('tabs') || 3
         getActive = ->
             options[i] for i in [1,2,4] when (selection&i) is i
         scope.active = do getActive
         scope.on = (num) -> (selection & +num) is +num
         scope.set = (num) ->
             selection ^= +num # 011(3) xor 100(4) = 111(7)
+            localStorageService.set 'tabs', selection
             scope.active = do getActive # selection = 111(7) => ['request','complain','pub-work']
 
 .directive 'item', ->
