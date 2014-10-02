@@ -129,7 +129,7 @@ module.exports = (grunt) ->
 
     watch:
       coffee:
-        files: '<%= srcDir %>/scripts/**/*.coffee'
+        files: ['<%= srcDir %>/scripts/**/*.coffee', '<%= srcDir %>/lib/**/*.coffee']
         tasks: ['newer:coffee:dev']
       stylus:
         files: '<%= srcDir %>/styles/**/*.styl'
@@ -230,11 +230,8 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'prodlib', 'Concat production only libraries', ->
     grunt.log.writeln 'Gathering javascript libraries'
-    #    testLibs = Object.keys grunt.file.readJSON('bower.json').devDependencies
-    libDir = grunt.config 'libDir'
-    distLibs = grunt.file.expand ["#{libDir}/**/angular.js", "#{libDir}/**/*.js"]
-    #    distLibs = distLibs.filter (file) ->
-    #      path.basename(file, '.js') not in testLibs
+    tmpDir = grunt.config 'tmpDir'
+    distLibs = grunt.file.expand ["#{tmpDir}/lib/**/angular.js", "#{tmpDir}/lib/**/*.js"]
     grunt.config 'concat.dist.src', distLibs
     grunt.task.run 'concat:dist'
 

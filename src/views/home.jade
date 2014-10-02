@@ -4,7 +4,7 @@ ul.list(ng-show="show.list && filteredItems.length")
     li(ng-repeat="it in filteredItems = ( items | filter:byType | filter:{name:q.name}) track by it.id", item="it")
 p.list(ng-show="show.list && !filteredItems.length") No se encontro ningún elemento
 
-footer(ng-if="inHome()")
+footer(ng-if="in('home')")
     a.button(href="#/new", title="Nuevo") Nuevo Reporte
     a.button(href="#/profile", title="Perfil") Mi Perfil
     a.button(href="#/info", title="Información") Informacion
