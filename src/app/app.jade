@@ -1,0 +1,10 @@
+template
+  core-drawer-panel
+    //- left side navigation bar
+    nav(drawer)
+      core-toolbar
+        yi-icon-button(icon="back", core-drawer-toggle)
+      a(repeat.for="route of router.navigation", href.bind="route.href", class="${route.isActive?'active':''}") ${route.title}
+      yi-logo
+    //- applicaiton sections
+    router-view(main, flex)
