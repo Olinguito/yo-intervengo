@@ -1,2 +1,15 @@
 template
-  h1 Reports
+  import(from='app/elements/marker/yi-marker')
+  core-toolbar
+    yi-icon-button(icon="menu")
+    yi-icon-button(icon="search")
+
+  au-leaflet-map
+    yi-marker(category="")
+
+  core-toolbar.bottom
+    yi-icon-button(icon="map-center")
+    yi-report-button()
+
+  yi-card-list
+    yi-card()
