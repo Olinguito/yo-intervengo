@@ -4,3 +4,44 @@
 
 body
   background colorBlack
+  font-family 'Roboto', sans-serif
+  font-weight 300
+
+nav[drawer]
+  background fade-out(colorBlack, 5%)
+  z-index 2
+  display flex
+  flex-direction column
+
+  core-toolbar
+    display flex
+    justify-content flex-end
+    background none
+
+  a
+    padding 0 1em
+    display block
+    width 100%
+    line-height 3em
+    font-size 1.2em
+    letter-spacing -1px
+    text-transform uppercase
+    color #fff
+    transition color 0.2s
+    font-style italic
+
+    &.active
+      color colorOrange
+      &:before
+        content: '...'
+  yi-logo
+    margin auto
+    margin-bottom 1rem
+
+body > nav-router
+  position relative
+  width 100%
+  height 100%
+
+#reports
+  @require 'reports'

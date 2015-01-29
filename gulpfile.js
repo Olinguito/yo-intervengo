@@ -27,7 +27,8 @@ var path = {
     scripts: 'src/app/**/*.js',
     html: 'src/**/*.jade',
     style: 'src/styles/**/*.styl',
-    output: 'build/',
+    custElementsStyle: 'src/app/elements/**/*.styl',
+    output: '.tmp/',
     out: 'dist/',
     doc: './doc'
 };
@@ -78,6 +79,15 @@ gulp.task('build-style', function () {
         .pipe(sourcemaps.init())
         .pipe(stylus({use: [nib()], import: 'nib'}))
         .pipe(rename('style.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(path.output));
+});
+
+gulp.task('build-elements-style', function () {
+    return gulp.src([path.custElementsStyle], {base: path.src})
+        .pipe(changed(path.output, {extension: '.styl'}))
+        .pipe(sourcemaps.init())
+        .pipe(stylus({use: [nib()], import: 'nib'}))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.output));
 });
@@ -134,7 +144,7 @@ gulp.task('changelog', function (callback) {
 gulp.task('build', function (callback) {
     return runSequence(
         'clean',
-        ['build-system', 'build-style', 'build-html'],
+        ['build-system', 'build-elements-style', 'build-style', 'build-html'],
         callback
     );
 });
@@ -168,6 +178,7 @@ gulp.task('watch', ['serve'], function () {
     gulp.watch(path.scripts, ['build-system', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.html, ['build-html', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.style, ['build-style', browserSync.reload]).on('change', reportChange);
+    gulp.watch(path.custElementsStyle, ['build-elements-style', browserSync.reload]).on('change', reportChange);
 });
 
 gulp.task('prepare-release', function (callback) {

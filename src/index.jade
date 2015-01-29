@@ -3,12 +3,12 @@ html
   head
     meta(charset="utf-8")
     meta(name="viewport", content="initial-scale=1, width=device-width")
+    //- include polymer web-components
+    link(rel="import",href="polymer-elements.html")
     //- application main style
     link(rel="stylesheet",href="style.css")
-    //- include polymer web-components
-    link(rel="import",href="elements.html")
 
-  body(aurelia-app="yi/app")
+  body(aurelia-app="app/app")
     script(type="text/javascript",src="vendor/system.js")
     script(type="text/javascript",src="config.js")
     script(type="text/javascript").
