@@ -1,11 +1,11 @@
 template
-  import(from='app/elements/marker/yi-marker')
+  import(from="app/elements/marker/yi-marker")
   core-toolbar
     yi-icon-button(icon="menu")
     yi-icon-button(icon="search")
 
   au-leaflet-map
-    yi-marker(category="")
+    yi-marker(category="", click.trigger="mrk.toggleType()", ref.view-model="mrk")
 
   core-toolbar.bottom
     yi-icon-button(icon="map-center")

@@ -1,4 +1,5 @@
 template
+  import(from='app/elements/logo/yi-logo')
   core-drawer-panel
     //- left side navigation bar
     nav(drawer)
@@ -6,6 +7,6 @@ template
         yi-icon-button(icon="back", core-drawer-toggle)
       a(repeat.for="route of router.navigation", href.bind="route.href", class="${route.isActive?'active':''}").
         ${route.title}
-      yi-logo
+      yi-logo()
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")

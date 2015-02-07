@@ -23,8 +23,21 @@ export class YiMarker {
         addStyle(this.element, style);
     }
 
-    bounce() {
-
+    toggleType() {
+        this.element.classList.toggle('alt');
     }
 
+    bounce() {
+        console.log('bOinng!');
+        this.element.animate([
+                {transform: 'translateY(0px)'},
+                {transform: 'translateY(-30px)'},
+                {transform: 'translateY(0px)'},
+                {transform: 'translateY(-8px)'},
+                {transform: 'translateY(0px)'}
+            ], {
+                direction: 'alternate', duration: 350, iterations: 1
+            }
+        );
+    }
 }
