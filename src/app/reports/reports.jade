@@ -1,15 +1,24 @@
 template
   import(from="app/elements/marker/yi-marker")
   import(from="app/elements/card/yi-card")
-  core-toolbar
-    yi-icon-button(icon="menu")
-    yi-icon-button(icon="search")
+  
 
-  au-leaflet-map
-    yi-marker(category="", click.trigger="mrk.toggleType()", ref.view-model="mrk")
-    yi-card
+  section
+    core-toolbar
+      yi-icon-button(icon="menu")
+      yi-icon-button(icon="search")
 
-  core-toolbar.bottom
-    yi-icon-button(icon="map-center")
-    yi-report-button()
+    au-leaflet-map
+      yi-marker(category="", click.trigger="mrk.toggleType()", ref.view-model="mrk")
+      yi-card
+
+    core-toolbar.bottom
+      yi-icon-button(icon="map-center")
+      yi-report-button()
+
+  section
+    include report-detail
+  
+
+    
 

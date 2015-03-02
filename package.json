@@ -21,37 +21,36 @@
     "browser-sync": "^1.8.1",
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
-    "gulp": "^3.8.10",
+    "gulp": "^3.8.11",
     "gulp-6to5": "^2.0.0",
     "gulp-bump": "^0.1.11",
     "gulp-changed": "^1.1.0",
-    "gulp-jshint": "^1.9.0",
-    "gulp-plumber": "^0.6.6",
-    "gulp-yuidoc": "^0.1.2",
-    "gulp-sourcemaps": "^1.3.0",
-    "gulp-rename": "^1.2.0",
     "gulp-data": "^1.2.0",
     "gulp-jade": "^0.10.0",
+    "gulp-jshint": "^1.9.0",
+    "gulp-plumber": "^0.6.6",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.3.0",
     "gulp-stylus": "^2.0.0",
-    "nib": "^1.0.4",
+    "gulp-yuidoc": "^0.1.2",
     "jshint-stylish": "^1.0.0",
     "karma": "^0.12.28",
     "karma-6to5-preprocessor": "^1.0.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jspm": "^1.0.1",
+    "nib": "^1.0.4",
     "object.assign": "^1.0.3",
     "run-sequence": "^1.0.2",
     "vinyl-paths": "^1.0.0"
   },
   "jspm": {
-    "name": "yi",
     "directories": {
       "baseURL": "src",
       "lib": "src/app",
       "packages": "vendor"
     },
     "dependencies": {
-      "aurelia-bootstrapper": "^0.9.1"
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.9.1"
     }
   }
 }
