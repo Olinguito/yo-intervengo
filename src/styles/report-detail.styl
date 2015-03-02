@@ -12,10 +12,17 @@ header
         diplay inline-block
         margin-bottom 0.5em
         button
+            color #ffffff
             width 40px
             height 40px
             cursor pointer
-            border-radius 10px
+            border-radius 50%
+            background-color rgba(0, 0, 0, .0)
+            border none
+            font-size 1.3em
+            font-weight 300
+            &:hover
+                color #ef5b22
         button.close
             margin 0 255px
 
@@ -26,10 +33,12 @@ header
             width 9rem
             height 9rem
             margin 0.5rem
-            background-color #FFF88E
+            background-color #ef5b22
             border-radius 5px
             box-shadow 0 0 0 3pt rgba(80, 80, 80, .25)
             overflow hidden
+        li.mapmask
+            background-color: rgba(255, 255, 255, .0)
             
 article.info-card
     width 80%
@@ -65,24 +74,33 @@ article.info-card
         section.right-side
             display inline-block
             position relative
-            top - 20px
+            top - 25px
             width 29%
             height 100%
             text-align right
-            padding 0 20px 0 0
+            padding 0 10px 0 0
             margin 0 0 20px 0
             text-shadow 0 1px 3px rgba(0, 0, 0, .95)
             button
                 display inline-block
-                height 30px
-                width 30px
                 cursor: pointer
                 margin-bottom 42px
+                color #ffffff
+                width 20px
+                height 40px
+                border-radius 50%
+                background-color rgba(0, 0, 0, .0)
+                border none
+                font-size 1.3em
+                font-style italic
+                &:hover
+                    color #ef5b22
 
             i
                 display inline-block
                 font-size 15px
                 width 100%
+                padding-right 10px
             
     section.info-card-bottom
         width 100%
