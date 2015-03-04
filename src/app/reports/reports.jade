@@ -1,10 +1,13 @@
 template
   import(from="app/elements/search/yi-search-tool")
   import(from="app/elements/marker/yi-marker")
+  import(from="app/elements/card/yi-card")
+
   section#map-area
     core-toolbar
       yi-icon-button(icon="menu")
       yi-icon-button(icon="search")
+
 
     leaflet-map(
     latitude.bind="map.lat",
@@ -30,3 +33,5 @@ template
 
   yi-card-list
     yi-card()
+
+  section: include report-detail
