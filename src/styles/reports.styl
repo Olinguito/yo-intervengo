@@ -1,3 +1,6 @@
+rightPanelWidth = 20rem
+headerHeight = 4rem
+
 #reports
 
   #map-area
@@ -25,15 +28,22 @@
 
 yi-search-tool
   absolute left 0 top 0
+  padding-right rightPanelWidth
   z-index 1
 
 yi-card-list
   absolute right 0 top 0
-  height 100%
-  display block
-  width 18rem
-  z-index 2
   background fade-out(colorBlack, 20%)
+  display flex
+  flex-direction column
+  justify-content space-around
+  height 100%
+  padding headerHeight 1rem
+  width rightPanelWidth
+  z-index 2
+
+  yi-card
+    margin 1rem auto
 
 // Sub sections
 @import 'report-detail'
