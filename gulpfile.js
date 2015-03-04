@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var del = require('del');
 var vinylPaths = require('vinyl-paths');
-var to5 = require('gulp-6to5');
+var to5 = require('gulp-babel');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var yuidoc = require("gulp-yuidoc");
@@ -45,7 +45,6 @@ var compilerOptions = {
     sourceRoot: '',
     moduleRoot: '',
     moduleIds: false,
-    runtime: false,
     experimental: false,
     format: {
         comments: false,
@@ -70,7 +69,9 @@ gulp.task('build-system', function () {
     return gulp.src(path.scripts, {base: path.src})
         .pipe(plumber())
         .pipe(changed(path.output, {extension: '.js'}))
+//        .pipe(sourcemaps.init())
         .pipe(to5(assign({}, compilerOptions, {modules: 'system'})))
+//        .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/' + path.output }))
         .pipe(gulp.dest(path.output));
 });
 

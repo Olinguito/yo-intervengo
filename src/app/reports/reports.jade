@@ -1,15 +1,32 @@
 template
+  import(from="app/elements/search/yi-search-tool")
   import(from="app/elements/marker/yi-marker")
-  core-toolbar
-    yi-icon-button(icon="menu")
-    yi-icon-button(icon="search")
+  section#map-area
+    core-toolbar
+      yi-icon-button(icon="menu")
+      yi-icon-button(icon="search")
 
-  au-leaflet-map
-    yi-marker(category="", click.trigger="mrk.toggleType()", ref.view-model="mrk")
+    leaflet-map(
+    latitude.bind="map.lat",
+    longitude.bind="map.lng",
+    tileServer.bind="mapConf.tiles",
+    zoom.bind="map.zoom",
+    options.bind="mapConf",
+    tileserver.bind="mapConf.tiles"
+    )
+      yi-marker(
+      marker,
+      latitude.one-time="map.lat",
+      longitude.one-time="map.lng",
+      click.trigger="mrk.toggleType()",
+      ref.view-model="mrk"
+      )
 
-  core-toolbar.bottom
-    yi-icon-button(icon="map-center")
-    yi-report-button()
+    core-toolbar.bottom
+      yi-icon-button(icon="map-center")
+      yi-report-button()
+
+  yi-search-tool
 
   yi-card-list
     yi-card()

@@ -1,22 +1,27 @@
 {
-  "name": "yo-intervengo",
-  "version": "2.0.0",
-  "homepage": "https://github.com/Olinguito/yo-intervengo",
-  "authors": [
-    "Daniel Olano <danielolanoc@gmail.com>"
-  ],
-  "license": "MIT",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "vendor",
-    "test",
-    "tests",
-    ".tmp"
-  ],
-  "devDependencies": {
-    "core-drawer-panel": "Polymer/core-drawer-panel#~0.5.4",
-    "core-toolbar": "Polymer/core-toolbar#~0.5.4"
-  }
+    "name": "yo-intervengo",
+    "version": "2.0.0",
+    "homepage": "https://github.com/Olinguito/yo-intervengo",
+    "authors": [
+        "Daniel Olano <danielolanoc@gmail.com>"
+    ],
+    "license": "MIT",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "vendor",
+        "test",
+        "tests",
+        ".tmp"
+    ],
+    "dependencies": {
+        "core-drawer-panel": "Polymer/core-drawer-panel#~0.5.4",
+        "core-toolbar": "Polymer/core-toolbar#~0.5.4",
+        "leaflet-map-component": "git@github.com:olanod/leaflet-map-component#master"
+    },
+    "resolutions": {
+        "polymer": "^0.5",
+        "core-component-page": "^0.5"
+    }
 }

@@ -1,17 +1,36 @@
-core-toolbar
-  absolute top 0 left 0
-  z-index 1
-  width 100%
-  background linear-gradient(top, fade-out(black, 50%), fade-out(black, 99.9%))
-  &.bottom
-    background linear-gradient(bottom, fade-out(black, 50%), fade-out(black, 99.9%))
-    absolute bottom 0 left 0
-    top initial
+#reports
 
-au-leaflet-map
+  #map-area
+    position relative
+    height 100%
+    width 100%
+
+    core-toolbar
+      absolute top 0 left 0
+      z-index 1
+      width 100%
+      background linear-gradient(top, fade-out(black, 50%), fade-out(black, 99.9%))
+      &.bottom
+        background linear-gradient(bottom, fade-out(black, 50%), fade-out(black, 99.9%))
+        absolute bottom 0 left 0
+        top initial
+
+    leaflet-map
+      height 100%
+      width 100%
+      /*tmp style*/
+      display flex
+      justify-content center
+      align-items center
+
+yi-search-tool
+  absolute left 0 top 0
+  z-index 1
+
+yi-card-list
+  absolute right 0 top 0
   height 100%
-  width 100%
-  /*tmp style*/
-  display flex
-  justify-content center
-  align-items center
+  display block
+  width 18rem
+  z-index 2
+  background fade-out(colorBlack, 20%)
