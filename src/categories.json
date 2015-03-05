@@ -1,0 +1,19 @@
+{
+    "mobility": "movilidad",
+    "mobility.tunnel": "tunel",
+    "mobility.crossing": "cruce",
+
+    "buildings": "edificios y terrenos",
+    "buildings.bridge": "puente",
+
+    "security": "seguridad",
+    "security.gangs": "pandillas",
+
+    "pub-services": "servicios públicos",
+    "pub-services.water": "acueducto",
+    "pub-services.internet": "internet",
+
+    "environment": "medio ambiente",
+
+    "other": "otros"
+}

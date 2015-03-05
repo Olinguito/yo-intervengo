@@ -23,7 +23,7 @@ header
   &:hover
     figure.title
       figcaption
-        background linear-gradient(top,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, .9))
+        background linear-gradient(top,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.9))
     .category
       background-color: #e35620 - 20%
 
@@ -50,7 +50,7 @@ header
         top 0
         z-index 0
       figcaption
-        background linear-gradient(top,rgba(0, 0, 0, 0.1),rgba(0, 0, 0, .6))
+        background linear-gradient(top,rgba(0, 0, 0, 0.1),rgba(0, 0, 0, 0.6))
         color #FFFFFF
         font-weight 200
         height 100%
@@ -75,6 +75,7 @@ header
           font-size 10pt
           font-weight 200
           padding-top 0.5rem
+          text-transform uppercase
 
     .yi-card-icon
       fill none
@@ -103,13 +104,17 @@ header
 
 // stlyes by type
 .complain
-  figure.category,
+  .category,
   ~ .backups:hover
     background-color colorOrange
+  &:hover .category
+    background-color colorOrange - 20%
 .request
-  figure.category,
+  .category,
   ~ .backups:hover
     background-color colorBlue
+  &:hover .category
+    background-color colorBlue - 20%
 
 
 

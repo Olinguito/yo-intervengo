@@ -1,6 +1,13 @@
 import {Router} from 'aurelia-router';
 import {BindingLanguage} from 'aurelia-framework';
+import cats from 'categories.json!';
 
+//
+export const categories = cats;
+
+/**
+ * Aurelia Application
+ */
 export class App {
 
     static inject() { return [Router, BindingLanguage]; }
