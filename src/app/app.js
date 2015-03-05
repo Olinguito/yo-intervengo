@@ -6,7 +6,7 @@ export class App {
     static inject() { return [Router, BindingLanguage]; }
 
     constructor(router, bindingLang) {
-        // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it)
+        // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix
         bindingLang.attributeMap['tileserver'] = 'tileServer';
         // config application routes
         this.router = router;
@@ -24,6 +24,6 @@ export class App {
     }
 
     get activeRoute() {
-        return this.router.currentInstruction ? this.router.currentInstruction.fragment : '';
+        return this.router.currentInstruction ? this.router.currentInstruction.fragment.split('/')[0] : '';
     }
 }

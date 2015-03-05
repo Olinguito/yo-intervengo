@@ -1,5 +1,4 @@
 template
-  import(from="app/elements/search/yi-search-tool")
   import(from="app/elements/marker/yi-marker")
   import(from="app/elements/card/yi-card")
 
@@ -32,9 +31,9 @@ template
   yi-search-tool
 
   yi-card-list
-    yi-card()
-      yi-card()
-      yi-card()
-      yi-card()
+      yi-card(click.trigger="router.navigate('some-report')")
+      yi-card(click.trigger="router.navigate('other-report')")
+      yi-card(click.trigger="router.navigate('some-complain')")
+      yi-card(click.trigger="router.navigate('other-complain')")
 
-    section: include report-detail
+      router-view
