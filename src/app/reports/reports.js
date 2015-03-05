@@ -10,8 +10,8 @@ export class Reports {
         this.router = router;
         this.router.configure(config => {
             config.map([
-                {route: ':name', moduleId: 'app/reports/report-detail'},
-                {route: '', moduleId: 'app/reports/search'}
+                {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail'},
+                {route: '', moduleId: 'app/reports/search', id: 'search'}
             ]);
         });
         // Map container
@@ -29,5 +29,10 @@ export class Reports {
     attached() {
         this.map.mapElement = document.querySelector('leafletMap');
     }
+
+    get activeSubSection() {
+        return this.router.currentInstruction.config.id || '';
+    }
+
 
 }
