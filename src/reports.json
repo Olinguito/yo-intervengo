@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Puente quebrado",
+        "description": "El puente esta quebrado, con que lo curaremos.\nCon cascaras de huevo.",
+        "photo": "",
+        "category": ["mobility", "bridge"],
+        "type": 1
+    },
+    {
+        "name": "Viaducto",
+        "description": "Dificil circulación po el viaducto de la flora en horas pico",
+        "photo": "",
+        "category": ["mobility", "tunnel"],
+        "type": 1
+    },
+    {
+        "name": "Puente centro comercial el cacique",
+        "description": "No es posible el paso de peatones debidio a que es muy amplia la carretera y el cruce es inseguro.",
+        "photo": "",
+        "category": ["mobility", "crossing"],
+        "type": 0
+    },
+    {
+        "name": "Cambiar sitio de eventos deportivos",
+        "description": "Cada vez que hay partidos hay muertos. Se ha tornado muy inseguro salir a la calle por presencia de ñangas del B/ga",
+        "photo": "",
+        "category": ["security", "gangs"],
+        "type": 0
+    }
+]
