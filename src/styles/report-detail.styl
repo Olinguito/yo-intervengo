@@ -1,59 +1,118 @@
 #report-detail
-    background-color #FFFFFF !important
-    position absolute
-    width 90%
-    text-align center
-    max-width 680px
-
+  width 90%
+  text-align center
+  min-height 100vh
+  overflow-x hidden
+  overflow-y auto
+  
 header
-    width 80%
-    text-align center
-    nav
-        diplay inline-block
-        margin-bottom 0.5em
-        button
-            color #ffffff
-            width 40px
-            height 40px
-            cursor pointer
-            border-radius 50%
-            background-color rgba(0, 0, 0, .0)
-            border none
-            font-size 1.3em
-            font-weight 300
-            &:hover
-                color #ef5b22
-        button.close
-            margin 0 255px
+  width 80%
+  text-align center
+  nav
+    diplay inline-block
+    margin-bottom 0.5em
+    button
+      color #ffffff
+      width 40px
+      height 40px
+      cursor pointer
+      border-radius 50%
+      background-color rgba(0, 0, 0, .0)
+      border none
+      font-size 1.3em
+      font-weight 300
+      &:hover
+        color #ef5b22
+    button.close
+      margin 0 255px
 
-    ul
-        text-align center
-        li.mapmask, li.pic, li.gallery
-            display inline-block
-            width 9rem
-            height 9rem
-            margin 0.5rem
-            background-color #ef5b22
-            border-radius 5px
-            box-shadow 0 0 0 3pt rgba(80, 80, 80, .25)
-            overflow hidden
-        li.mapmask
-            background-color: rgba(255, 255, 255, .0)
-            
-article.info-card
-    width 80%
+  ul
     text-align center
-    padding 0 5.5rem
-    margin-top 0.7rem
-        
-    header
-        background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
-        background-origin content-box
-        background-repeat no-repeat
-        background-size 100%
-        border-radius 5px 5px 0 0
+    li.mapmask, li.pic, li.gallery
+      display inline-block
+      width 9rem
+      height 9rem
+      margin 0.5rem
+      background-color #ef5b22
+      border-radius 5px
+      box-shadow 0 0 0 3pt rgba(80, 80, 80, .25)
+      overflow hidden
+    li.mapmask
+      background-color: rgba(255, 255, 255, .0)
+
+article.info-card
+  width 80%
+  text-align center
+  padding 0 5.5rem
+  margin-top 0.7rem
+
+  header
+    background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
+    background-origin content-box
+    background-repeat no-repeat
+    background-size 100%
+    border-radius 5px 5px 0 0
+    width 100%
+    background-color #2255EF
+    text-align left
+    color #FFF
+    vertical-align top
+    section.left-side
+      display inline-block
+      width 70%
+      height 100%
+      text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+      h1.title
+        font-size 1.4em
+        padding 20px 0 20px 20px
+      h3.cat-subcat
+        font-size 1.2em
+        padding 0 0 10px 20px
+      h4.address-city
+        font-size 1.1em
+        padding 0 0 0 20px
+    section.right-side
+      display inline-block
+      position relative
+      top - 25px
+      width 29%
+      height 100%
+      text-align right
+      padding 0 10px 0 0
+      margin 0 0 20px 0
+      text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+      button
+        display inline-block
+        cursor: pointer
+        margin-bottom 42px
+        color #ffffff
+        width 20px
+        height 40px
+        border-radius 50%
+        background-color rgba(0, 0, 0, .0)
+        border none
+        font-size 1.3em
+        font-style italic
+        &:hover
+          color #ef5b22
+
+      i
+        display inline-block
+        font-size 15px
         width 100%
-        background-color #2255EF
+        padding-right 10px
+
+  section.info-card-bottom
+    width 100%
+    background-color #FFF
+    border-radius 0 0 5px 5px
+    article
+      width 70%
+      display inline-block
+      p.description
+        font-size 1.1em
+        color gray
+        padding 20px
         text-align left
         color #FFF
         vertical-align top
@@ -116,74 +175,72 @@ article.info-card
                 padding 20px
                 text-align left
                 font-weight 100
-        aside
-            width 29%
-            padding-right 20px
-            display inline-block
-            text-align right
-            border-left solid 1px #e5e5e5
-            ul
-                li
-                    margin-bottom 15px
+    aside
+      width 29%
+      padding-right 20px
+      display inline-block
+      text-align right
+      border-left solid 1px #e5e5e5
+      ul
+        li
+          margin-bottom 15px
+
 section.down
+  width 80%
+  padding 0.5em
+  p.wiki-text
+    text-align center
+    font-size 1em
+    margin 10px auto 20px auto
+    color #FFF
     width 80%
-    padding 0.5em
-    overflow scroll
-    p.wiki-text
-        text-align center
-        font-size 1em
-        margin 10px auto 20px auto
-        color #FFF
-        width 80%
-        a.naranja
-            color #ef5b22
-        
-    section.tab-card
-        width 80%
-        margin auto
-        background-color #FFF
-        border-radius 5px
-        overflow hidden
-        vertical-align text-top
-        nav.tabs
-            display inline-block
-            ul
-                width 50px
-                border-right solid 1px #e5e5e5
+    a.naranja
+      color #ef5b22
 
-                li
-                    height 50px
-                    width 100%
-                    display inline-block
-                    border-bottom solid 1px #e5e5e5
-                    text-align center
-                    line-height 50px
-                    background-color #fff
-                    cursor pointer
-                    &:hover
-                        background-color #ef5b22
-                        color white
-                        border-bottom none
-                        
+  section.tab-card
+    width 80%
+    margin auto
+    background-color #FFF
+    border-radius 5px
+    overflow hidden
+    vertical-align text-top
+    nav.tabs
+      display inline-block
+      ul
+        width 50px
+        border-right solid 1px #e5e5e5
 
-                    
-                li.history
-                    background-color #e5e5e5
-                    color #000000
-                    border-bottom none
-        
-        section.history-card
-            display inline-block
-            width 70%
-            position relative
-            top - 100px
-            margin 20px
-            h2.title
-                color #ef5b22
-                font-size 1.3em
-                margin-bottom 30px
-        
-            
-            
-        
-                
+        li
+          height 50px
+          width 100%
+          display inline-block
+          border-bottom solid 1px #e5e5e5
+          text-align center
+          line-height 50px
+          background-color #fff
+          cursor pointer
+          &:hover
+            background-color #ef5b22
+            color white
+            border-bottom none
+
+        li.history
+          background-color #e5e5e5
+          color #000000
+          border-bottom none
+
+    section.history-card
+      display inline-block
+      width 70%
+      position relative
+      top - 100px
+      margin 20px
+      h2.title
+        color #ef5b22
+        font-size 1.3em
+        margin-bottom 30px
+
+
+
+
+

@@ -8,6 +8,7 @@ export class YiCard {
     static metadata() {
         return Behavior
             .customElement('yi-card')
+            .withProperty('report')
             .useShadowDOM();
     }
 
@@ -20,6 +21,10 @@ export class YiCard {
     bind() {
         //TODO:  should be added to the template element before compile (aurelia fix pending)
         addStyle(this.element, style);
+    }
+
+    get typeClass() {
+        return this.report.type ? 'complain': 'request';
     }
 
 }

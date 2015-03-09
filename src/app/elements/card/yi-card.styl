@@ -1,3 +1,6 @@
+colorBlue = #00BCDD
+colorOrange = #EF5B22
+
 :host
   background-color #FFFFFF
   border-radius 5px
@@ -30,7 +33,6 @@ header
     height 100%
 
     &.category
-      background-color #e35620
       display flex
       flex 1
       svg
@@ -97,8 +99,17 @@ header
   line-height 30px
 
   &:hover
-    background-color #e35620
     color #FFFFFF
+
+// stlyes by type
+.complain
+  figure.category,
+  ~ .backups:hover
+    background-color colorOrange
+.request
+  figure.category,
+  ~ .backups:hover
+    background-color colorBlue
 
 
 

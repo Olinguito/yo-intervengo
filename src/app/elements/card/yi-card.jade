@@ -1,9 +1,9 @@
 template
-  header
+  header(class="${typeClass}")
     figure.title
-      img(src='http://lorempixel.com/output/city-q-c-200-90-9.jpg')
+      img(src='http://lorempixel.com/200/90/city')
       figcaption
-        h1 Puente Calle 33 con Avenida López a la altura de su casa
+        h1 ${report.name}
         h2 NOMBRE SUBCATEGORÍA
     figure.category
       svg(width='18', height='57')

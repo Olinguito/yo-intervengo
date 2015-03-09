@@ -1,17 +1,19 @@
 import {Map} from 'lib/map';
 import {Router} from 'aurelia-router';
+import {HttpClient} from 'aurelia-http-client';
 
 export class Reports {
 
-    static inject() { return [Router]}
+    static inject() { return [Router, HttpClient]}
 
-    constructor(router) {
+    constructor(router, http) {
+        this.http = http;
         // reports sub router
         this.router = router;
         this.router.configure(config => {
             config.map([
-                {route: ':name', moduleId: 'app/reports/report-detail'},
-                {route: '', moduleId: 'app/reports/search'}
+                {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail', title: ''},
+                {route: '', moduleId: 'app/reports/search', id: 'search'}
             ]);
         });
         // Map container
@@ -26,8 +28,20 @@ export class Reports {
         }
     }
 
+    activate(params, queryString, config) {
+        return this.http.get('/reports.json')
+            .then(data => {
+                this.reports = JSON.parse(data.response) || [];
+            });
+    }
+
     attached() {
         this.map.mapElement = document.querySelector('leafletMap');
     }
+
+    get activeSubSection() {
+        return this.router.currentInstruction.config.id || '';
+    }
+
 
 }

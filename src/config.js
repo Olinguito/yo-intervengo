@@ -11,6 +11,7 @@ System.config({
 System.config({
   "map": {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.9.5",
+    "aurelia-http-client": "github:aurelia/http-client@0.5.5",
     "leaflet": "npm:leaflet@0.7.3",
     "github:aurelia/binding@0.3.7": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.4.5",
@@ -45,6 +46,10 @@ System.config({
     },
     "github:aurelia/history-browser@0.2.5": {
       "aurelia-history": "github:aurelia/history@0.2.4",
+      "core-js": "npm:core-js@0.4.10"
+    },
+    "github:aurelia/http-client@0.5.5": {
+      "aurelia-path": "github:aurelia/path@0.4.5",
       "core-js": "npm:core-js@0.4.10"
     },
     "github:aurelia/loader-default@0.4.3": {
@@ -113,7 +118,7 @@ System.config({
       "path-browserify": "npm:path-browserify@0.0.0"
     },
     "github:jspm/nodelibs-process@0.1.1": {
-      "process": "npm:process@0.10.0"
+      "process": "npm:process@0.10.1"
     },
     "github:jspm/nodelibs-stream@0.1.0": {
       "stream-browserify": "npm:stream-browserify@1.0.0"

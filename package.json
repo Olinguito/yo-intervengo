@@ -9,7 +9,7 @@
   "bugs": {
     "url": "https://github.com/Olinguito/yo-intervengo/issues"
   },
-  "license": "MIT",
+  "license": "GPLv3",
   "author": "Daniel Olano<daniel@olinguito.co> (http://olinguito.co)",
   "main": "dist/commonjs/index.js",
   "repository": {
@@ -44,13 +44,15 @@
     "vinyl-paths": "^1.0.0"
   },
   "jspm": {
+    "name": "yi",
     "directories": {
       "baseURL": "src",
       "lib": "src/app",
       "packages": "vendor"
     },
     "dependencies": {
-      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.9.1"
+      "aurelia-bootstrapper": "^0.9.1",
+      "aurelia-http-client": "^0.5.5"
     }
   }
 }
