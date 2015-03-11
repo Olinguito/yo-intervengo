@@ -4,7 +4,7 @@
   min-height 100vh
   overflow-x hidden
   overflow-y auto
-
+  
 header
   width 80%
   text-align center
@@ -111,9 +111,69 @@ article.info-card
       display inline-block
       p.description
         font-size 1.1em
-        color gray
+        color #000
         padding 20px
         text-align left
+        vertical-align top
+        section.left-side
+            display inline-block
+            width 70%
+            height 100%
+            text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+            h1.title
+                font-size 1.4em 
+                padding 20px 0 20px 20px
+            h3.cat-subcat
+                font-size 1.2em 
+                padding 0 0 10px 20px
+            h4.address-city
+                font-size 1.1em
+                padding 0 0 0 20px
+        section.right-side
+            display inline-block
+            position relative
+            top - 25px
+            width 29%
+            height 100%
+            text-align right
+            padding 0 10px 0 0
+            margin 0 0 20px 0
+            text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+            button
+                display inline-block
+                cursor: pointer
+                margin-bottom 42px
+                color #ffffff
+                width 20px
+                height 40px
+                border-radius 50%
+                background-color rgba(0, 0, 0, .0)
+                border none
+                font-size 1.3em
+                font-style italic
+                &:hover
+                    color #ef5b22
+
+            i
+                display inline-block
+                font-size 15px
+                width 100%
+                padding-right 10px
+            
+    section.info-card-bottom
+        width 100%
+        background-color #FFF
+        border-radius 0 0 5px 5px
+        article
+            width 70%
+            display inline-block
+            p.description
+                font-size 1.1em
+                font-family 'Roboto Slab'
+                color gray
+                padding 20px
+                text-align left
+                font-weight 100
     aside
       width 29%
       padding-right 20px
@@ -146,6 +206,7 @@ section.down
     nav.tabs
       display inline-block
       ul
+        margin-left - 62px
         width 50px
         border-right solid 1px #e5e5e5
 
@@ -159,27 +220,22 @@ section.down
           background-color #fff
           cursor pointer
           &:hover
-            background-color #ef5b22
+            background-color #e5e5e5
             color white
             border-bottom none
 
         li.history
-          background-color #e5e5e5
-          color #000000
+          background-color #ef5b22
+          color #fff
           border-bottom none
 
     section.history-card
       display inline-block
-      width 70%
+      width 80%
       position relative
       top - 100px
-      margin 20px
+      text-align left
       h2.title
         color #ef5b22
         font-size 1.3em
         margin-bottom 30px
-
-
-
-
-
