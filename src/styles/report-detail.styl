@@ -1,241 +1,274 @@
 #report-detail
-  width 90%
   text-align center
   min-height 100vh
   overflow-x hidden
   overflow-y auto
-  
-header
-  width 80%
-  text-align center
-  nav
-    diplay inline-block
-    margin-bottom 0.5em
-    button
-      color #ffffff
-      width 40px
-      height 40px
-      cursor pointer
-      border-radius 50%
-      background-color rgba(0, 0, 0, .0)
-      border none
-      font-size 1.3em
-      font-weight 300
-      &:hover
-        color #ef5b22
-    button.close
-      margin 0 255px
-
-  ul
-    text-align center
-    li.mapmask, li.pic, li.gallery
-      display inline-block
-      width 9rem
-      height 9rem
-      margin 0.5rem
-      background-color #ef5b22
-      border-radius 5px
-      box-shadow 0 0 0 3pt rgba(80, 80, 80, .25)
-      overflow hidden
-    li.mapmask
-      background-color: rgba(255, 255, 255, .0)
-
-article.info-card
-  width 80%
-  text-align center
-  padding 0 5.5rem
-  margin-top 0.7rem
-
-  header
-    background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
-    background-origin content-box
-    background-repeat no-repeat
-    background-size 100%
-    border-radius 5px 5px 0 0
+  &:before
+    -webkit-clip-path polygon(0 100%, 100% 100%, 100% 22%, 0 34%)
+    clip-path: polygon(0 100%, 100% 100%, 100% 22%, 0 34%)
+    content ''
+    display block
+    position absolute
+    z-index 0
     width 100%
-    background-color #2255EF
-    text-align left
-    color #FFF
-    vertical-align top
-    section.left-side
-      display inline-block
-      width 70%
-      height 100%
-      text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-      h1.title
-        font-size 1.4em
-        padding 20px 0 20px 20px
-      h3.cat-subcat
-        font-size 1.2em
-        padding 0 0 10px 20px
-      h4.address-city
-        font-size 1.1em
-        padding 0 0 0 20px
-    section.right-side
-      display inline-block
-      position relative
-      top - 25px
-      width 29%
-      height 100%
-      text-align right
-      padding 0 10px 0 0
-      margin 0 0 20px 0
-      text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+    height 100%
+    top 0
+    left 0
+    background-image linear-gradient(top, #fff, #e5e5e5)
+    background-repeat no-repeat
+  
+section.main
+  width 90%
+  position absolute
+  left 5%
+  z-index 1
+  header
+    margin auto
+    text-align center
+    width 100%
+    max-width 700px
+    margin-bottom 10px
+    nav
+      display flex
+      margin-bottom 1em
+      margin-top 0.5em
+      margin auto
       button
-        display inline-block
-        cursor: pointer
-        margin-bottom 42px
+        width 40px
         color #ffffff
-        width 20px
         height 40px
-        border-radius 50%
+        cursor pointer
         background-color rgba(0, 0, 0, .0)
         border none
         font-size 1.3em
-        font-style italic
+        font-weight 300
         &:hover
           color #ef5b22
-
-      i
+      button.close
+        margin auto     
+          
+    ul
+      text-align center
+      li.mapmask, li.pic, li.gallery
         display inline-block
-        font-size 15px
-        width 100%
-        padding-right 10px
+        width 9rem
+        min-width 9rem
+        margin 2%
+        height 9rem
+        background-color #ef5b22
+        border-radius 8px
+        box-shadow 0 0 0 3pt rgba(180, 180, 180, .4)
+        overflow hidden
+      li.mapmask
+        background-color: rgba(255, 255, 255, .0)
+        
 
-  section.info-card-bottom
+  article.info-card
     width 100%
-    background-color #FFF
-    border-radius 0 0 5px 5px
-    article
-      width 70%
-      display inline-block
-      p.description
-        font-size 1.1em
-        color #000
-        padding 20px
-        text-align left
-        vertical-align top
-        section.left-side
-            display inline-block
-            width 70%
-            height 100%
-            text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-            h1.title
-                font-size 1.4em 
-                padding 20px 0 20px 20px
-            h3.cat-subcat
-                font-size 1.2em 
-                padding 0 0 10px 20px
-            h4.address-city
-                font-size 1.1em
-                padding 0 0 0 20px
-        section.right-side
-            display inline-block
-            position relative
-            top - 25px
-            width 29%
-            height 100%
-            text-align right
-            padding 0 10px 0 0
-            margin 0 0 20px 0
-            text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-            button
-                display inline-block
-                cursor: pointer
-                margin-bottom 42px
-                color #ffffff
-                width 20px
-                height 40px
-                border-radius 50%
-                background-color rgba(0, 0, 0, .0)
-                border none
-                font-size 1.3em
-                font-style italic
-                &:hover
-                    color #ef5b22
-
-            i
-                display inline-block
-                font-size 15px
-                width 100%
-                padding-right 10px
-            
-    section.info-card-bottom
-        width 100%
-        background-color #FFF
-        border-radius 0 0 5px 5px
-        article
-            width 70%
-            display inline-block
-            p.description
-                font-size 1.1em
-                font-family 'Roboto Slab'
-                color gray
-                padding 20px
-                text-align left
-                font-weight 100
-    aside
-      width 29%
-      padding-right 20px
-      display inline-block
-      text-align right
-      border-left solid 1px #e5e5e5
-      ul
-        li
-          margin-bottom 15px
-
-section.down
-  width 80%
-  padding 0.5em
-  p.wiki-text
     text-align center
-    font-size 1em
-    margin 10px auto 20px auto
-    color #FFF
-    width 80%
-    a.naranja
-      color #ef5b22
-
-  section.tab-card
-    width 80%
+    max-width 680px
     margin auto
     background-color #FFF
-    border-radius 5px
-    overflow hidden
-    vertical-align text-top
-    nav.tabs
-      display inline-block
-      ul
-        margin-left - 62px
-        width 50px
-        border-right solid 1px #e5e5e5
+    border-radius 8px
+    //padding 0 5.5rem
+    //margin-top 0.7rem
 
-        li
-          height 50px
-          width 100%
-          display inline-block
-          border-bottom solid 1px #e5e5e5
-          text-align center
-          line-height 50px
-          background-color #fff
-          cursor pointer
-          &:hover
-            background-color #e5e5e5
-            color white
-            border-bottom none
-
-        li.history
-          background-color #ef5b22
-          color #fff
-          border-bottom none
-
-    section.history-card
-      display inline-block
-      width 80%
-      position relative
-      top - 100px
+    header
+      background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
+      background-origin content-box
+      background-repeat no-repeat
+      background-size 100%
+      background-color #2255EF
       text-align left
-      h2.title
+      color #FFF
+      vertical-align top
+      -webkit-clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
+      clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
+      border-radius 8px 8px 0 0
+      padding-bottom 8px
+  
+      section.left-side
+        display inline-block
+        width 70%
+        height 100%
+        text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+        h1.title
+          font-size 1.4em
+          padding 20px 0 20px 20px
+        h3.cat-subcat
+          font-size 1.2em
+          padding 0 0 10px 20px
+        h4.address-city
+          font-size 1.1em
+          padding 0 0 0 20px
+      section.right-side
+        display inline-block
+        position relative
+        top - 25px
+        width 29%
+        height 100%
+        text-align right
+        padding 0 5px 0 0
+        margin 0 0 20px 0
+        text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+        button
+          display inline-block
+          cursor: pointer
+          margin-bottom 42px
+          color #ffffff
+          width 20px
+          height 40px
+          border-radius 50%
+          background-color rgba(0, 0, 0, .0)
+          border none
+          font-size 1.3em
+          font-style italic
+          &:hover
+            color #ef5b22
+
+        i
+          display inline-block
+          font-size 15px
+          width 100%
+          padding-right 10px
+
+    section.info-card-bottom
+      width 100%
+      background-color #FFF
+      border-radius 0 0 8px 8px
+      article
+        width 70%
+        display inline-block
+        p.description
+          font-size 1.1em
+          color #000
+          padding 20px
+          text-align left
+          vertical-align top
+          font-family 'Roboto Slab'
+          font-weight 100
+          section.left-side
+              display inline-block
+              width 70%
+              height 100%
+              text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+              h1.title
+                  font-size 1.4em 
+                  padding 20px 0 20px 20px
+              h3.cat-subcat
+                  font-size 1.2em 
+                  padding 0 0 10px 20px
+              h4.address-city
+                  font-size 1.1em
+                  padding 0 0 0 20px
+          section.right-side
+              display inline-block
+              position relative
+              top - 25px
+              width 29%
+              height 100%
+              text-align right
+              padding 0 10px 0 0
+              margin 0 0 20px 0
+              text-shadow 0 1px 3px rgba(0, 0, 0, .95)
+              button
+                  display inline-block
+                  cursor: pointer
+                  margin-bottom 42px
+                  color #ffffff
+                  width 20px
+                  height 40px
+                  border-radius 50%
+                  background-color rgba(0, 0, 0, .0)
+                  border none
+                  font-size 1.3em
+                  font-style italic
+                  &:hover
+                      color #ef5b22
+
+              i
+                  display inline-block
+                  font-size 15px
+                  width 100%
+                  padding-right 10px
+              
+      section.info-card-bottom
+          width 100%
+          background-color #FFF
+          border-radius 0 0 5px 5px
+          article
+              width 70%
+              display inline-block
+              p.description
+                  font-size 1.1em
+                  font-family 'Roboto Slab'
+                  color #333333
+                  padding 20px
+                  text-align left
+                  font-weight 100
+      aside
+        width 29%
+        padding-right 20px
+        display inline-block
+        text-align right
+        border-left solid 1px #e5e5e5
+        ul
+          li
+            margin-bottom 15px
+
+  section.down
+    width 100%
+    padding 0.5em
+    max-width 700px
+    margin auto
+    p.wiki-text
+      text-align center
+      font-size 1.1em
+      margin 10px auto 20px auto
+      color #333333
+      width 80%
+      a.naranja
         color #ef5b22
-        font-size 1.3em
-        margin-bottom 30px
+
+    section.tab-card
+      background-color #FFF
+      border-radius 8px
+      overflow hidden
+      text-align left
+      vertical-align text-top
+      nav.tabs
+        display inline-block
+        ul
+          width 50px
+          border-right solid 1px #e5e5e5
+
+          li
+            height 50px
+            width 100%
+            display inline-block
+            border-bottom solid 1px #e5e5e5
+            text-align center
+            line-height 50px
+            background-color #fff
+            cursor pointer
+            &:hover
+              background-color #e5e5e5
+              color white
+              border-bottom none
+
+          li.history
+            background-color #ef5b22
+            color #fff
+            border-bottom none
+            
+      section.history-card
+        display inline-block
+        position relative
+        text-align left
+        vertical-align top
+        margin 10px
+        margin-top 15px
+        h2.title
+          color #ef5b22
+          font-size 1.3em
+          margin-bottom 30px
