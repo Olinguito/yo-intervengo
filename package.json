@@ -44,15 +44,14 @@
     "vinyl-paths": "^1.0.0"
   },
   "jspm": {
-    "name": "yi",
     "directories": {
       "baseURL": "src",
       "lib": "src/app",
       "packages": "vendor"
     },
     "dependencies": {
-      "aurelia-bootstrapper": "^0.9.1",
-      "aurelia-http-client": "^0.5.5"
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.9.1",
+      "aurelia-http-client": "github:aurelia/http-client@^0.5.5"
     }
   }
 }
