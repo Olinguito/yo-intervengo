@@ -1,0 +1,50 @@
+@import '../../../styles/values'
+
+:host
+  align-items flex-end
+  display flex
+  flex-direction column
+  transition background-color 0.3s
+
+  section
+    display none
+    padding 1rem
+
+    ::content yi-button::shadow .btn
+      margin 0.8rem
+
+  nav
+    display flex
+    flex-direction row-reverse
+    padding 1rem
+
+  yi-button#main
+    margin 0.8rem
+    transition transform 0.3s
+    transform scale(1.4)
+
+    &::shadow .title
+      display none
+
+  ul#btns-list
+    display flex
+    flex-direction row-reverse
+    justify-content center
+    margin 0
+    padding 0
+    white-space nowrap
+
+    li
+      display inline-block
+      list-style none
+
+:host(.opened)
+  background-color fade-out(#000, 60%)
+
+  section
+    display flex
+    flex 1
+    flex-direction column-reverse
+
+  yi-button#main
+    transform scale(1)

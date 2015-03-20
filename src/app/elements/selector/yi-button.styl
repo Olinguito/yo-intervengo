@@ -1,0 +1,70 @@
+@import '../../../styles/colors'
+@import '../../../styles/values'
+
+:host
+  color #ffffff
+  display block
+  text-align right
+  white-space nowrap
+
+:host(.request)
+  .btn
+    background colorBlue
+    button
+      background colorBlue
+:host(.complain)
+  .btn
+    background colorOrange
+    button
+      background colorOrange
+
+.title
+  display inline-block
+  text-transform capitalize
+  vertical-align middle
+
+.btn
+  background colorGray3 + 30%
+  border-radius 50%
+  box-shadow 0 0 1rem fade-out(black, 50%)
+  box-sizing border-box
+  display inline-block
+  height btnSize
+  padding (btnSize/8)
+  vertical-align middle
+  width btnSize
+
+  &:active
+    padding (btnSize/9)
+
+    button
+      box-shadow 0 0 0.2rem fade-out(black, 50%)
+      transform scale(0.95)
+
+  button
+    background colorGray3
+    border-radius 50%
+    border none
+    box-shadow 0 0 0.4rem fade-out(black, 70%)
+    color white
+    display block
+    height 100%
+    outline none
+    text-align center
+    transition all 0.06s
+    width 100%
+
+content[select=yi-button]::content
+  > yi-button
+    display none
+
+:host([selected='true'])
+  .title, .btn
+    display none
+
+  content[select=yi-button]::content
+    > yi-button
+      display block
+
+:host([selected='false'])
+  display none !important
