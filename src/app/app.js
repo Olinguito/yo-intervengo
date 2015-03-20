@@ -26,7 +26,7 @@ export class App {
                 {route: 'stats', moduleId: 'app/stats/stats', nav: true},
                 {route: 'profile', moduleId: 'app/profile/profile', nav: true},
                 {route: 'about', moduleId: 'app/about/about', nav: true},
-                {route: 'login', moduleId: 'app/login/login', nav: true},
+                {route: 'login', moduleId: 'app/login/login'},
                 {route: '', redirect: '/reports'}
             ]);
         });
