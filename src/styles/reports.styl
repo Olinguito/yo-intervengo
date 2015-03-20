@@ -1,11 +1,13 @@
 @import 'values'
 
 #reports
+  display flex
 
   #map-area
-    position relative
+    absolute left 0 top 0
     height 100%
     width 100%
+    z-index 0
 
     core-toolbar
       absolute top 0 left 0
@@ -26,26 +28,40 @@
       align-items center
 
   > router-view
-    absolute left 0 top 0
+    flex 3
     width 100%
 
-yi-search-tool
-  absolute left 0 top 0
-  z-index 1
+    yi-search-tool
+      position relative
+      z-index 1
 
 yi-card-list
-  absolute right 0 top 0
   background fade-out(colorBlack, 20%)
   display flex
+  flex 1
   flex-direction column
+  flex-shrink 0
   justify-content space-around
   height 100%
-  padding headerHeight 1rem
-  width rightPanelWidth
+  padding 2rem 1rem
+  min-width rightPanelMinWidth
+  max-width rightPanelMaxWidth
+  overflow-x hidden
+  overflow-y auto
   z-index 2
+
+  &::-webkit-scrollbar
+    width 4px
+    height 4px
+  &::-webkit-scrollbar-thumb
+    background fade-out(#fff, 50%)
+    border-radius 2px
 
   yi-card
     margin 1rem auto
+
+// responsive
+@import 'reports-mobile'
 
 // Sub sections
 @import 'report-detail'

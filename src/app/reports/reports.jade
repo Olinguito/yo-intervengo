@@ -28,9 +28,7 @@ template
       yi-icon-button(icon="map-center")
       yi-report-button()
 
-  yi-search-tool
-
-  //-yi-card-list
-    yi-card(repeat.for="report of reports", report.bind="report")
-
   router-view(id="${activeSubSection}")
+
+  yi-card-list
+    yi-card(repeat.for="report of reports", report.bind="report")
