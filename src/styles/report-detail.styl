@@ -4,24 +4,25 @@
   overflow-x hidden
   overflow-y auto
   &:before
-    -webkit-clip-path polygon(0 100%, 100% 100%, 100% 22%, 0 34%)
-    clip-path: polygon(0 100%, 100% 100%, 100% 22%, 0 34%)
     content ''
-    display block
     position absolute
     z-index 0
-    width 100%
-    height 100%
-    top 0
-    left 0
-    background-image linear-gradient(top, #fff, #e5e5e5)
-    background-repeat no-repeat
-  
+    width 2000%
+    height 500%
+    top - 690px
+    left - 50%
+    background-image url('../assets/bg.svg')
+    background-color #F2F2F2
+    transform rotate(-5deg)
+    transform-origin center top
+    box-shadow inset 0 8px 10px rgba(0, 0, 0, .2)
+    border solid 5px #f5f5f5
+    
 section.main
-  width 90%
   position absolute
   left 5%
-  z-index 1
+  z-index 2
+  width 90%
   header
     margin auto
     text-align center
@@ -62,7 +63,6 @@ section.main
       li.mapmask
         background-color: rgba(255, 255, 255, .0)
         
-
   article.info-card
     width 100%
     text-align center
@@ -70,8 +70,7 @@ section.main
     margin auto
     background-color #FFF
     border-radius 8px
-    //padding 0 5.5rem
-    //margin-top 0.7rem
+    box-shadow 0 2px 10px rgba(0, 0, 0, .2)
 
     header
       background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
@@ -93,10 +92,10 @@ section.main
         height 100%
         text-shadow 0 1px 3px rgba(0, 0, 0, .95)
         h1.title
-          font-size 1.4em
+          font-size 1.6em
           padding 20px 0 20px 20px
         h3.cat-subcat
-          font-size 1.2em
+          font-size 1.3em
           padding 0 0 10px 20px
         h4.address-city
           font-size 1.1em
@@ -109,7 +108,7 @@ section.main
         height 100%
         text-align right
         padding 0 5px 0 0
-        margin 0 0 20px 0
+        margin 0 0 40px 0
         text-shadow 0 1px 3px rgba(0, 0, 0, .95)
         button
           display inline-block
@@ -146,7 +145,7 @@ section.main
           text-align left
           vertical-align top
           font-family 'Roboto Slab'
-          font-weight 100
+          font-weight 300
           section.left-side
               display inline-block
               width 70%
@@ -221,6 +220,7 @@ section.main
     padding 0.5em
     max-width 700px
     margin auto
+
     p.wiki-text
       text-align center
       font-size 1.1em
@@ -236,6 +236,8 @@ section.main
       overflow hidden
       text-align left
       vertical-align text-top
+      box-shadow 0 2px 10px rgba(0, 0, 0, .2)
+      height 700px
       nav.tabs
         display inline-block
         ul
