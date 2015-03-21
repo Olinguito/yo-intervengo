@@ -3,21 +3,21 @@
 #reports
   display flex
 
+  core-toolbar
+    absolute top 0 left 0
+    z-index 1
+    width 100%
+    background linear-gradient(top, fade-out(black, 50%), fade-out(black, 99.9%))
+    &.bottom
+      background linear-gradient(bottom, fade-out(black, 50%), fade-out(black, 99.9%))
+      absolute bottom 0 left 0
+      top initial
+
   #map-area
     absolute left 0 top 0
     height 100%
     width 100%
     z-index 0
-
-    core-toolbar
-      absolute top 0 left 0
-      z-index 1
-      width 100%
-      background linear-gradient(top, fade-out(black, 50%), fade-out(black, 99.9%))
-      &.bottom
-        background linear-gradient(bottom, fade-out(black, 50%), fade-out(black, 99.9%))
-        absolute bottom 0 left 0
-        top initial
 
     leaflet-map
       height 100%
@@ -35,13 +35,17 @@
       position relative
       z-index 1
 
-yi-selector
-  fixed bottom 0 right rightPanelWidth
+yi-selector[icon]
+  absolute bottom 0 right rightPanelWidth
   z-index 1
+  margin 0
 
   &.opened
-    height 100%
-    left leftPanelWidth
+    left 0
+    height 100vh
+
+  @media queryMedium
+    right 0
 
 yi-card-list
   background fade-out(colorBlack, 20%)
@@ -52,8 +56,8 @@ yi-card-list
   justify-content space-around
   height 100%
   padding 2rem 1rem
-  min-width rightPanelMinWidth
-  max-width rightPanelMaxWidth
+  max-width rightPanelWidth
+  min-width rightPanelWidth
   overflow-x hidden
   overflow-y auto
   z-index 2
