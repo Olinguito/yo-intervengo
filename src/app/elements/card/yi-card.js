@@ -3,6 +3,7 @@ import {addStyleToShadowElement as addStyle} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from 'app/elements/card/yi-card.css!text';
 import {categories} from 'app/app';
+import {Router} from 'aurelia-router';
 
 export class YiCard {
 
@@ -13,10 +14,11 @@ export class YiCard {
             .useShadowDOM();
     }
 
-    static inject() { return [Element]; }
+    static inject() { return [Element, Router]; }
 
-    constructor(element) {
+    constructor(element, router) {
         this.element = element;
+        this.router = router;
     }
 
     bind() {

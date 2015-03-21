@@ -1,91 +1,148 @@
+@import 'values'
+@import 'colors'
+
+cardRadius = 8px
+colorTiltedBg = #E8E8E8 + 16%
+
 #report-detail
+  // TODO: find better hack
+  background-image linear-gradient(top, colorTiltedBg, colorTiltedBg)
+  background-size 100% 50%
+  background-position bottom
+  background-repeat no-repeat
   text-align center
   min-height 100vh
   overflow-x hidden
   overflow-y auto
-  &:before
-    content ''
-    position absolute
-    z-index 0
-    width 2000%
-    height 500%
-    top - 690px
-    left - 50%
-    background-image url('../assets/bg.svg')
-    background-color #F2F2F2
-    transform rotate(-5deg)
-    transform-origin center top
-    box-shadow inset 0 8px 10px rgba(0, 0, 0, .2)
-    border solid 5px #f5f5f5
-    
-section.main
-  position absolute
-  left 5%
-  z-index 2
-  width 90%
-  header
+  position relative
+
+  &::-webkit-scrollbar
+    width 4px
+    background-color fade-out(colorBlack, 30%)
+  &::-webkit-scrollbar-thumb
+    background-color fade-out(colorOrange, 20%)
+    border-radius 2px
+
+  main
     margin auto
-    text-align center
+    max-width 800px
+    padding 0 1rem 2rem 1rem
+    position relative
     width 100%
-    max-width 700px
-    margin-bottom 10px
-    nav
-      display flex
-      margin-bottom 1em
-      margin-top 0.5em
+    z-index 1
+
+  .tilted-bg
+    absolute top 13rem bottom 0
+    left 0
+    right 0
+    overflow hidden
+    z-index 0
+
+    &:before
+      absolute left -50% top 0
+      background-image url('../assets/bg.svg')
+      background-color colorTiltedBg
+      border solid 5px colorTiltedBg
+      box-shadow inset 0 5px 15px fade-out(black, 95%)
+      content ''
+      height 200%
+      transform rotate(-5deg)
+      transform-origin 80% center
+      width 200%
+      z-index 0
+
+  nav
+    align-items center
+    display flex
+    margin auto
+    height headerHeight
+
+    button
+      width 40px
+      color #ffffff
+      height 40px
+      cursor pointer
+      background-color rgba(0, 0, 0, .0)
+      border none
+      font-size 1.3em
+      font-weight 300
+      &:hover
+        color #ef5b22
+    button.close
       margin auto
-      button
-        width 40px
-        color #ffffff
-        height 40px
-        cursor pointer
-        background-color rgba(0, 0, 0, .0)
-        border none
-        font-size 1.3em
-        font-weight 300
-        &:hover
-          color #ef5b22
-      button.close
-        margin auto     
-          
-    ul
-      text-align center
-      li.mapmask, li.pic, li.gallery
-        display inline-block
-        width 9rem
-        min-width 9rem
-        margin 2%
-        height 9rem
-        background-color #ef5b22
-        border-radius 8px
-        box-shadow 0 0 0 3pt rgba(180, 180, 180, .4)
-        overflow hidden
-      li.mapmask
-        background-color: rgba(255, 255, 255, .0)
-        
+
+  ul.pics
+    text-align center
+    display flex
+    justify-content space-between
+    margin 1rem auto
+
+    li
+      border-radius cardRadius
+      box-shadow 0 0 0 3pt rgba(180, 180, 180, .4)
+      display flex
+      height 9rem
+      min-width 9rem
+      margin 6pt
+      overflow hidden
+      width 9rem
+
+      &.pic
+        align-items center
+        justify-content center
+
+      &.gallery
+        flex-wrap wrap
+        img
+          height  50%
+
+      &:first-of-type
+        margin-left 3pt
+      &:last-of-type
+        margin-right 3pt
+
+    li.mapmask
+      background-color: rgba(255, 255, 255, .0)
+
+    @media query1200
+      li:nth-of-type(3)
+        display none
+
+    @media queryMobile
+      display none
+
   article.info-card
     width 100%
     text-align center
-    max-width 680px
-    margin auto
     background-color #FFF
-    border-radius 8px
+    border-radius cardRadius
     box-shadow 0 2px 10px rgba(0, 0, 0, .2)
+    margin 1rem auto
+    position relative
 
     header
-      background-image url(http://lorempixel.com/output/city-q-c-640-480-9.jpg)
-      background-origin content-box
-      background-repeat no-repeat
-      background-size 100%
-      background-color #2255EF
       text-align left
       color #FFF
       vertical-align top
-      -webkit-clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
       clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
-      border-radius 8px 8px 0 0
+      -webkit-clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
+      border-radius cardRadius cardRadius 0 0
       padding-bottom 8px
-  
+      position relative
+
+      > figure
+        absolute top 0 left 0
+        align-items center
+        border-radius cardRadius cardRadius 0 0
+        bottom 0
+        display flex
+        overflow hidden
+        right 0
+        z-index -1
+
+        img
+          width 100%
+
       section.left-side
         display inline-block
         width 70%
@@ -97,6 +154,7 @@ section.main
         h3.cat-subcat
           font-size 1.3em
           padding 0 0 10px 20px
+          text-transform capitalize
         h4.address-city
           font-size 1.1em
           padding 0 0 0 20px
@@ -131,146 +189,78 @@ section.main
           width 100%
           padding-right 10px
 
-    section.info-card-bottom
-      width 100%
-      background-color #FFF
-      border-radius 0 0 8px 8px
-      article
-        width 70%
-        display inline-block
-        p.description
-          font-size 1.1em
-          color #000
-          padding 20px
-          text-align left
-          vertical-align top
-          font-family 'Roboto Slab'
-          font-weight 300
-          section.left-side
-              display inline-block
-              width 70%
-              height 100%
-              text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-              h1.title
-                  font-size 1.4em 
-                  padding 20px 0 20px 20px
-              h3.cat-subcat
-                  font-size 1.2em 
-                  padding 0 0 10px 20px
-              h4.address-city
-                  font-size 1.1em
-                  padding 0 0 0 20px
-          section.right-side
-              display inline-block
-              position relative
-              top - 25px
-              width 29%
-              height 100%
-              text-align right
-              padding 0 10px 0 0
-              margin 0 0 20px 0
-              text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-              button
-                  display inline-block
-                  cursor: pointer
-                  margin-bottom 42px
-                  color #ffffff
-                  width 20px
-                  height 40px
-                  border-radius 50%
-                  background-color rgba(0, 0, 0, .0)
-                  border none
-                  font-size 1.3em
-                  font-style italic
-                  &:hover
-                      color #ef5b22
+    .content
+      display flex
+      padding 1rem
 
-              i
-                  display inline-block
-                  font-size 15px
-                  width 100%
-                  padding-right 10px
-              
-      section.info-card-bottom
-          width 100%
-          background-color #FFF
-          border-radius 0 0 5px 5px
-          article
-              width 70%
-              display inline-block
-              p.description
-                  font-size 1.1em
-                  font-family 'Roboto Slab'
-                  color #333333
-                  padding 20px
-                  text-align left
-                  font-weight 100
-      aside
-        width 29%
-        padding-right 20px
-        display inline-block
-        text-align right
-        border-left solid 1px #e5e5e5
-        ul
-          li
-            margin-bottom 15px
-
-  section.down
-    width 100%
-    padding 0.5em
-    max-width 700px
-    margin auto
-
-    p.wiki-text
-      text-align center
-      font-size 1.1em
-      margin 10px auto 20px auto
-      color #333333
-      width 80%
-      a.naranja
-        color #ef5b22
-
-    section.tab-card
-      background-color #FFF
-      border-radius 8px
-      overflow hidden
-      text-align left
-      vertical-align text-top
-      box-shadow 0 2px 10px rgba(0, 0, 0, .2)
-      height 700px
-      nav.tabs
-        display inline-block
-        ul
-          width 50px
-          border-right solid 1px #e5e5e5
-
-          li
-            height 50px
-            width 100%
-            display inline-block
-            border-bottom solid 1px #e5e5e5
-            text-align center
-            line-height 50px
-            background-color #fff
-            cursor pointer
-            &:hover
-              background-color #e5e5e5
-              color white
-              border-bottom none
-
-          li.history
-            background-color #ef5b22
-            color #fff
-            border-bottom none
-            
-      section.history-card
-        display inline-block
-        position relative
+      .description
+        font-size 1.1em
+        font-family 'Roboto Slab'
+        font-weight 100
+        flex 1
         text-align left
-        vertical-align top
-        margin 10px
-        margin-top 15px
-        h2.title
-          color #ef5b22
-          font-size 1.3em
-          margin-bottom 30px
+
+      aside
+        border-left solid 1px #e5e5e5
+        text-align right
+        flex-shrink 0
+        li
+          margin 1rem
+          white-space nowrap
+
+  p.wiki-text
+    text-align center
+    font-size 1.1em
+    margin 1.6rem auto
+    color colorBlack
+
+    a
+      color colorOrange
+      margin-left 0.5em
+      white-space nowrap
+
+  section.tab-card
+    background-color #FFF
+    border-radius cardRadius
+    overflow hidden
+    text-align left
+    vertical-align text-top
+    box-shadow 0 2px 10px rgba(0, 0, 0, .2)
+    min-height 20rem
+
+    nav.tabs
+      display inline-block
+      ul
+        width 50px
+        border-right solid 1px #e5e5e5
+
+        li
+          height 50px
+          width 100%
+          display inline-block
+          border-bottom solid 1px #e5e5e5
+          text-align center
+          line-height 50px
+          background-color #fff
+          cursor pointer
+          &:hover
+            background-color #e5e5e5
+            color white
+            border-bottom none
+
+        li.history
+          background-color #ef5b22
+          color #fff
+          border-bottom none
+
+    section.history-card
+      display inline-block
+      position relative
+      text-align left
+      vertical-align top
+      margin 10px
+      margin-top 15px
+      h2.title
+        color #ef5b22
+        font-size 1.3em
+        margin-bottom 30px
