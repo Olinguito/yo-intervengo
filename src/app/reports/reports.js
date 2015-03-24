@@ -2,6 +2,31 @@ import {Map} from 'lib/map';
 import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
 
+var categories = [
+    {
+        name: 'request',
+        categories: [
+            {name: 'mobility', categories: [{name: 'crossing'}, {name: 'road'}]},
+            {name: 'buildings', categories: [{name: 'bridge'}]},
+            {name: 'security', categories: [{name: 'policemen'}]},
+            {name: 'public services', categories: [{name: 'water'}, {name: 'electricity'}]},
+            {name: 'environment', categories: [{name: 'trash can'}]},
+            {name: 'other', categories: []}
+        ]
+    },
+    {
+        name: 'complain',
+        categories: [
+            {name: 'mobility', categories: [{name: 'hole'}, {name: 'crossing'}]},
+            {name: 'buildings', categories: [{name: 'stadium'}]},
+            {name: 'security', categories: [{name: 'dangerous zone'}]},
+            {name: 'public services', categories: [{name: 'water leak'}]},
+            {name: 'environment', categories: [{name: 'polution'}]},
+            {name: 'other', categories: []}
+        ]
+    }
+];
+
 export class Reports {
 
     static inject() { return [Router, HttpClient]}
@@ -25,7 +50,9 @@ export class Reports {
             minZoom: 5,
             tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
             // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-        }
+        };
+        // example categories // TODO: get actual list of categories
+        this.cats = categories;
     }
 
     activate(params, queryString, config) {
@@ -39,9 +66,9 @@ export class Reports {
         this.map.mapElement = document.querySelector('leafletMap');
     }
 
-    get activeSubSection() {
+    get
+        activeSubSection() {
         return this.router.currentInstruction.config.id || '';
     }
-
 
 }
