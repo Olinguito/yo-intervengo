@@ -21,19 +21,23 @@
     "browser-sync": "^1.9.1",
     "conventional-changelog": "0.0.11",
     "del": "^1.1.0",
+    "glob": "^5.0.3",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.0",
     "gulp-bump": "^0.1.13",
     "gulp-changed": "^1.1.0",
     "gulp-data": "^1.2.0",
+    "gulp-gh-pages": "^0.5.0",
     "gulp-jade": "^0.10.0",
     "gulp-jshint": "^1.9.2",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-stylus": "^2.0.0",
+    "gulp-vulcanize": "^5.0.0",
     "gulp-yuidoc": "^0.1.2",
     "jshint-stylish": "^1.0.1",
+    "jspm": "^0.14.0",
     "karma": "^0.12.32",
     "karma-6to5-preprocessor": "^1.0.0",
     "karma-chrome-launcher": "^0.1.7",
@@ -51,7 +55,16 @@
     },
     "dependencies": {
       "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.9.1",
-      "aurelia-http-client": "github:aurelia/http-client@^0.5.5"
+      "aurelia-framework": "github:aurelia/framework@^0.8.8",
+      "aurelia-history-browser": "github:aurelia/history-browser@^0.2.5",
+      "aurelia-http-client": "github:aurelia/http-client@^0.5.5",
+      "aurelia-router": "github:aurelia/router@^0.5.8",
+      "aurelia-templating-binding": "github:aurelia/templating-binding@^0.8.7",
+      "aurelia-templating-resources": "github:aurelia/templating-resources@^0.8.10",
+      "aurelia-templating-router": "github:aurelia/templating-router@^0.9.4",
+      "core-js": "npm:core-js@0.4.10",
+      "json": "github:systemjs/plugin-json@^0.1.0",
+      "text": "github:systemjs/plugin-text@^0.0.2"
     }
   }
 }

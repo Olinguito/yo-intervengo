@@ -21,6 +21,10 @@ var nib = require('nib');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var p = require('path');
+var vulcanize = require('gulp-vulcanize');
+var ghPages = require('gulp-gh-pages');
+var glob = require('glob');
+var jspm = require('jspm');
 
 var path = {
     src: 'src/',
@@ -28,9 +32,15 @@ var path = {
     html: 'src/**/*.jade',
     style: 'src/styles/**/*.styl',
     custElementsStyle: 'src/app/elements/**/*.styl',
+    custElementsStyleCompiled: 'src/app/elements/**/*.{css,css.map}',
     output: '.tmp/',
     out: 'dist/',
     doc: './doc'
+};
+path.elementsStyleOut = path.output;
+
+var inProd = function(){
+    return process.env.NODE_ENV === 'production' ? true : false;
 };
 
 var compilerOptions = {
@@ -65,6 +75,11 @@ gulp.task('clean', function () {
         .pipe(vinylPaths(del));
 });
 
+gulp.task('clean:dist', function () {
+    return gulp.src([path.custElementsStyleCompiled, path.output + '**/*.map'])
+        .pipe(vinylPaths(del));
+});
+
 gulp.task('build-system', function () {
     return gulp.src(path.scripts, {base: path.src})
         .pipe(plumber())
@@ -78,7 +93,7 @@ gulp.task('build-system', function () {
 gulp.task('build-style', function () {
     return gulp.src([path.src + 'styles/app.styl'])
         .pipe(sourcemaps.init())
-        .pipe(stylus({use: [nib()], import: 'nib'}))
+        .pipe(stylus({use: [nib()], import: 'nib', compress: inProd()}))
         .pipe(rename('style.css'))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.output));
@@ -88,9 +103,9 @@ gulp.task('build-elements-style', function () {
     return gulp.src([path.custElementsStyle], {base: path.src})
         .pipe(changed(path.output, {extension: '.styl'}))
         .pipe(sourcemaps.init())
-        .pipe(stylus({use: [nib()], import: 'nib'}))
+        .pipe(stylus({use: [nib()], import: 'nib', compress: inProd()}))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(path.output));
+        .pipe(gulp.dest(path.elementsStyleOut));
 });
 
 gulp.task('build-html', function () {
@@ -98,14 +113,14 @@ gulp.task('build-html', function () {
 
     return gulp.src(path.html)
         .pipe(changed(path.output, {extension: '.html'}))
-        //.pipe(data(stringsFile))
-        .pipe(jade({pretty: true}))
+//        .pipe(data(stringsFile))
+        .pipe(jade({pretty: !inProd()}))
         .pipe(gulp.dest(path.output));
 
-    //function stringsFile(file) {
-    //    var filePath = './strings/' + lang + '/' + p.basename(file.path, '.jade') + '.' + lang + '.json';
-    //    return fs.existsSync(filePath) ? require(filePath): {};
-    //}
+//    function stringsFile(file) {
+//        var filePath = './strings/' + lang + '/' + p.basename(file.path, '.jade') + '.' + lang + '.json';
+//        return fs.existsSync(filePath) ? require(filePath): {};
+//    }
 });
 
 gulp.task('lint', function () {
@@ -182,13 +197,68 @@ gulp.task('watch', ['serve'], function () {
     gulp.watch(path.custElementsStyle, ['build-elements-style', browserSync.reload]).on('change', reportChange);
 });
 
-gulp.task('prepare-release', function (callback) {
+// bundling/dist/deploy stuff
+
+gulp.task('copy:lib', function () {
+    return gulp.src('vendor/{system,babel,es6-module-loader}.js', { base: '.'})
+        .pipe(gulp.dest(path.out));
+});
+
+gulp.task('copy:assets', function () {
+    return gulp.src([path.src + '**/*.{png,jpg,svg,json}', path.src + 'config.js'])
+        .pipe(gulp.dest(path.out));
+});
+
+gulp.task('vulcanize', function () {
+    return gulp.src(path.output + 'polymer-elements.html')
+        .pipe(vulcanize({
+            dest: path.output,
+            inline: true,
+            abspath: '.',
+            strip: true
+        }))
+        .pipe(gulp.dest(path.output));
+});
+
+gulp.task('jspm:bundle', function (done) {
+    // get js files to be bundled
+    var files = glob.sync('**/*.js', {ignore: '*.js', cwd: path.src})
+        .map(function (file) { return file.slice(0, -3) });
+    // TODO: jspm(or aurelia) issue not including this dependencies, delete when fixed
+    var extraDeps = [
+        'aurelia-bootstrapper',
+        'core-js',
+        'aurelia-templating-binding',
+        'aurelia-templating-resources',
+        'aurelia-history-browser',
+        'aurelia-templating-router',
+        'aurelia-http-client'
+    ];
+    // TODO: create jspm plugin
+    jspm.setPackagePath('.');
+    jspm.bundle(
+        files.concat(extraDeps).join(' + '),
+        'dist/build.js',
+        {}
+    ).then(done);
+});
+
+gulp.task('dist', function (done) {
+    path.output = 'dist/';
+    path.elementsStyleOut = path.src;
+    // manually set NODE_ENV to 'production' // is it the best way?
+    process.env.NODE_ENV = 'production';
     return runSequence(
-        'build',
-        'lint',
-        'bump-version',
-        'doc',
-        'changelog',
-        callback
+        'clean',
+        ['build-elements-style', 'build-style', 'build-html', 'copy:lib', 'copy:assets'],
+        ['vulcanize', 'jspm:bundle'],
+        'clean:dist',
+        done
     );
+});
+
+gulp.task('deploy:preprod', ['dist'], function () {
+    var origin = 'me';
+    return gulp.src('dist/**/*')
+        .pipe(ghPages({origin: origin, force: true}));
 });

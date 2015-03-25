@@ -1,4 +1,5 @@
 System.config({
+  "transpiler": "babel",
   "paths": {
     "*": "*.js",
     "yi/*": "app/*.js",
@@ -12,8 +13,17 @@ System.config({
 System.config({
   "map": {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.9.5",
+    "aurelia-framework": "github:aurelia/framework@0.8.8",
+    "aurelia-history-browser": "github:aurelia/history-browser@0.2.5",
     "aurelia-http-client": "github:aurelia/http-client@0.5.5",
+    "aurelia-router": "github:aurelia/router@0.5.8",
+    "aurelia-templating-binding": "github:aurelia/templating-binding@0.8.7",
+    "aurelia-templating-resources": "github:aurelia/templating-resources@0.8.10",
+    "aurelia-templating-router": "github:aurelia/templating-router@0.9.4",
+    "core-js": "npm:core-js@0.4.10",
+    "json": "github:systemjs/plugin-json@0.1.0",
     "leaflet": "npm:leaflet@0.7.3",
+    "text": "github:systemjs/plugin-text@0.0.2",
     "github:aurelia/binding@0.3.7": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.4.5",
       "aurelia-metadata": "github:aurelia/metadata@0.3.3",
