@@ -15,7 +15,7 @@ class ReportDetail {
 
     activate(params) {
         // FIXME: replace with api call
-        return this.http.get('/reports.json')
+        return this.http.get('reports.json')
             .then(data => {
                 var reports = JSON.parse(data.response) || [];
                 this.report = reports.find( cat => cat.slug === params.name);

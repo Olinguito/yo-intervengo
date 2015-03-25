@@ -56,7 +56,7 @@ export class Reports {
     }
 
     activate(params, queryString, config) {
-        return this.http.get('/reports.json')
+        return this.http.get('reports.json')
             .then(data => {
                 this.reports = JSON.parse(data.response) || [];
             });
