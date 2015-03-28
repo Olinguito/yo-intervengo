@@ -1,0 +1,20 @@
+template
+  import(from="app/elements/form/responsive-form")
+  import(from="app/elements/controls/yi-photo-button")
+
+  responsive-form.request
+    section.info.left
+      .cat
+        figure: img(alt="category icon")
+        h2 Category
+        h3 Sub Category
+      .fields
+        input(placeholder="Title")
+        textarea(placeholder="Report Description")
+    section.map.right
+      input(placeholder="Address")
+      leaflet-map
+    section.photo.right
+      figure
+        img()
+        yi-photo-button(title="Add photo")

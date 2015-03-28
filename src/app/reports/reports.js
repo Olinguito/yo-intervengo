@@ -6,22 +6,45 @@ var categories = [
     {
         name: 'request',
         categories: [
-            {name: 'mobility', categories: [{name: 'crossing'}, {name: 'road'}]},
-            {name: 'buildings', categories: [{name: 'bridge'}]},
-            {name: 'security', categories: [{name: 'policemen'}]},
-            {name: 'public services', categories: [{name: 'water'}, {name: 'electricity'}]},
-            {name: 'environment', categories: [{name: 'trash can'}]},
+            {name: 'mobility', categories: [
+                {name: 'crossing'},
+                {name: 'road'}
+            ]},
+            {name: 'buildings', categories: [
+                {name: 'bridge'}
+            ]},
+            {name: 'security', categories: [
+                {name: 'policemen'}
+            ]},
+            {name: 'public services', categories: [
+                {name: 'water'},
+                {name: 'electricity'}
+            ]},
+            {name: 'environment', categories: [
+                {name: 'trash can'}
+            ]},
             {name: 'other', categories: []}
         ]
     },
     {
         name: 'complain',
         categories: [
-            {name: 'mobility', categories: [{name: 'hole'}, {name: 'crossing'}]},
-            {name: 'buildings', categories: [{name: 'stadium'}]},
-            {name: 'security', categories: [{name: 'dangerous zone'}]},
-            {name: 'public services', categories: [{name: 'water leak'}]},
-            {name: 'environment', categories: [{name: 'polution'}]},
+            {name: 'mobility', categories: [
+                {name: 'hole'},
+                {name: 'crossing'}
+            ]},
+            {name: 'buildings', categories: [
+                {name: 'stadium'}
+            ]},
+            {name: 'security', categories: [
+                {name: 'dangerous zone'}
+            ]},
+            {name: 'public services', categories: [
+                {name: 'water leak'}
+            ]},
+            {name: 'environment', categories: [
+                {name: 'polution'}
+            ]},
             {name: 'other', categories: []}
         ]
     }
@@ -37,8 +60,9 @@ export class Reports {
         this.router = router;
         this.router.configure(config => {
             config.map([
+                {route: 'new/:type/:category/:subCategory', moduleId: 'app/reports/report-new', id: 'report-new', title: ''},
                 {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail', title: ''},
-                {route: '', moduleId: 'app/reports/search', id: 'search'}
+                {route: '', moduleId: 'app/reports/search', id: 'search', title: ''}
             ]);
         });
         // Map container
@@ -66,8 +90,7 @@ export class Reports {
         this.map.mapElement = document.querySelector('leafletMap');
     }
 
-    get
-        activeSubSection() {
+    get activeSubSection() {
         return this.router.currentInstruction.config.id || '';
     }
 

@@ -1,0 +1,119 @@
+@import 'values'
+@import 'colors'
+
+inputLineHeight = 1.5rem
+itemsMaxWidth = 500px
+
+#report-new
+  background fade-out(black, 40%)
+  color white
+  height 100%
+  position relative
+
+  responsive-form
+    height 100%
+
+    input, textarea
+      background transparent
+      border 1px solid white
+      border-radius 3px
+      color white
+      display inline-block
+      font-size 1.06em
+      line-height inputLineHeight
+      max-width itemsMaxWidth
+      min-height 2.4rem
+      margin 0.5rem auto
+      padding 0 1rem
+      text-align center
+      width 100%
+
+      &::-webkit-input-placeholder
+        text-align center
+
+    textarea
+      min-height (inputLineHeight*5)
+      padding 0.8rem 1rem
+      text-align left
+
+  .info
+
+    .fields, .cat
+      margin 2rem auto
+      max-width itemsMaxWidth
+      width 100%
+
+    .cat
+      h2, h3
+        text-align left
+      h2
+        font-size 2em
+        line-height 2em
+      h3
+        font-size 1.2em
+
+      figure
+        border-radius 5px
+        float left
+        height 17vmin
+        margin-right 1.5rem
+        margin-bottom 1rem
+        min-height 120px
+        min-width 120px
+        overflow hidden
+        width 17vmin
+
+        img
+          width 100%
+
+  .photo
+    padding 1rem
+
+    figure
+      border 1px solid white
+      border-radius 5px
+      max-width itemsMaxWidth
+      position relative
+      width 100%
+
+      &::before
+        content ''
+        display block
+        padding-bottom 60%
+
+      img
+        width 100%
+
+      yi-photo-button
+        photoBtnSize = 6rem
+        absolute left 50% top 50%
+        height photoBtnSize
+        margin-top -(photoBtnSize/2)
+        margin-left -(photoBtnSize/2)
+        width photoBtnSize
+
+  .map
+    leaflet-map
+      width 100%
+      min-height 200px
+      max-width itemsMaxWidth
+
+  // change colors based on type
+  .request
+    .cat figure
+      background colorBlue
+
+  .complain
+    .cat figure
+      background colorOrange
+
+  // mobile version
+  @media queryMobile
+    responsive-form
+      input, textarea
+        border-left none
+        border-right none
+        border-radius 0
+
+      .cat
+        padding 0.5rem

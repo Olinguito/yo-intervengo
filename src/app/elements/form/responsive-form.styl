@@ -1,0 +1,90 @@
+@import '../../../styles/values'
+@import '../../../styles/colors'
+
+:host
+  color white
+  display flex
+  flex-direction column
+
+#form-sections
+  flex 1
+  display flex
+
+  .section
+    flex 1
+    display flex
+    flex-direction column
+    padding 0.5rem
+
+    ::content section
+      display flex
+      flex 1
+      flex-direction column
+      align-items center
+      justify-content center
+      padding 0.5rem
+      text-align center
+      transition background 0.2s
+
+      &:hover
+        background fade-out(colorBlack, 20%)
+
+nav
+  box-sizing border-box
+  display none
+  height headerHeight
+  padding 0.5rem 0
+
+  button
+    background colorGray2
+    border none
+    border-radius 3px
+    color white
+    font-size 1.2rem
+    flex 1
+    height 100%
+    margin 0 0.5rem
+    outline none
+    padding 0 2rem
+
+    &:hover
+      background-color colorGray2 - 5%
+    &:active
+      background-color colorGray2 - 15%
+
+    &[disabled]
+      color colorGray2 + 16%
+      &:hover, &:active
+        background colorGray2
+
+:host(.request)
+  button:last-of-type
+    background-color colorBlue
+    &:hover
+      background-color colorBlue - 5%
+    &:active
+      background-color colorBlue - 15%
+
+:host(.complain)
+  button:last-of-type
+    background-color colorOrange
+    &:hover
+      background-color colorOrange - 5%
+    &:active
+      background-color colorOrange - 15%
+
+
+// mobile mode
+@media queryMobile
+  #form-sections
+    flex-direction column
+
+    .section
+      padding 0
+
+      ::content section
+        padding 0
+        &:hover
+          background none
+  nav
+    display flex

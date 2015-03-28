@@ -10,10 +10,9 @@ export const defCoords = {
  */
 export class Map {
 
-    constructor(mapEle = null, lat = defCoords.lat, lng = defCoords.lng, zoom = defCoords.zoom) {
+    constructor(mapEle = null, center = new Coords, zoom = defCoords.zoom) {
         this.mapElement = mapEle;
-        this.lat = lat;
-        this.lng = lng;
+        this.center = center;
         this.zoom = zoom;
         this.markers = [];
     }
@@ -30,10 +29,19 @@ export class Map {
 /**
  *
  */
+var counter = 0;
 export class Marker {
+    constructor(center = new Coords, id = ++counter) {
+        this.id = id;
+        this.coords = center;
+    }
+}
 
-    constructor(lat, lng) {
+export class Coordinates {
+    constructor(lat = defCoords.lat, lng = defCoords.lng) {
         this.lat = lat;
         this.lng = lng;
     }
 }
+
+export var Coords = Coordinates;

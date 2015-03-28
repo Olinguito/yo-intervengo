@@ -3,26 +3,23 @@ template
   import(from="app/elements/card/yi-card")
   import(from="app/elements/selector/yi-selector")
   import(from="app/elements/selector/yi-button")
-  import(from="app/elements/wizard/responsive-wizard")
 
   section#map-area
     core-toolbar
       yi-icon-button(icon="menu")
       yi-icon-button(icon="search")
 
-
     leaflet-map(
-    latitude.bind="map.lat",
-    longitude.bind="map.lng",
-    tileServer.bind="mapConf.tiles",
+    latitude.bind="map.center.lat",
+    longitude.bind="map.center.lng",
     zoom.bind="map.zoom",
     options.bind="mapConf",
     tileserver.bind="mapConf.tiles"
     )
       yi-marker(
       marker,
-      latitude.one-time="map.lat",
-      longitude.one-time="map.lng",
+      latitude.one-time="map.center.lat",
+      longitude.one-time="map.center.lng",
       click.trigger="mrk.toggleType()",
       ref.view-model="mrk"
       )
@@ -35,7 +32,7 @@ template
           yi-button(title.bind="cat.name", class="${$parent.type.name}", repeat.for="cat of type.categories")
             yi-button(title.bind="subcat.name", class="${$parent.$parent.type.name}", repeat.for="subcat of cat.categories")
 
-  //- sub routes(search, detail)
+  //- sub routes(search, detail, new)
   router-view(id="${activeSubSection}")
 
   yi-card-list
