@@ -52,9 +52,9 @@ var categories = [
 
 export class Reports {
 
-    static inject() { return [Router, HttpClient]}
+    static inject() { return [Router, HttpClient, Map]}
 
-    constructor(router, http) {
+    constructor(router, http, mainMap) {
         this.http = http;
         // reports sub router
         this.router = router;
@@ -66,7 +66,7 @@ export class Reports {
             ]);
         });
         // Map container
-        this.map = new Map();
+        this.map = mainMap;
         // leaflet map config
         this.mapConf = {
             zoomControl: false,

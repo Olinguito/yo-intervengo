@@ -1,6 +1,7 @@
 template
   import(from="app/elements/form/responsive-form")
   import(from="app/elements/controls/yi-photo-button")
+  import(from="app/elements/marker/yi-marker")
 
   responsive-form.request
     section.info.left
@@ -12,9 +13,19 @@ template
         input(placeholder="Title")
         textarea(placeholder="Report Description")
     section.map.right
+      p Locate your report on the map
+      leaflet-map(
+      latitude.bind="center.lat",
+      longitude.bind="center.lng",
+      zoom="17",
+      options.one-time="mapConf",
+      tileServer.one-time="mapConf.tiles"
+      )
+        yi-marker(class="alt", fixed-marker)
+
       input(placeholder="Address")
-      leaflet-map
     section.photo.right
+      p Add a photo to your report
       figure
         img()
         yi-photo-button(title="Add photo")

@@ -23,7 +23,7 @@ itemsMaxWidth = 500px
       line-height inputLineHeight
       max-width itemsMaxWidth
       min-height 2.4rem
-      margin 0.5rem auto
+      margin 1rem auto
       padding 0 1rem
       text-align center
       width 100%
@@ -35,6 +35,9 @@ itemsMaxWidth = 500px
       min-height (inputLineHeight*5)
       padding 0.8rem 1rem
       text-align left
+
+  p
+    line-height 2.5em
 
   .info
 
@@ -94,9 +97,14 @@ itemsMaxWidth = 500px
 
   .map
     leaflet-map
-      width 100%
-      min-height 200px
+      flex 1
       max-width itemsMaxWidth
+      min-height 150px
+      width 100%
+
+      yi-marker
+        top calc(50% - 63px)
+        left calc(50% - 26px)
 
   // change colors based on type
   .request
