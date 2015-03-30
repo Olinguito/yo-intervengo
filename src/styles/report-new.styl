@@ -36,7 +36,7 @@ itemsMaxWidth = 500px
       padding 0.8rem 1rem
       text-align left
 
-  p
+  i
     line-height 2.5em
 
   .info
@@ -73,9 +73,13 @@ itemsMaxWidth = 500px
     padding 1rem
 
     figure
+      background-size cover
+      background-position center
+      background-repeat no-repeat
       border 1px solid white
       border-radius 5px
       max-width itemsMaxWidth
+      overflow hidden
       position relative
       width 100%
 
@@ -84,9 +88,6 @@ itemsMaxWidth = 500px
         display block
         padding-bottom 60%
 
-      img
-        width 100%
-
       yi-photo-button
         photoBtnSize = 6rem
         absolute left 50% top 50%
@@ -94,6 +95,7 @@ itemsMaxWidth = 500px
         margin-top -(photoBtnSize/2)
         margin-left -(photoBtnSize/2)
         width photoBtnSize
+        z-index 2
 
   .map
     leaflet-map

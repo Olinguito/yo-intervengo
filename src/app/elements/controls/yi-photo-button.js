@@ -6,20 +6,20 @@ export class YiPhotoButton {
     static metadata() {
         return Behavior
             .customElement('yi-photo-button')
-            .withProperty('file')
             .withProperty('title')
+            .withProperty('filechange')
             .useShadowDOM();
     }
 
     static inject() { return [Element] }
     constructor(ele) {
         this.element = ele;
-        this.file = null;
         this.inputFile = null;
     }
 
-    choseFile() {
-        this.inputFile.click();
+    fileChosen() {
+        var file = this.inputFile.files[0];
+        this.filechange(file);
     }
 
     bind() {
@@ -27,6 +27,6 @@ export class YiPhotoButton {
     }
 
     attached() {
-        window.ff = this.inputFile = this.element.shadowRoot.querySelector('input');
+        this.inputFile = this.element.shadowRoot.querySelector('input');
     }
 }

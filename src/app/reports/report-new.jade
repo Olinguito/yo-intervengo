@@ -13,7 +13,7 @@ template
         input(placeholder="Title")
         textarea(placeholder="Report Description")
     section.map.right
-      p Locate your report on the map
+      i Locate your report on the map
       leaflet-map(
       latitude.bind="center.lat",
       longitude.bind="center.lng",
@@ -25,7 +25,6 @@ template
 
       input(placeholder="Address")
     section.photo.right
-      p Add a photo to your report
+      i Add a photo to your report
       figure
-        img()
-        yi-photo-button(title="Add photo")
+        yi-photo-button(title="Add photo", filechange.call="photoSelected()")
