@@ -10,8 +10,8 @@ template
         h2 ${report.category.parent.name}
         h3 ${report.category.name}
       .fields
-        input(placeholder="Title")
-        textarea(placeholder="Report Description")
+        input(placeholder="Title", tabindex="1", autofocus)
+        textarea(placeholder="Report Description", tabindex="1")
     section.map.right
       i Locate your report on the map
       leaflet-map(
@@ -23,7 +23,7 @@ template
       )
         yi-marker(class="alt", fixed-marker)
 
-      input(placeholder="Address")
+      input(placeholder="Address", tabindex="1")
     section.photo.right
       i Add a photo to your report
       figure
