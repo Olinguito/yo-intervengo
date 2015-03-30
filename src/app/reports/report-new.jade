@@ -6,9 +6,9 @@ template
   responsive-form.request
     section.info.left
       .cat
-        figure: img(alt="category icon")
-        h2 Category
-        h3 Sub Category
+        figure: img(alt="category icon", src="assets/semaforo.svg")
+        h2 ${report.category.parent.name}
+        h3 ${report.category.name}
       .fields
         input(placeholder="Title")
         textarea(placeholder="Report Description")

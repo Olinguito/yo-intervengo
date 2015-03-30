@@ -1,4 +1,5 @@
 import {Coords} from 'lib/map';
+import {categories} from 'app/app';
 
 /**
  * Report Model
@@ -10,6 +11,7 @@ export class Report {
         this.description = data.description || '';
         this.address = data.address || '';
         this.coords = new Coords(data.lat, data.lng);
+        this.category = null;
 
         this.date = data.date || new Date;
         this._persisted = false;
@@ -30,3 +32,11 @@ export class Complain extends Report {
     }
 }
 
+export class Category {
+    constructor(tree) {
+        this.path = tree.join('.');
+        this.slug = tree[tree.length-1];
+        this.name = categories[this.path] || this.slug;
+        this.parent = tree.length > 1 ? new Category(tree.slice(0,-1)) : null;
+    }
+}

@@ -1,4 +1,4 @@
-import {Complain, Request} from './report';
+import {Complain, Request, Category} from './report';
 import {Map} from 'lib/map';
 
 export class ReportNew {
@@ -24,8 +24,11 @@ export class ReportNew {
     }
 
     activate(params) {
-        this.report = params.type == 'request' ?
-            new Request : params.type == 'complain' ?
+        var {type, category, subCategory} = params;
+        this.report = type === 'request' ?
+            new Request : type === 'complain' ?
             new Complain : null;
+        // TODO: change wen backend implemented
+        this.report.category = new Category([category,subCategory]);
     }
 }
