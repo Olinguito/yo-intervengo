@@ -35,8 +35,7 @@ export class Complain extends Report {
 export class Category {
     constructor(tree) {
         this.path = tree.join('.');
-        this.slug = tree[tree.length-1];
-        this.name = categories[this.path] || this.slug;
+        this.name = categories[this.path] || tree[tree.length-1];
         this.parent = tree.length > 1 ? new Category(tree.slice(0,-1)) : null;
     }
 }

@@ -27,10 +27,10 @@ template
     core-toolbar.bottom
       yi-icon-button(icon="map-center")
       //- create report
-      yi-selector(icon="add")
-        yi-button(title.bind="type.name", class="${type.name}", repeat.for="type of cats")
-          yi-button(title.bind="cat.name", class="${$parent.type.name}", repeat.for="cat of type.categories")
-            yi-button(title.bind="subcat.name", class="${$parent.$parent.type.name}", repeat.for="subcat of cat.categories")
+      yi-selector(icon="add", select.call="newReport()")
+        yi-button(title.bind="type.name", value.bind="type.slug", class="${type.name}", repeat.for="type of cats")
+          yi-button(title.bind="cat.name", value.bind="cat.slug", class="${$parent.type.name}", repeat.for="cat of type.categories")
+            yi-button(title.bind="subcat.name", value.bind="subcat.slug", class="${$parent.$parent.type.name}", repeat.for="subcat of cat.categories")
 
   //- sub routes(search, detail, new)
   router-view(id="${activeSubSection}")

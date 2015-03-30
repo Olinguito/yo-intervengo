@@ -4,48 +4,56 @@ import {HttpClient} from 'aurelia-http-client';
 
 var categories = [
     {
-        name: 'request',
+        name: 'new request',
+        slug: 'request',
         categories: [
-            {name: 'mobility', categories: [
-                {name: 'crossing'},
-                {name: 'road'}
+            {name: 'mobility', slug: 'mobility', categories: [
+                {name: 'crossing', slug: 'crossing'},
+                {name: 'road', slug: 'road'}
             ]},
-            {name: 'buildings', categories: [
-                {name: 'bridge'}
+            {name: 'buildings', slug: 'buildings', categories: [
+                {name: 'bridge', slug: 'bridge'}
             ]},
-            {name: 'security', categories: [
-                {name: 'policemen'}
+            {name: 'security', slug: 'security', categories: [
+                {name: 'policemen', slug: 'policemen'}
             ]},
-            {name: 'public services', categories: [
-                {name: 'water'},
-                {name: 'electricity'}
+            {name: 'public services', slug: 'public-services', categories: [
+                {name: 'water', slug: 'water'},
+                {name: 'electricity', slug: 'electricity'},
+                {name: 'internet', slug: 'internet'}
             ]},
-            {name: 'environment', categories: [
-                {name: 'trash can'}
+            {name: 'environment', slug: 'environment', categories: [
+                {name: 'trash can', slug: 'trash-can'}
             ]},
-            {name: 'other', categories: []}
+            {name: 'other', slug: 'other', categories: [
+                {name: 'new event', slug: 'event'}
+            ]}
         ]
     },
     {
-        name: 'complain',
+        name: 'new complain',
+        slug: 'complain',
         categories: [
-            {name: 'mobility', categories: [
-                {name: 'hole'},
-                {name: 'crossing'}
+            {name: 'mobility', slug: 'mobility', categories: [
+                {name: 'hole', slug: 'hole'},
+                {name: 'crossing', slug: 'crossing'}
             ]},
-            {name: 'buildings', categories: [
-                {name: 'stadium'}
+            {name: 'buildings', slug: 'buildings', categories: [
+                {name: 'stadium', slug: 'stadium'}
             ]},
-            {name: 'security', categories: [
-                {name: 'dangerous zone'}
+            {name: 'security', slug: 'security', categories: [
+                {name: 'dangerous zone', slug: 'dangerous-zone'},
+                {name: 'gangs', slug: 'gangs'}
             ]},
-            {name: 'public services', categories: [
-                {name: 'water leak'}
+            {name: 'public services', slug: 'pub-services', categories: [
+                {name: 'water leak', slug: 'water-leak'}
             ]},
-            {name: 'environment', categories: [
-                {name: 'polution'}
+            {name: 'environment', slug: 'environment', categories: [
+                {name: 'polution', slug: 'polution'}
             ]},
-            {name: 'other', categories: []}
+            {name: 'other', slug: 'other', categories: [
+                {name: 'noise', slug: 'noise'}
+            ]}
         ]
     }
 ];
@@ -77,6 +85,13 @@ export class Reports {
         };
         // example categories // TODO: get actual list of categories
         this.cats = categories;
+    }
+
+    newReport(selector) {
+        console.log('new-report',selector.selection);
+        this.router.navigate(`new/${selector.selection.join('/')}`);
+        selector.toggle();
+
     }
 
     activate(params, queryString, config) {

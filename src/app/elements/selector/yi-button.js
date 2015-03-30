@@ -7,6 +7,7 @@ export class YiButton {
         return Behavior
             .customElement('yi-button')
             .withProperty('title')
+            .withProperty('value')
             .withProperty('selected')
             .useShadowDOM();
     }
@@ -26,7 +27,6 @@ export class YiButton {
             btn.selected = false;
             btn.setAttribute('selected', false);
         }
-        console.log('siblings', siblings);
         // add selected to current button
         this.element.selected = true;
         this.element.setAttribute('selected', true);

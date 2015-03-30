@@ -9,6 +9,7 @@ export class YiSelector {
     static metadata() {
         return Behavior
             .customElement('yi-selector')
+            .withProperty('onSelect', null, 'select')
             .useShadowDOM();
     }
 
@@ -16,16 +17,15 @@ export class YiSelector {
 
     constructor(element) {
         this.element = element;
-        this.onSelect = ()=> {};
         this.selection = [];
-//        this.mainBtn = null;
-//        this.vc = viewCompiler;
+        this.onSelect = () => {console.log('fuu')}
     }
 
     /**
      * Opens/Closes the selector
      */
     toggle() {
+        this.selection.length = 0;
         this.element.classList.toggle('opened');
         // reset buttons state
         for (let btn of this.element.querySelectorAll('yi-button'))
@@ -36,24 +36,17 @@ export class YiSelector {
      * Callback called when a `yi-button` in the selector is clicked
      * @param btn
      */
-    select(btn) {
+    onYiBtnClick(btn) {
         // adds 'select' property to a yi-button and deletes it from siblings
         btn.yiButton.select();
-        // add button copy to navigation bar
-//        this.element.shadowRoot.querySelector('#btns-list')
-//            .appendChild(newEle('li'))
-//            .appendChild(btn.cloneNode());
 
-        this.selection.push(btn.title);
-
+        this.selection.push(btn.yiButton.value);
         // if can't go deeper in the selection execute onSelect
-        if (btn.children.length === 0)
-            this.onSelect(this.selection);
+        if (btn.querySelectorAll('yi-button').length === 0)
+            this.onSelect(this);
     }
 
     bind() {
-//        this.mainBtn = this.element.shadowRoot.querySelector('#main');
-        // bind click listeners
         //TODO:  should be added to the template element before compile (aurelia fix pending)
         addStyle(this.element, style);
     }
@@ -63,7 +56,7 @@ export class YiSelector {
         for (let btn of this.element.querySelectorAll('yi-button')) {
             btn.addEventListener('click', e => {
                 e.stopPropagation();
-                this.select(e.target);
+                this.onYiBtnClick(e.target);
             });
         }
     }
