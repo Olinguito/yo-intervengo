@@ -27,10 +27,14 @@ template
     core-toolbar.bottom
       yi-icon-button(icon="map-center")
       //- create report
+      //- TODO: class interpolation aurelia/binding#33
       yi-selector(icon="add", select.call="newReport()")
-        yi-button(title.bind="type.name", value.bind="type.slug", class="${type.name}", repeat.for="type of cats")
-          yi-button(title.bind="cat.name", value.bind="cat.slug", class="${$parent.type.name}", repeat.for="cat of type.categories")
-            yi-button(title.bind="subcat.name", value.bind="subcat.slug", class="${$parent.$parent.type.name}", repeat.for="subcat of cat.categories")
+        // request or complain
+        yi-button(title="${type.name}", value="${type.slug}", class="${type.slug}", repeat.for="type of cats", click.delegate="$parent.selectorType=type.slug")
+          // main categories
+          yi-button(title="${cat.name}", value="${cat.slug}", repeat.for="cat of type.categories")
+            // sub-categories
+            yi-button(title="${subcat.name}", value="${subcat.slug}", repeat.for="subcat of cat.categories")
 
   //- sub routes(search, detail, new)
   router-view(id="${activeSubSection}")

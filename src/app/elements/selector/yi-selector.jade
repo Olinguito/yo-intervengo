@@ -6,3 +6,4 @@ template
   nav
     yi-button#main(click.delegate="toggle()", title="add new report")
     ul#btns-list
+      li(repeat.for="btn of selection"): yi-button(click.delegate="$parent.navBtnClicked($event)", title="${btn.title}")

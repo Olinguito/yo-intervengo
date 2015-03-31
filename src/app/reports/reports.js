@@ -17,7 +17,7 @@ var categories = [
             {name: 'security', slug: 'security', categories: [
                 {name: 'policemen', slug: 'policemen'}
             ]},
-            {name: 'public services', slug: 'public-services', categories: [
+            {name: 'public services', slug: 'pub-services', categories: [
                 {name: 'water', slug: 'water'},
                 {name: 'electricity', slug: 'electricity'},
                 {name: 'internet', slug: 'internet'}
@@ -87,11 +87,8 @@ export class Reports {
         this.cats = categories;
     }
 
-    newReport(selector) {
-        console.log('new-report',selector.selection);
-        this.router.navigate(`new/${selector.selection.join('/')}`);
-        selector.toggle();
-
+    newReport(selection) {
+        this.router.navigate(`new/${selection.map(ele=>ele.value).join('/')}`);
     }
 
     activate(params, queryString, config) {

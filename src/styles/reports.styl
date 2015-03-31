@@ -35,7 +35,7 @@
       position relative
       z-index 1
 
-yi-selector[icon]
+yi-selector
   absolute bottom 0 right rightPanelWidth
   z-index 1
   margin 0
@@ -46,6 +46,23 @@ yi-selector[icon]
 
   @media queryMedium
     right 0
+
+  &.request
+    &::shadow li yi-button::shadow, yi-button::shadow
+      button, .btn
+        background-color colorBlue
+  &.complain
+    &::shadow li yi-button::shadow, yi-button::shadow
+      button, .btn
+        background-color colorOrange
+
+yi-button
+  &.request::shadow, &.complain::shadow
+    button, .btn
+      background-color colorBlue !important
+  &.complain::shadow, &.complain::shadow
+    button, .btn
+      background-color colorOrange !important
 
 yi-card-list
   background fade-out(colorBlack, 20%)
