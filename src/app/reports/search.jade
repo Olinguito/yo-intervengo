@@ -1,4 +1,18 @@
 template
   import(from="app/elements/search/yi-search-tool")
+  import(from="app/elements/selector/yi-selector")
+  import(from="app/elements/selector/yi-button")
 
   yi-search-tool
+
+  core-toolbar.bottom
+    yi-icon-button(icon="map-center")
+    //- create report
+    //- TODO: class interpolation aurelia/binding#33
+    yi-selector(icon="add", select.call="newReport()")
+      // request or complain
+      yi-button(title="${type.name}", value="${type.slug}", class="${type.slug}", repeat.for="type of cats", click.delegate="$parent.selectorType=type.slug")
+        // main categories
+        yi-button(title="${cat.name}", value="${cat.slug}", repeat.for="cat of type.categories")
+          // sub-categories
+          yi-button(title="${subcat.name}", value="${subcat.slug}", repeat.for="subcat of cat.categories")

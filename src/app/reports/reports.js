@@ -1,69 +1,13 @@
 import {Map} from 'lib/map';
+import {BackEnd} from './deleteme-backend';
 import {Router} from 'aurelia-router';
-import {HttpClient} from 'aurelia-http-client';
-
-var categories = [
-    {
-        name: 'new request',
-        slug: 'request',
-        categories: [
-            {name: 'mobility', slug: 'mobility', categories: [
-                {name: 'crossing', slug: 'crossing'},
-                {name: 'road', slug: 'road'}
-            ]},
-            {name: 'buildings', slug: 'buildings', categories: [
-                {name: 'bridge', slug: 'bridge'}
-            ]},
-            {name: 'security', slug: 'security', categories: [
-                {name: 'policemen', slug: 'policemen'}
-            ]},
-            {name: 'public services', slug: 'pub-services', categories: [
-                {name: 'water', slug: 'water'},
-                {name: 'electricity', slug: 'electricity'},
-                {name: 'internet', slug: 'internet'}
-            ]},
-            {name: 'environment', slug: 'environment', categories: [
-                {name: 'trash can', slug: 'trash-can'}
-            ]},
-            {name: 'other', slug: 'other', categories: [
-                {name: 'new event', slug: 'event'}
-            ]}
-        ]
-    },
-    {
-        name: 'new complain',
-        slug: 'complain',
-        categories: [
-            {name: 'mobility', slug: 'mobility', categories: [
-                {name: 'hole', slug: 'hole'},
-                {name: 'crossing', slug: 'crossing'}
-            ]},
-            {name: 'buildings', slug: 'buildings', categories: [
-                {name: 'stadium', slug: 'stadium'}
-            ]},
-            {name: 'security', slug: 'security', categories: [
-                {name: 'dangerous zone', slug: 'dangerous-zone'},
-                {name: 'gangs', slug: 'gangs'}
-            ]},
-            {name: 'public services', slug: 'pub-services', categories: [
-                {name: 'water leak', slug: 'water-leak'}
-            ]},
-            {name: 'environment', slug: 'environment', categories: [
-                {name: 'polution', slug: 'polution'}
-            ]},
-            {name: 'other', slug: 'other', categories: [
-                {name: 'noise', slug: 'noise'}
-            ]}
-        ]
-    }
-];
 
 export class Reports {
 
-    static inject() { return [Router, HttpClient, Map]}
+    static inject() { return [Router, BackEnd, Map]}
 
-    constructor(router, http, mainMap) {
-        this.http = http;
+    constructor(router, backend, mainMap) {
+        this.bE = backend;
         // reports sub router
         this.router = router;
         this.router.configure(config => {
@@ -83,19 +27,10 @@ export class Reports {
             tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
             // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
         };
-        // example categories // TODO: get actual list of categories
-        this.cats = categories;
-    }
-
-    newReport(selection) {
-        this.router.navigate(`new/${selection.map(ele=>ele.value).join('/')}`);
     }
 
     activate(params, queryString, config) {
-        return this.http.get('/reports.json')
-            .then(data => {
-                this.reports = JSON.parse(data.response) || [];
-            });
+        this.reports = this.bE.getReports();
     }
 
     attached() {

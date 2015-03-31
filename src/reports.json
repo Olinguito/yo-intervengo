@@ -1,6 +1,6 @@
 [
     {
-        "name": "Puente quebrado",
+        "title": "Puente quebrado",
         "slug": "puente-quebrado",
         "description": "El puente esta quebrado, con que lo curaremos.\nCon cascaras de huevo.",
         "address": "Bogotá",
@@ -10,7 +10,7 @@
         "supporters": 100
     },
     {
-        "name": "Viaducto",
+        "title": "Viaducto",
         "slug": "viaducto",
         "description": "Dificil circulación po el viaducto de la flora en horas pico",
         "address": "Bucaramanga",
@@ -20,7 +20,7 @@
         "supporters": 54
     },
     {
-        "name": "Puente centro comercial el cacique",
+        "title": "Puente centro comercial el cacique",
         "slug": "puente-el-cacique",
         "description": "No es posible el paso de peatones debidio a que es muy amplia la carretera y el cruce es inseguro.",
         "address": "Bucaramanga",
@@ -30,7 +30,7 @@
         "supporters": 3
     },
     {
-        "name": "Cambiar sitio de eventos deportivos",
+        "title": "Cambiar sitio de eventos deportivos",
         "slug": "sitio-eventos-deportivos",
         "description": "Cada vez que hay partidos hay muertos. Se ha tornado muy inseguro salir a la calle por presencia de ñangas del B/ga",
         "address": "Bucaramanga",

@@ -8,10 +8,12 @@ export class Report {
     constructor(data = {}) {
         // main info
         this.title = data.title || '';
+        this.slug = data.slug || '';
         this.description = data.description || '';
         this.address = data.address || '';
         this.coords = new Coords(data.lat, data.lng);
-        this.category = null;
+        this.category = data.category ? new Category(data.category) : null;
+        this.supporters = data.supporters || 0;
 
         this.date = data.date || new Date;
         this._persisted = false;
@@ -23,12 +25,20 @@ export class Request extends Report {
         super(data);
         this.type = 0;
     }
+
+    get typeText() {
+        return 'request';
+    }
 }
 
 export class Complain extends Report {
     constructor(data) {
         super(data);
         this.type = 1;
+    }
+
+    get typeText() {
+        return 'complain';
     }
 }
 

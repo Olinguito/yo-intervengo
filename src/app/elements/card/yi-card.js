@@ -25,16 +25,4 @@ export class YiCard {
         //TODO:  should be added to the template element before compile (aurelia fix pending)
         addStyle(this.element, style);
     }
-
-    get typeClass() {
-        return this.report.type ? 'complain': 'request';
-    }
-
-    get category() {
-        return categories[this.report.category[0]];
-    }
-
-    get subCategory() {
-        return categories[`${this.report.category[0]}.${this.report.category[1]}`];
-    }
 }
