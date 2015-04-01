@@ -12,7 +12,7 @@ export class Report {
         this.description = data.description || '';
         this.address = data.address || '';
         this.photo = data.photo || '';
-        this.coords = new Coords(data.lat, data.lng);
+        this.location = new Coords(data.location);
         this.category = data.category ? new Category(data.category) : null;
         this.supporters = data.supporters || 0;
 

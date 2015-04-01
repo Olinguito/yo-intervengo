@@ -43,6 +43,10 @@ export class Coordinates {
             let coords = arguments[0];
             this.lat = coords.lat;
             this.lng = coords.lng;
+        } else if (typeof arguments[0] == 'object'
+            && arguments[0].constructor == Object) { // plain object
+            this.lat = arguments[0].lat || defCoords.lat;
+            this.lng = arguments[0].lng || defCoords.lng;
         } else {
             this.lat = arguments[0] || defCoords.lat;
             this.lng = arguments[1] || defCoords.lng;

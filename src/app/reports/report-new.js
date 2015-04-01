@@ -34,6 +34,12 @@ export class ReportNew {
     saveReport() {
         if (this.report.title != null && this.report.title.trim() !== '' &&
             this.report.description != null && this.report.description.trim() !== '') {
+            // TODO: remove when two-way binding on custom elements is fixed
+            var map = document.querySelector('#report-new leaflet-map');
+            this.report.location.lat = map.latitude;
+            this.report.location.lng = map.longitude;
+            // TODO: persist report
+            // temporal slug for report
             this.report.id = this.report.title.trim().toLowerCase().replace(/ /g, '-');
             this.r.navigateBack();
         }
