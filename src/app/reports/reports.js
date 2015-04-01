@@ -1,23 +1,24 @@
 import {Map} from 'lib/map';
+import {BackEnd} from './deleteme-backend';
 import {Router} from 'aurelia-router';
-import {HttpClient} from 'aurelia-http-client';
 
 export class Reports {
 
-    static inject() { return [Router, HttpClient]}
+    static inject() { return [Router, BackEnd, Map]}
 
-    constructor(router, http) {
-        this.http = http;
+    constructor(router, backend, mainMap) {
+        this.bE = backend;
         // reports sub router
         this.router = router;
         this.router.configure(config => {
             config.map([
+                {route: 'new/:type/:category/:subCategory', moduleId: 'app/reports/report-new', id: 'report-new', title: ''},
                 {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail', title: ''},
-                {route: '', moduleId: 'app/reports/search', id: 'search'}
+                {route: '', moduleId: 'app/reports/search', id: 'search', title: ''}
             ]);
         });
         // Map container
-        this.map = new Map();
+        this.map = mainMap;
         // leaflet map config
         this.mapConf = {
             zoomControl: false,
@@ -25,14 +26,11 @@ export class Reports {
             minZoom: 5,
             tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
             // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-        }
+        };
     }
 
     activate(params, queryString, config) {
-        return this.http.get('/reports.json')
-            .then(data => {
-                this.reports = JSON.parse(data.response) || [];
-            });
+        this.reports = this.bE.getReports();
     }
 
     attached() {
@@ -42,6 +40,5 @@ export class Reports {
     get activeSubSection() {
         return this.router.currentInstruction.config.id || '';
     }
-
 
 }

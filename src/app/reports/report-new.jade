@@ -1,0 +1,30 @@
+template
+  import(from="app/elements/form/responsive-form")
+  import(from="app/elements/controls/yi-photo-button")
+  import(from="app/elements/marker/yi-marker")
+
+  responsive-form(class="${report.typeText}", submit.call="saveReport()")
+    section.info.left
+      .cat
+        figure: img(alt="category icon", src="assets/semaforo.svg")
+        h2 ${report.category.parent.name}
+        h3 ${report.category.name}
+      .fields
+        input(placeholder="Title", tabindex="1", autofocus, value.bind="report.title", required)
+        textarea(placeholder="Report Description", tabindex="1", value.bind="report.description", required)
+    section.map.right
+      i Locate your report on the map
+      leaflet-map(
+      latitude.bind="center.lat",
+      longitude.bind="center.lng",
+      zoom="17",
+      options.one-time="mapConf",
+      tileServer.one-time="mapConf.tiles"
+      )
+        yi-marker(class="${report.type==0?'alt':''}", fixed-marker)
+
+      input(placeholder="Address", tabindex="1", required)
+    section.photo.right
+      i Add a photo to your report
+      figure
+        yi-photo-button(title="Add photo", filechange.call="photoSelected()")

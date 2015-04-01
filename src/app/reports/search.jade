@@ -8,21 +8,11 @@ template
   core-toolbar.bottom
     yi-icon-button(icon="map-center")
     //- create report
-    yi-selector(icon="add")
-      yi-button.request(icon="request", title="request")
-        yi-button.request(icon="fuu", title="mobility")
-        yi-button.request(icon="fuu", title="buildings")
-        yi-button.request(icon="fuu", title="security")
-        yi-button.request(icon="fuu", title="public services")
-        yi-button.request(icon="fuu", title="environment")
-        yi-button.request(icon="fuu", title="other")
-
-      yi-button.complain(icon="complain", title="Complain")
-        yi-button.complain(icon="fuu", title="mobility")
-          yi-button.complain(icon="fuu", title="Tunnel")
-          yi-button.complain(icon="fuu", title="Crossing")
-        yi-button.complain(icon="fuu", title="buildings")
-        yi-button.complain(icon="fuu", title="security")
-        yi-button.complain(icon="fuu", title="public services")
-        yi-button.complain(icon="fuu", title="environment")
-        yi-button.complain(icon="fuu", title="other")
+    //- TODO: class interpolation aurelia/binding#33
+    yi-selector(icon="add", select.call="newReport()")
+      // request or complain
+      yi-button(title="${type.name}", value="${type.slug}", class="${type.slug}", repeat.for="type of cats", click.delegate="$parent.selectorType=type.slug")
+        // main categories
+        yi-button(title="${cat.name}", value="${cat.slug}", repeat.for="cat of type.categories")
+          // sub-categories
+          yi-button(title="${subcat.name}", value="${subcat.slug}", repeat.for="subcat of cat.categories")

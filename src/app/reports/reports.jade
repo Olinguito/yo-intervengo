@@ -7,23 +7,22 @@ template
       yi-icon-button(icon="menu")
       yi-icon-button(icon="search")
 
-
     leaflet-map(
-    latitude.bind="map.lat",
-    longitude.bind="map.lng",
-    tileServer.bind="mapConf.tiles",
+    latitude.bind="map.center.lat",
+    longitude.bind="map.center.lng",
     zoom.bind="map.zoom",
     options.bind="mapConf",
     tileserver.bind="mapConf.tiles"
     )
       yi-marker(
       marker,
-      latitude.one-time="map.lat",
-      longitude.one-time="map.lng",
+      latitude.one-time="map.center.lat",
+      longitude.one-time="map.center.lng",
       click.trigger="mrk.toggleType()",
       ref.view-model="mrk"
       )
 
+  //- sub routes(search, detail, new)
   router-view(id="${activeSubSection}")
 
   yi-card-list

@@ -1,40 +1,40 @@
 [
     {
-        "name": "Puente quebrado",
-        "slug": "puente-quebrado",
+        "id": "puente-quebrado",
+        "title": "Puente quebrado",
         "description": "El puente esta quebrado, con que lo curaremos.\nCon cascaras de huevo.",
         "address": "Bogotá",
-        "photo": "",
+        "photo": "http://lorempixel.com/400/180/city",
         "category": ["buildings", "bridge"],
         "type": 1,
         "supporters": 100
     },
     {
-        "name": "Viaducto",
-        "slug": "viaducto",
+        "id": "viaducto",
+        "title": "Viaducto",
         "description": "Dificil circulación po el viaducto de la flora en horas pico",
         "address": "Bucaramanga",
-        "photo": "",
+        "photo": "http://lorempixel.com/400/180/city",
         "category": ["mobility", "tunnel"],
         "type": 1,
         "supporters": 54
     },
     {
-        "name": "Puente centro comercial el cacique",
-        "slug": "puente-el-cacique",
+        "id": "puente-el-cacique",
+        "title": "Puente centro comercial el cacique",
         "description": "No es posible el paso de peatones debidio a que es muy amplia la carretera y el cruce es inseguro.",
         "address": "Bucaramanga",
-        "photo": "",
+        "photo": "http://lorempixel.com/400/180/city",
         "category": ["mobility", "crossing"],
         "type": 0,
         "supporters": 3
     },
     {
-        "name": "Cambiar sitio de eventos deportivos",
-        "slug": "sitio-eventos-deportivos",
+        "id": "sitio-eventos-deportivos",
+        "title": "Cambiar sitio de eventos deportivos",
         "description": "Cada vez que hay partidos hay muertos. Se ha tornado muy inseguro salir a la calle por presencia de ñangas del B/ga",
         "address": "Bucaramanga",
-        "photo": "",
+        "photo": "http://lorempixel.com/400/180/city",
         "category": ["security", "gangs"],
         "type": 0,
         "supporters": 653

@@ -1,19 +1,28 @@
 {
     "mobility": "movilidad",
     "mobility.tunnel": "tunel",
+    "mobility.hole": "hueco",
+    "mobility.road": "vía",
     "mobility.crossing": "cruce",
 
     "buildings": "edificios y terrenos",
     "buildings.bridge": "puente",
+    "buildings.stadium": "estadio",
 
     "security": "seguridad",
     "security.gangs": "pandillas",
+    "security.policemen": "policía",
 
     "pub-services": "servicios públicos",
     "pub-services.water": "acueducto",
+    "pub-services.electricity": "electricidad",
     "pub-services.internet": "internet",
 
     "environment": "medio ambiente",
+    "environment.polution": "contaminación",
+    "environment.trash-can": "cesto de basura",
 
-    "other": "otros"
+    "other": "otros",
+    "other.noise": "ruido",
+    "other.event": "nuevo evento"
 }

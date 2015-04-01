@@ -35,45 +35,64 @@
       position relative
       z-index 1
 
-yi-selector[icon]
-  absolute bottom 0 right rightPanelWidth
-  z-index 1
-  margin 0
+  yi-card-list
+    background fade-out(colorBlack, 20%)
+    display flex
+    flex 1
+    flex-direction column
+    flex-shrink 0
+    justify-content space-around
+    height 100%
+    padding 2rem 1rem
+    max-width rightPanelWidth
+    min-width rightPanelWidth
+    overflow-x hidden
+    overflow-y auto
+    z-index 2
 
-  &.opened
-    left 0
-    height 100vh
+    &::-webkit-scrollbar
+      width 4px
+      height 4px
+    &::-webkit-scrollbar-thumb
+      background fade-out(#fff, 50%)
+      border-radius 2px
 
-  @media queryMedium
-    right 0
+    yi-card
+      margin 1rem auto
+      width 100%
 
-yi-card-list
-  background fade-out(colorBlack, 20%)
-  display flex
-  flex 1
-  flex-direction column
-  flex-shrink 0
-  justify-content space-around
-  height 100%
-  padding 2rem 1rem
-  max-width rightPanelWidth
-  min-width rightPanelWidth
-  overflow-x hidden
-  overflow-y auto
-  z-index 2
+  yi-selector
+    absolute bottom 0 right rightPanelWidth
+    z-index 1
+    margin 0
 
-  &::-webkit-scrollbar
-    width 4px
-    height 4px
-  &::-webkit-scrollbar-thumb
-    background fade-out(#fff, 50%)
-    border-radius 2px
+    &.opened
+      left 0
+      height 100vh
 
-  yi-card
-    margin 1rem auto
+    @media queryMedium
+      right 0
+
+    &.request
+      &::shadow li yi-button::shadow, yi-button::shadow
+        button, .btn
+          background-color colorBlue
+    &.complain
+      &::shadow li yi-button::shadow, yi-button::shadow
+        button, .btn
+          background-color colorOrange
+
+yi-button
+  &.request::shadow, &.complain::shadow
+    button, .btn
+      background-color colorBlue !important
+  &.complain::shadow, &.complain::shadow
+    button, .btn
+      background-color colorOrange !important
 
 // responsive
 @import 'reports-mobile'
 
 // Sub sections
 @import 'report-detail'
+@import 'report-new'

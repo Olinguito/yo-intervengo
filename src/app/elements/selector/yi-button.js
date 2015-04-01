@@ -7,7 +7,8 @@ export class YiButton {
         return Behavior
             .customElement('yi-button')
             .withProperty('title')
-            .withProperty('selected')
+            .withProperty('value')
+            .withProperty('selected', 'selectedChanged')
             .useShadowDOM();
     }
 
@@ -16,20 +17,18 @@ export class YiButton {
     constructor(element) {
         this.element = element;
         this.title = '';
-        this.selected = false;
+        // has 3 states true, false, null(attribute removed)
+        this.selected = null;
     }
 
-    select() {
-        // remove selected property from siblings
-        var siblings = this.element.parentNode.querySelectorAll(':scope > yi-button');
-        for (let btn of siblings) {
-            btn.selected = false;
-            btn.setAttribute('selected', false);
+    selectedChanged(value) {
+        if (value === true) {
+            this.element.setAttribute('selected', true);
+        } else if (value === false) {
+            this.element.setAttribute('selected', false);
+        } else {
+            this.element.removeAttribute('selected');
         }
-        console.log('siblings', siblings);
-        // add selected to current button
-        this.element.selected = true;
-        this.element.setAttribute('selected', true);
     }
 
     bind() {
