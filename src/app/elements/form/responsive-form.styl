@@ -31,9 +31,19 @@
 
 nav
   box-sizing border-box
-  display none
   height headerHeight
-  padding 0.5rem 0
+  padding 0.5rem
+  align-items center
+
+  &.mobile
+    display none
+  &.desktop
+    display flex
+    justify-content flex-end
+
+    yi-button
+      &:last-of-type
+        margin 0 1rem
 
   button
     background colorGray2
@@ -60,19 +70,20 @@ nav
 :host(.request)
   button:last-of-type
     background-color colorBlue
-    &:hover
-      background-color colorBlue - 5%
     &:active
-      background-color colorBlue - 15%
+      background-color colorBlue - 10%
+  yi-button:last-of-type::shadow
+    .btn, button
+      background-color colorBlue
 
 :host(.complain)
   button:last-of-type
     background-color colorOrange
-    &:hover
-      background-color colorOrange - 5%
     &:active
-      background-color colorOrange - 15%
-
+      background-color colorOrange - 10%
+  yi-button:last-of-type::shadow
+    .btn, button
+      background-color colorOrange
 
 // mobile mode
 @media queryMobile
@@ -86,5 +97,9 @@ nav
         padding 0
         &:hover
           background none
+
   nav
-    display flex
+    &.mobile
+      display flex
+    &.desktop
+      display none

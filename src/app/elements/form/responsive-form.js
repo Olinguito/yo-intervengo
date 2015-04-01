@@ -6,6 +6,7 @@ export class ResponsiveForm {
     static metadata() {
         return Behavior
             .customElement('responsive-form')
+            .withProperty('submit')
             .useShadowDOM();
     }
 
@@ -30,8 +31,7 @@ export class ResponsiveForm {
     }
 
     done() {
-        if (this.inLastStep)
-            console.log('finished!');
+        this.submit();
     }
 
     get inLastStep() {

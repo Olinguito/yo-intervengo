@@ -3,15 +3,15 @@ template
   import(from="app/elements/controls/yi-photo-button")
   import(from="app/elements/marker/yi-marker")
 
-  responsive-form.request
+  responsive-form(class="${report.typeText}", submit.call="saveReport()")
     section.info.left
       .cat
         figure: img(alt="category icon", src="assets/semaforo.svg")
         h2 ${report.category.parent.name}
         h3 ${report.category.name}
       .fields
-        input(placeholder="Title", tabindex="1", autofocus)
-        textarea(placeholder="Report Description", tabindex="1")
+        input(placeholder="Title", tabindex="1", autofocus, value.bind="report.title", required)
+        textarea(placeholder="Report Description", tabindex="1", value.bind="report.description", required)
     section.map.right
       i Locate your report on the map
       leaflet-map(
@@ -21,9 +21,9 @@ template
       options.one-time="mapConf",
       tileServer.one-time="mapConf.tiles"
       )
-        yi-marker(class="alt", fixed-marker)
+        yi-marker(class="${report.type==0?'alt':''}", fixed-marker)
 
-      input(placeholder="Address", tabindex="1")
+      input(placeholder="Address", tabindex="1", required)
     section.photo.right
       i Add a photo to your report
       figure

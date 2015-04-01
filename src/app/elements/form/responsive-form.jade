@@ -1,9 +1,13 @@
 template
+  import(from="app/elements/selector/yi-button")
+
   #form-sections
     .section.lest: content(select="section.left")
     .section.right: content(select="section.right")
 
-  nav
+  nav.mobile
     button(click.delegate="prev()", disabled.bind="currStep==0") previous
     button(click.delegate="next()", if.bind="!inLastStep") next
     button(click.delegate="done()", if.bind="inLastStep") done
+  nav.desktop
+    yi-button(click.delegate="done()", title="Save")

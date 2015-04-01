@@ -38,9 +38,19 @@ export class Marker {
 }
 
 export class Coordinates {
-    constructor(lat = defCoords.lat, lng = defCoords.lng) {
-        this.lat = lat;
-        this.lng = lng;
+    constructor() {
+        if(arguments[0] instanceof Coordinates) {
+            let coords = arguments[0];
+            this.lat = coords.lat;
+            this.lng = coords.lng;
+        } else {
+            this.lat = arguments[0] || defCoords.lat;
+            this.lng = arguments[1] || defCoords.lng;
+        }
+    }
+
+    asArray() {
+        return [this.lat, this.lng];
     }
 }
 
