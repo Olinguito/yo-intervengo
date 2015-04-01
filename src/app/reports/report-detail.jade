@@ -19,10 +19,10 @@ template
 
     article.info-card
       header
-        figure: img(src='http://lorempixel.com/700/400/city')
+        figure: img(src.bind='report.photo')
         section.left-side
-          h1.title ${report.name}
-          h3.cat-subcat ${category} - ${subCategory}
+          h1.title ${report.title}
+          h3.cat-subcat ${report.category.parent.name} - ${report.category.name}
           h4.address-city ${report.address}
         section.right-side
           button.alert i

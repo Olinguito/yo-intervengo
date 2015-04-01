@@ -1,33 +1,27 @@
 import {Router} from 'aurelia-router';
-import {HttpClient} from 'aurelia-http-client';
+import {BackEnd} from './deleteme-backend';
 import {categories} from 'app/app';
 
 export default
 class ReportDetail {
 
-    static inject() { return [HttpClient, Router]; }
+    static inject() { return [BackEnd, Router]; }
 
-    constructor(http, router) {
-        this.http = http;
+    constructor(backend, router) {
+        this.bE = backend;
         this.report = {};
         this.r = router;
     }
 
     activate(params) {
         // FIXME: replace with api call
-        return this.http.get('/reports.json')
-            .then(data => {
-                var reports = JSON.parse(data.response) || [];
-                this.report = reports.find( cat => cat.slug === params.name);
-            });
-
+        this.report = this.bE.getReports()
+            .find( r => r.id === params.name);
+        // TODO: urgent! find correct method to do this
+        setTimeout(()=>{
+            var view = document.querySelector('#report-detail');
+            view.className = this.report.typeText;
+        }, 500);
     }
 
-    get category() {
-        return categories[this.report.category[0]];
-    }
-
-    get subCategory() {
-        return categories[`${this.report.category[0]}.${this.report.category[1]}`];
-    }
 }

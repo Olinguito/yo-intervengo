@@ -18,10 +18,28 @@ colorTiltedBg = #E8E8E8 + 16%
 
   &::-webkit-scrollbar
     width 4px
-    background-color fade-out(colorBlack, 30%)
   &::-webkit-scrollbar-thumb
-    background-color fade-out(colorOrange, 20%)
     border-radius 2px
+
+  &.request
+    &::-webkit-scrollbar
+      background-color fade-out(colorBlack, 30%)
+    &::-webkit-scrollbar-thumb
+      background-color fade-out(colorBlue, 20%)
+    p.wiki-text a, button:hover, .history-card .title
+      color colorBlue
+    .tabs .history
+      background-color colorBlue
+
+  &.complain
+    &::-webkit-scrollbar
+      background-color fade-out(colorBlack, 30%)
+    &::-webkit-scrollbar-thumb
+      background-color fade-out(colorOrange, 20%)
+    p.wiki-text a, button:hover, .history-card .title
+      color colorOrange
+    .tabs .history
+      background-color colorOrange
 
   main
     margin auto
@@ -66,8 +84,6 @@ colorTiltedBg = #E8E8E8 + 16%
       border none
       font-size 1.3em
       font-weight 300
-      &:hover
-        color #ef5b22
     button.close
       margin auto
 
@@ -180,8 +196,6 @@ colorTiltedBg = #E8E8E8 + 16%
           border none
           font-size 1.3em
           font-style italic
-          &:hover
-            color #ef5b22
 
         i
           display inline-block
@@ -215,7 +229,6 @@ colorTiltedBg = #E8E8E8 + 16%
     color colorBlack
 
     a
-      color colorOrange
       margin-left 0.5em
       white-space nowrap
 
@@ -249,7 +262,6 @@ colorTiltedBg = #E8E8E8 + 16%
             border-bottom none
 
         li.history
-          background-color #ef5b22
           color #fff
           border-bottom none
 
@@ -261,6 +273,5 @@ colorTiltedBg = #E8E8E8 + 16%
       margin 10px
       margin-top 15px
       h2.title
-        color #ef5b22
         font-size 1.3em
         margin-bottom 30px
