@@ -1,6 +1,6 @@
 import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
-import {categories} from 'app/app';
+import {categories} from 'yi/app';
 
 export default
 class ReportDetail {

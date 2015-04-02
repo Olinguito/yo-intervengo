@@ -1,8 +1,8 @@
 import {Behavior} from 'aurelia-framework';
 import {addStyleToShadowElement as addStyle} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
-import style from 'app/elements/card/yi-card.css!text';
-import {categories} from 'app/app';
+import style from './yi-card.css!text';
+import {categories} from 'yi/app';
 import {Router} from 'aurelia-router';
 
 export class YiCard {

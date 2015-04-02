@@ -37,8 +37,8 @@ export class Reports {
         this.router = router;
         this.router.configure(config => {
             config.map([
-                {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail', title: ''},
-                {route: '', moduleId: 'app/reports/search', id: 'search'}
+                {route: ':name', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
+                {route: '', moduleId: 'yi/reports/search', id: 'search'}
             ]);
         });
         // Map container

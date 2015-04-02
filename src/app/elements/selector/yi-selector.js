@@ -1,6 +1,6 @@
 import {Behavior, ViewCompiler} from 'aurelia-framework';
 import {addStyleToShadowElement as addStyle} from 'lib/util';
-import style from 'app/elements/selector/yi-selector.css!text';
+import style from './yi-selector.css!text';
 
 /**
  * YiSelector - New report category selector
