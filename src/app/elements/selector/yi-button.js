@@ -1,6 +1,6 @@
 import {Behavior} from 'aurelia-framework';
 import {addStyleToShadowElement as addStyle} from 'lib/util';
-import style from 'app/elements/selector/yi-button.css!text';
+import style from './yi-button.css!text';
 
 export class YiButton {
     static metadata() {

@@ -1,5 +1,5 @@
 template
-  import(from='../marker/yi-marker')
+  require(from='../marker/yi-marker')
   svg(width='150', height='80', click.delegate='mrk.toggleType()', dblclick.delegate='mrk.bounce()')
     defs
       filter#filterMarkeInnerShadow(color-interpolation-filters='sRGB'): fegaussianblur#feGaussianBlur6727(stddeviation='1.9525641')

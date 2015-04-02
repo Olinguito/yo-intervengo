@@ -1,7 +1,7 @@
 import {Behavior} from 'aurelia-framework';
 import {addStyleToShadowElement as addStyle} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
-import style from 'app/elements/marker/yi-marker.css!text';
+import style from './yi-marker.css!text';
 
 export class YiMarker {
 

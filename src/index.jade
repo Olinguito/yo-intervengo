@@ -8,8 +8,10 @@ html
     //- application main style
     link(rel="stylesheet",href="style.css")
 
-  body(aurelia-app="app/app")
+  body(aurelia-app="yi/bootstrap")
     script(type="text/javascript",src="vendor/system.js")
     script(type="text/javascript",src="config.js")
+    if 'production' == process.env.NODE_ENV
+      script(type="text/javascript",src="build.js")
     script(type="text/javascript").
       System.import('aurelia-bootstrapper').catch(console.error.bind(console));

@@ -1,6 +1,6 @@
 import {Behavior, ViewCompiler} from 'aurelia-framework';
 import {addStyleToShadowElement as addStyle} from 'lib/util';
-import style from 'app/elements/selector/yi-selector.css!text';
+import style from './yi-selector.css!text';
 
 /**
  * YiSelector - New report category selector
@@ -35,7 +35,7 @@ export class YiSelector {
      * Callback called when a `yi-button` in the selector is clicked
      * @param btn
      */
-    onYiBtnClick(btn) {
+        onYiBtnClick(btn) {
         // adds 'select' property to a yi-button and deletes it from siblings
         selectYiButton(btn);
         this.selection.push(btn.yiButton);
