@@ -5,15 +5,12 @@ var vinylPaths = require('vinyl-paths');
 var to5 = require('gulp-babel');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var yuidoc = require("gulp-yuidoc");
-var changelog = require('conventional-changelog');
 var assign = Object.assign || require('object.assign');
 var fs = require('fs');
 var bump = require('gulp-bump');
 var browserSync = require('browser-sync');
 var changed = require('gulp-changed');
 var plumber = require('gulp-plumber');
-var tools = require('aurelia-tools');
 var data = require('gulp-data');
 var jade = require('gulp-jade');
 var stylus = require('gulp-stylus');
@@ -34,8 +31,7 @@ var path = {
     custElementsStyle: 'src/app/elements/**/*.styl',
     custElementsStyleCompiled: 'src/app/elements/**/*.{css,css.map}',
     output: '.tmp/',
-    out: 'dist/',
-    doc: './doc'
+    out: 'dist/'
 };
 path.elementsStyleOut = path.output;
 
@@ -129,32 +125,10 @@ gulp.task('lint', function () {
         .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('doc-generate', function () {
-    return gulp.src(path.scripts)
-        .pipe(yuidoc.parser(null, 'api.json'))
-        .pipe(gulp.dest(path.doc));
-});
-
-gulp.task('doc', ['doc-generate'], function () {
-    tools.transformAPIModel(path.doc);
-});
-
 gulp.task('bump-version', function () {
     return gulp.src(['./package.json'])
         .pipe(bump({type: 'patch'})) //major|minor|patch|prerelease
         .pipe(gulp.dest('./'));
-});
-
-gulp.task('changelog', function (callback) {
-    var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
-
-    return changelog({
-        repository: pkg.repository.url,
-        version: pkg.version,
-        file: path.doc + '/CHANGELOG.md'
-    }, function (err, log) {
-        fs.writeFileSync(path.doc + '/CHANGELOG.md', log);
-    });
 });
 
 gulp.task('build', function (callback) {
@@ -163,10 +137,6 @@ gulp.task('build', function (callback) {
         ['build-system', 'build-elements-style', 'build-style', 'build-html'],
         callback
     );
-});
-
-gulp.task('update-own-deps', function () {
-    tools.updateOwnDependenciesFromLocalRepositories();
 });
 
 gulp.task('serve', ['build'], function (done) {
