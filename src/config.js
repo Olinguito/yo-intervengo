@@ -18,9 +18,17 @@ System.config({
 System.config({
   "map": {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.10.0",
+    "aurelia-framework": "github:aurelia/framework@0.9.0",
+    "aurelia-history-browser": "github:aurelia/history-browser@0.2.5",
     "aurelia-http-client": "github:aurelia/http-client@0.6.1",
+    "aurelia-loader-default": "github:aurelia/loader-default@0.5.0",
+    "aurelia-router": "github:aurelia/router@0.6.0",
+    "aurelia-templating-binding": "github:aurelia/templating-binding@0.9.0",
+    "aurelia-templating-resources": "github:aurelia/templating-resources@0.9.2",
+    "aurelia-templating-router": "github:aurelia/templating-router@0.10.0",
     "babel": "npm:babel@4.7.16",
     "babel-runtime": "npm:babel-runtime@4.7.16",
+    "core-js": "npm:core-js@0.4.10",
     "json": "github:systemjs/plugin-json@0.1.0",
     "text": "github:systemjs/plugin-text@0.0.2",
     "github:aurelia/binding@0.4.1": {
