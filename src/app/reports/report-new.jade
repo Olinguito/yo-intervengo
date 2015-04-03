@@ -1,7 +1,7 @@
 template
-  import(from="app/elements/form/responsive-form")
-  import(from="app/elements/controls/yi-photo-button")
-  import(from="app/elements/marker/yi-marker")
+  require(from="yi/elements/form/responsive-form")
+  require(from="yi/elements/controls/yi-photo-button")
+  require(from="yi/elements/marker/yi-marker")
 
   responsive-form(class="${report.typeText}", submit.call="saveReport()")
     section.info.left

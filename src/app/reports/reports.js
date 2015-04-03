@@ -12,9 +12,9 @@ export class Reports {
         this.router = router;
         this.router.configure(config => {
             config.map([
-                {route: 'new/:type/:category/:subCategory', moduleId: 'app/reports/report-new', id: 'report-new', title: ''},
-                {route: ':name', moduleId: 'app/reports/report-detail', id: 'report-detail', title: ''},
-                {route: '', moduleId: 'app/reports/search', id: 'search', title: ''}
+                {route: 'new/:type/:category/:subCategory', moduleId: 'yi/reports/report-new', id: 'report-new', title: ''},
+                {route: ':name', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
+                {route: '', moduleId: 'yi/reports/search', id: 'search', title: ''}
             ]);
         });
         // Map container
