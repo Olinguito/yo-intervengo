@@ -9,6 +9,8 @@ html
     link(rel="stylesheet",href="style.css")
 
   body(aurelia-app="yi/bootstrap")
+    include boot
+    //- startup scripts
     script(type="text/javascript",src="vendor/system.js")
     script(type="text/javascript",src="config.js")
     if 'production' == process.env.NODE_ENV
