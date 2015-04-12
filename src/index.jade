@@ -3,11 +3,8 @@ html
   head
     meta(charset="utf-8")
     meta(name="viewport", content="initial-scale=1, width=device-width")
-    //- include polymer web-components
-    link(rel="import",href="polymer-elements.html")
     //- application main style
     link(rel="stylesheet",href="style.css")
-
   body(aurelia-app="yi/bootstrap")
     include boot
     //- startup scripts
@@ -15,5 +12,4 @@ html
     script(type="text/javascript",src="config.js")
     if 'production' == process.env.NODE_ENV
       script(type="text/javascript",src="build.js")
-    script(type="text/javascript").
-      System.import('aurelia-bootstrapper').catch(console.error.bind(console));
+    script(type="text/javascript") System.import('yi/bootstrap')

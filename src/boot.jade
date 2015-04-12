@@ -1,6 +1,6 @@
 //- page loading section
 section#boot
-  svg#logo.loading(xmlns='http://www.w3.org/2000/svg', height='290', width='418', version='1.1')
+  svg#logo.loading(xmlns='http://www.w3.org/2000/svg', height='290', width='418', viewBox="0 0 418 290", version='1.1')
     defs
       filter#filterMarkeInnerShadow(style='color-interpolation-filters:sRGB')
         fegaussianblur#feGaussianBlur6727(stddeviation='1.9525641')
@@ -18,7 +18,7 @@ section#boot
 
   // browser not compatible message
   article
-    p Lo sentimos, de momento esta versión esta disponble sólo para
+    p Lo sentimos, tu navegador no es compatible con este demo. Te invitamos a probar
     p: a(href='http://www.google.com/chrome', target='_blank')
       img(alt='Google Chrome Logo', src='assets/chrome-logo.svg')
       | Google Chrome
