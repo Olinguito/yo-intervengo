@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/olinguito/yo-intervengo.png?label=ready&title=Ready)](https://waffle.io/olinguito/yo-intervengo)
 Yo Intervengo
 =============
 Application that allows citizens to make complains, requests and keep track of public works.
