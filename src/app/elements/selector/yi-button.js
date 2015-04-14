@@ -7,6 +7,7 @@ export class YiButton {
         return Behavior
             .customElement('yi-button')
             .withProperty('title')
+            .withProperty('icon')
             .withProperty('value')
             .withProperty('selected', 'selectedChanged')
             .useShadowDOM();
@@ -17,6 +18,7 @@ export class YiButton {
     constructor(element) {
         this.element = element;
         this.title = '';
+        this.icon = '';
         // has 3 states true, false, null(attribute removed)
         this.selected = null;
     }

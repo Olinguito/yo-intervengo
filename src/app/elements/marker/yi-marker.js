@@ -8,7 +8,7 @@ export class YiMarker {
     static metadata() {
         return Behavior
             .customElement('yi-marker')
-            .withProperty('category')
+            .withProperty('icon')
             .useShadowDOM();
     }
 
@@ -28,7 +28,6 @@ export class YiMarker {
     }
 
     bounce() {
-        console.log('bOinng!');
         this.element.animate([
                 {transform: 'translateY(0px)'},
                 {transform: 'translateY(-30px)'},

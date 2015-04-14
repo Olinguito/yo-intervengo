@@ -1,5 +1,4 @@
-colorBlue = #00BCDD
-colorOrange = #EF5B22
+@import '../../../styles/colors'
 
 :host
   background-color #FFFFFF
@@ -63,8 +62,11 @@ header
     &.category
       display flex
       flex 1
-      svg
+
+      yi-icon
         margin auto
+        width 90%
+        height 90%
 
     &.title
       color #000
@@ -112,10 +114,6 @@ header
           padding-top 0.5rem
           text-transform uppercase
 
-    .yi-card-icon
-      fill none
-      stroke #ffffff
-      stroke-width 2
 
 .description
   font-size 12pt
@@ -139,3 +137,13 @@ header
 
   &:hover
     color #FFFFFF
+
+    yi-icon::shadow path
+      stroke white
+
+  yi-icon
+    height 24px
+    vertical-align middle
+
+    &::shadow path
+      stroke colorBlack

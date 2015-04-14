@@ -2,11 +2,12 @@ template
   require(from="yi/elements/form/responsive-form")
   require(from="yi/elements/controls/yi-photo-button")
   require(from="yi/elements/marker/yi-marker")
+  require(from="yi/elements/icon/yi-icon")
 
   responsive-form(class="${report.typeText}", submit.call="saveReport()")
     section.info.left
       .cat
-        figure: img(alt="category icon", src="assets/semaforo.svg")
+        figure: yi-icon(icon="${report.category.icon}")
         h2 ${report.category.parent.name}
         h3 ${report.category.name}
       .fields
@@ -21,7 +22,7 @@ template
       options.one-time="mapConf",
       tileServer.one-time="mapConf.tiles"
       )
-        yi-marker(class="${report.type==0?'alt':''}", fixed-marker)
+        yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
 
       input(placeholder="Address", tabindex="1", required)
     section.photo.right
