@@ -1,19 +1,14 @@
-import {Behavior} from 'aurelia-framework';
+import {customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './responsive-form.css!text';
 
+@customElement('responsive-form')
+@useShadowDOM
 export class ResponsiveForm {
-    static metadata() {
-        return Behavior
-            .customElement('responsive-form')
-            .withProperty('submit')
-            .useShadowDOM();
-    }
 
-    constructor(ele) {
-        this.currStep = 0;
-        this.numberOfSteps = 3;
-    }
+    @bindable submit;
+    currStep = 0;
+    numberOfSteps = 3;
 
     prev() {
         if (this.currStep > 0)

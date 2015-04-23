@@ -1,4 +1,4 @@
-import {Behavior} from 'aurelia-framework';
+import {Decorators, inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-icon.css!text';
 
@@ -6,19 +6,15 @@ import style from './yi-icon.css!text';
  * Custom element containing the icons of the application
  * TODO. In a future version it should allow transitioning from one icon to another
  */
+@useShadowDOM
+@customElement('yi-icon')
+@inject(Element)
 export class YiIcon {
-    static metadata() {
-        return Behavior
-            .customElement('yi-icon')
-            .withProperty('icon')
-            .useShadowDOM();
-    }
-
-    static inject() { return [Element]; }
+    @bindable icon;
+    shownIcon = null;
 
     constructor(element) {
         this.element = element;
-        this.shownIcon = null;
     }
 
     attached() {

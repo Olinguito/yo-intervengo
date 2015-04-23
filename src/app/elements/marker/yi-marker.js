@@ -1,18 +1,14 @@
-import {Behavior} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-marker.css!text';
 
+@customElement('yi-marker')
+@useShadowDOM
+@inject(Element)
 export class YiMarker {
 
-    static metadata() {
-        return Behavior
-            .customElement('yi-marker')
-            .withProperty('icon')
-            .useShadowDOM();
-    }
-
-    static inject() { return [Element]; }
+    @bindable icon;
 
     constructor(element) {
         this.element = element;

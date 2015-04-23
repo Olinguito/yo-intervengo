@@ -1,3 +1,4 @@
+import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 
 // TODO: remove and get from backend
@@ -57,9 +58,9 @@ var categories = [
     }
 ];
 
+@inject(Router)
 export class Search {
 
-    static inject() {return [Router]}
 
     constructor(router) {
         this.cats = categories;

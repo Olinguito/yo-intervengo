@@ -1,23 +1,20 @@
-import {Behavior, ViewCompiler} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-selector.css!text';
 
 /**
  * YiSelector - New report category selector
  */
+@customElement('yi-selector')
+@useShadowDOM
+@inject(Element)
 export class YiSelector {
-    static metadata() {
-        return Behavior
-            .customElement('yi-selector')
-            .withProperty('onSelect', null, 'select')
-            .useShadowDOM();
-    }
 
-    static inject() { return [Element]; }
+    @bindable select;
+    selection = [];
 
     constructor(element) {
         this.element = element;
-        this.selection = [];
         this.onSelect = () => {};
     }
 
@@ -35,7 +32,7 @@ export class YiSelector {
      * Callback called when a `yi-button` in the selector is clicked
      * @param btn
      */
-        onYiBtnClick(btn) {
+    onYiBtnClick(btn) {
         // adds 'select' property to a yi-button and deletes it from siblings
         selectYiButton(btn);
         this.selection.push(btn.yiButton);

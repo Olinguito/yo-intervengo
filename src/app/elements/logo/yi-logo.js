@@ -1,10 +1,6 @@
-import {Behavior} from 'aurelia-framework';
+import {customElement, useShadowDOM} from 'aurelia-framework';
 
+@customElement('yi-logo')
+@useShadowDOM
 export class YiLogo {
-
-    static metadata() {
-        return Behavior
-            .customElement('yi-logo')
-            .useShadowDOM();
-    }
 }

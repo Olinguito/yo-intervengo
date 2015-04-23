@@ -1,26 +1,20 @@
-import {Behavior} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-button.css!text';
 
+@customElement('yi-button')
+@useShadowDOM
+@inject(Element)
 export class YiButton {
-    static metadata() {
-        return Behavior
-            .customElement('yi-button')
-            .withProperty('title')
-            .withProperty('icon')
-            .withProperty('value')
-            .withProperty('selected', 'selectedChanged')
-            .useShadowDOM();
-    }
 
-    static inject() { return [Element]; }
+    @bindable title = '';
+    @bindable icon = '';
+    @bindable value;
+    // has 3 states true, false, null(attribute removed)
+    @bindable selected = null;
 
     constructor(element) {
         this.element = element;
-        this.title = '';
-        this.icon = '';
-        // has 3 states true, false, null(attribute removed)
-        this.selected = null;
     }
 
     selectedChanged(value) {

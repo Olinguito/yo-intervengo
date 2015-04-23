@@ -1,15 +1,15 @@
+import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {BackEnd} from './deleteme-backend';
 import {categories} from 'yi/app';
 
+@inject(BackEnd, Router)
 export default
 class ReportDetail {
-
-    static inject() { return [BackEnd, Router]; }
+    report = {};
 
     constructor(backend, router) {
         this.bE = backend;
-        this.report = {};
         this.r = router;
     }
 
@@ -18,7 +18,7 @@ class ReportDetail {
         this.report = this.bE.getReports()
             .find( r => r.id === params.name);
         // TODO: urgent! find correct method to do this
-        setTimeout(()=>{
+        setTimeout(()=> {
             var view = document.querySelector('#report-detail');
             view.className = this.report.typeText;
         }, 500);

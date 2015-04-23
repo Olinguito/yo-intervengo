@@ -20,7 +20,7 @@
     "browser-sync": "^1.9.1",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
-    "gulp-babel": "^4.0.1",
+    "gulp-babel": "^5.1.0",
     "gulp-bump": "^0.1.13",
     "gulp-changed": "^1.2.1",
     "gulp-data": "^1.2.0",
@@ -35,7 +35,7 @@
     "jshint-stylish": "^1.0.1",
     "jspm": "^0.15.1",
     "karma": "^0.12.32",
-    "karma-babel-preprocessor": "^4.0.0",
+    "karma-babel-preprocessor": "^5.1.0",
     "karma-chrome-launcher": "^0.1.7",
     "karma-jspm": "^1.1.4",
     "nib": "^1.1.0",
@@ -50,10 +50,10 @@
       "packages": "vendor"
     },
     "dependencies": {
-      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.10.0",
-      "aurelia-framework": "github:aurelia/framework@^0.9.0",
-      "aurelia-http-client": "github:aurelia/http-client@^0.6.1",
-      "aurelia-router": "github:aurelia/router@^0.6.0",
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.11.0",
+      "aurelia-framework": "github:aurelia/framework@^0.10.0",
+      "aurelia-http-client": "github:aurelia/http-client@^0.7.0",
+      "aurelia-router": "github:aurelia/router@^0.7.2",
       "json": "github:systemjs/plugin-json@^0.1.0",
       "text": "github:systemjs/plugin-text@^0.0.2"
     },

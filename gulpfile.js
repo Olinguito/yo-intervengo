@@ -5,7 +5,6 @@ var vinylPaths = require('vinyl-paths');
 var to5 = require('gulp-babel');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var assign = Object.assign || require('object.assign');
 var fs = require('fs');
 var bump = require('gulp-bump');
 var browserSync = require('browser-sync');
@@ -39,28 +38,15 @@ var inProd = function(){
 };
 
 var compilerOptions = {
-    filename: '',
-    filenameRelative: '',
-    blacklist: [],
-    whitelist: [],
-    modules: '',
-    sourceMap: true,
-    sourceMapName: '',
-    sourceFileName: '',
-    sourceRoot: '',
-    moduleRoot: '',
+    modules: 'system',
     moduleIds: false,
-    experimental: false,
-    format: {
-        comments: false,
-        compact: false,
-        indent: {
-            parentheses: true,
-            adjustMultilineComment: true,
-            style: "  ",
-            base: 0
-        }
-    }
+    comments: false,
+    compact: false,
+    stage: 2,
+    optional: [
+        'es7.decorators',
+        'es7.classProperties'
+    ]
 };
 
 var jshintConfig = {esnext: true};
@@ -80,7 +66,7 @@ gulp.task('build-system', function () {
         .pipe(plumber())
         .pipe(changed(path.output, {extension: '.js'}))
 //        .pipe(sourcemaps.init())
-        .pipe(to5(assign({}, compilerOptions, {modules: 'system'})))
+        .pipe(to5(compilerOptions))
 //        .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/' + path.output }))
         .pipe(gulp.dest(path.output));
 });

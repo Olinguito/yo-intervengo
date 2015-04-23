@@ -1,12 +1,20 @@
+import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 import {Map} from 'lib/map';
 import {BackEnd} from './deleteme-backend';
-import {Router} from 'aurelia-router';
 
+@inject(Router, BackEnd, Map)
 export class Reports {
-
-    static inject() { return [Router, BackEnd, Map]}
+    mapConf = {
+        zoomControl: false,
+        attributionControl: false,
+        minZoom: 5,
+        tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+        // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+    };
 
     constructor(router, backend, mainMap) {
+        // leaflet map config
         this.bE = backend;
         // reports sub router
         this.router = router;
@@ -19,14 +27,6 @@ export class Reports {
         });
         // Map container
         this.map = mainMap;
-        // leaflet map config
-        this.mapConf = {
-            zoomControl: false,
-            attributionControl: false,
-            minZoom: 5,
-            tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-            // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-        };
     }
 
     activate(params, queryString, config) {

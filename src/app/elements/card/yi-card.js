@@ -1,17 +1,16 @@
-import {Behavior} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-card.css!text';
 import {categories} from 'yi/app';
 import {Router} from 'aurelia-router';
 
+@customElement('yi-card')
+@useShadowDOM
+@inject(Element, Router)
 export class YiCard {
 
-    static metadata() {
-        return Behavior.customElement('yi-card').withProperty('report').useShadowDOM();
-    }
-
-    static inject() { return [Element, Router]; }
+    @bindable report;
 
     constructor(element, router) {
         this.element = element;

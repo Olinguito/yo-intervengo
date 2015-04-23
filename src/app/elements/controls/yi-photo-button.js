@@ -1,20 +1,18 @@
-import {Behavior} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-photo-button.css!text';
 
+@customElement('yi-photo-button')
+@useShadowDOM
+@inject(Element)
 export class YiPhotoButton {
-    static metadata() {
-        return Behavior
-            .customElement('yi-photo-button')
-            .withProperty('title')
-            .withProperty('filechange')
-            .useShadowDOM();
-    }
 
-    static inject() { return [Element] }
+    @bindable title;
+    @bindable filechange;
+    inputFile = null;
+
     constructor(ele) {
         this.element = ele;
-        this.inputFile = null;
     }
 
     fileChosen() {

@@ -1,23 +1,23 @@
-import {Parent} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Complain, Request, Category} from './report';
 import {Map, Coords} from 'lib/map';
 import {BackEnd} from './deleteme-backend';
 
+@inject(Map, BackEnd, Router)
 export class ReportNew {
-    static inject() { return [Map, BackEnd, Parent.of(Router)]; }
+    report = null;
+    mapConf = {
+        zoomControl: false,
+        attributionControl: false,
+        minZoom: 12,
+        tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+    };
 
     constructor(mainMap, backend, router) {
         this.bE = backend;
-        this.report = null;
         this.center = new Coords(mainMap.center);
         this.r = router;
-        this.mapConf = {
-            zoomControl: false,
-            attributionControl: false,
-            minZoom: 12,
-            tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-        };
     }
 
     photoSelected(file) {
