@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './yi-icon.css!text';
 
 /**
@@ -21,10 +21,6 @@ export class YiIcon {
         this.shownIcon = null;
     }
 
-    iconChanged(value) {
-        console.log(value)
-    }
-
     attached() {
         if (this.icon)
             this.shownIcon = this.element.shadowRoot.getElementById(this.icon);
@@ -32,7 +28,7 @@ export class YiIcon {
             this.shownIcon.classList.add('show');
     }
 
-    bind() {
-        addStyle(this.element, style);
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
 }

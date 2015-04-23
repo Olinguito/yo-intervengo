@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './yi-search-tool.css!text';
 
 export class YiSearchTool {
@@ -10,15 +10,7 @@ export class YiSearchTool {
             .useShadowDOM();
     }
 
-    static inject() { return [Element]; }
-
-    constructor(element) {
-        this.element = element;
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
-
-    bind() {
-        //TODO:  should be added to the template element before compile (aurelia fix pending)
-        addStyle(this.element, style);
-    }
-
 }

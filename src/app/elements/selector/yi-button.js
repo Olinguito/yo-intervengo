@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './yi-button.css!text';
 
 export class YiButton {
@@ -33,9 +33,7 @@ export class YiButton {
         }
     }
 
-    bind() {
-        //TODO:  should be added to the template element before compile (aurelia fix pending)
-        addStyle(this.element, style);
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
-
 }

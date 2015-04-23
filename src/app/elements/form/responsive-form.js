@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './responsive-form.css!text';
 
 export class ResponsiveForm {
@@ -10,10 +10,7 @@ export class ResponsiveForm {
             .useShadowDOM();
     }
 
-    static inject() { return [Element]; }
-
     constructor(ele) {
-        this.element = ele;
         this.currStep = 0;
         this.numberOfSteps = 3;
     }
@@ -38,7 +35,7 @@ export class ResponsiveForm {
         return this.currStep === this.numberOfSteps;
     }
 
-    bind() {
-        addStyle(this.element, style);
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
 }

@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-marker.css!text';
 
@@ -18,11 +18,6 @@ export class YiMarker {
         this.element = element;
     }
 
-    bind() {
-        //TODO:  should be added to the template element before compile (aurelia fix pending)
-        addStyle(this.element, style);
-    }
-
     toggleType() {
         this.element.classList.toggle('alt');
     }
@@ -38,5 +33,9 @@ export class YiMarker {
                 direction: 'alternate', duration: 350, iterations: 1
             }
         );
+    }
+
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
 }

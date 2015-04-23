@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './yi-photo-button.css!text';
 
 export class YiPhotoButton {
@@ -22,11 +22,11 @@ export class YiPhotoButton {
         this.filechange(file);
     }
 
-    bind() {
-        addStyle(this.element, style);
-    }
-
     attached() {
         this.inputFile = this.element.shadowRoot.querySelector('input');
+    }
+
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
 }

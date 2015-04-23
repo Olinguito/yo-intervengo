@@ -1,5 +1,5 @@
 import {Behavior, ViewCompiler} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 import style from './yi-selector.css!text';
 
 /**
@@ -52,11 +52,6 @@ export class YiSelector {
         this.selection.splice(index);
     }
 
-    bind() {
-        //TODO:  should be added to the template element before compile (aurelia fix pending)
-        addStyle(this.element, style);
-    }
-
     attached() {
         // bind click listener to yi-buttons
         for (let btn of this.element.querySelectorAll('yi-button')) {
@@ -66,7 +61,13 @@ export class YiSelector {
             });
         }
     }
+
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
+    }
 }
+
+//
 
 function getIndex(node) {
     var childNodes = node.parentNode.children;

@@ -7,11 +7,4 @@ export class YiLogo {
             .customElement('yi-logo')
             .useShadowDOM();
     }
-
-    static inject() { return [Element]; }
-
-    constructor(element) {
-        this.element = element;
-    }
-
 }

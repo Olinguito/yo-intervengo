@@ -1,5 +1,5 @@
 import {Behavior} from 'aurelia-framework';
-import {addStyleToShadowElement as addStyle} from 'lib/util';
+import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-card.css!text';
 import {categories} from 'yi/app';
@@ -8,10 +8,7 @@ import {Router} from 'aurelia-router';
 export class YiCard {
 
     static metadata() {
-        return Behavior
-            .customElement('yi-card')
-            .withProperty('report')
-            .useShadowDOM();
+        return Behavior.customElement('yi-card').withProperty('report').useShadowDOM();
     }
 
     static inject() { return [Element, Router]; }
@@ -22,8 +19,6 @@ export class YiCard {
     }
 
     bind() {
-        //TODO:  should be added to the template element before compile (aurelia fix pending)
-        addStyle(this.element, style);
         //
         this.element.classList.add(this.report.typeText);
         if (!this.report.id)
@@ -42,5 +37,9 @@ export class YiCard {
     // when header is clicked open detail view
     openDetail() {
         if (this.report.id) this.router.navigate(this.report.id);
+    }
+
+    static beforeCompile(template) {
+        addStyleToTemplate(template, style);
     }
 }
