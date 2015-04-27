@@ -1,9 +1,10 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Map} from 'lib/map';
+import {Compiler} from 'lib/util';
 import {BackEnd} from './deleteme-backend';
 
-@inject(Router, BackEnd, Map)
+@inject(Router, BackEnd, Map, Compiler)
 export class Reports {
     mapConf = {
         zoomControl: false,
@@ -13,8 +14,8 @@ export class Reports {
         // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
     };
 
-    constructor(router, backend, mainMap) {
-        // leaflet map config
+    constructor(router, backend, mainMap, compiler) {
+        this.compiler = compiler;
         this.bE = backend;
         // reports sub router
         this.router = router;
@@ -27,6 +28,7 @@ export class Reports {
         });
         // Map container
         this.map = mainMap;
+        document.addEventListener('divmarker', (e)=> this.compileMarker(e.detail));
     }
 
     activate(params, queryString, config) {
@@ -41,4 +43,15 @@ export class Reports {
         return this.router.currentInstruction.config.id || '';
     }
 
+    /**
+     * compile the aurelia yi-marker custom element
+     */
+    compileMarker(marker) {
+        var ctx = marker.element.primaryBehavior.boundProperties[0].binding.source;
+        this.compiler.compile(marker.icon, ctx);
+        // workaround to set the lat/lng of the marker correctly
+        // TODO: investigate why it doesn't set them automatically
+        marker.element.latitude = ctx.report.location.lat;
+        marker.element.longitude = ctx.report.location.lng;
+    }
 }

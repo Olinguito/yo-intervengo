@@ -1,5 +1,4 @@
 template
-  require(from="yi/elements/marker/yi-marker")
   require(from="yi/elements/card/yi-card")
 
   section#map-area
@@ -8,18 +7,20 @@ template
       yi-icon-button(icon="search")
 
     leaflet-map(
-    latitude.bind="map.center.lat",
-    longitude.bind="map.center.lng",
-    zoom.bind="map.zoom",
-    options.bind="mapConf",
-    tileserver.bind="mapConf.tiles"
+      latitude.bind="map.center.lat",
+      longitude.bind="map.center.lng",
+      zoom.bind="map.zoom",
+      options.bind="mapConf",
+      tileserver.bind="mapConf.tiles"
     )
+      //- leaflet-marker( latitude.one-time="map.center.lat", longitude.one-time="map.center.lng", icon="{'iconUrl':'assets/yi-marker-complain.png'}" )
       yi-marker(
-      marker,
-      latitude.one-time="map.center.lat",
-      longitude.one-time="map.center.lng",
-      click.trigger="mrk.toggleType()",
-      ref.view-model="mrk"
+        marker,
+        repeat.for="report of reports"
+        latitude.bind="report.location.lat",
+        longitude.bind="report.location.lng",
+        icon.bind="report.category.icon",
+        class="${report.typeText == 'request'?'alt':''}"
       )
 
   router-view(id="${activeSubSection}")

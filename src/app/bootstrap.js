@@ -34,6 +34,8 @@ export function configure(aurelia) {
         .router()
         .eventAggregator();
 
+    aurelia.globalizeResources('yi/elements/marker/yi-marker');
+
     Promise.all([
         aurelia.start(),
         minWait
