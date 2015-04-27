@@ -2,7 +2,6 @@ import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-card.css!text';
-import {categories} from 'yi/app';
 import {Router} from 'aurelia-router';
 
 @customElement('yi-card')
@@ -19,11 +18,13 @@ export class YiCard {
 
     bind() {
         //
-        this.element.classList.add(this.report.typeText);
-        if (!this.report.id)
-            this.element.classList.add('new');
-        // observe id change to remove 'new' class
-        Object.observe(this.report, this.onIdChange.bind(this));
+        if (this.report){
+            this.element.classList.add(this.report.typeText);
+            if (!this.report.id)
+                this.element.classList.add('new');
+            // observe id change to remove 'new' class
+            Object.observe(this.report, this.onIdChange.bind(this));
+        }
     }
 
     onIdChange(changes) {

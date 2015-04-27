@@ -1,5 +1,6 @@
 template
   require(from="yi/elements/card/yi-card")
+  require(from="./search-filter")
 
   section#map-area
     core-toolbar
@@ -16,7 +17,7 @@ template
       //- leaflet-marker( latitude.one-time="map.center.lat", longitude.one-time="map.center.lng", icon="{'iconUrl':'assets/yi-marker-complain.png'}" )
       yi-marker(
         marker,
-        repeat.for="report of reports"
+        repeat.for="report of reports | search:query"
         latitude.bind="report.location.lat",
         longitude.bind="report.location.lng",
         icon.bind="report.category.icon",
@@ -26,4 +27,4 @@ template
   router-view(id="${activeSubSection}")
 
   yi-card-list
-    yi-card(repeat.for="report of reports", report.bind="report")
+    yi-card(repeat.for="report of reports | search:query", report.bind="report")

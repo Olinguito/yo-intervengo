@@ -14,6 +14,9 @@ export class Reports {
         // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
     };
 
+    // serach query property
+    query = '';
+
     constructor(router, backend, mainMap, compiler) {
         this.compiler = compiler;
         this.bE = backend;

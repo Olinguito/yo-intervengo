@@ -4,4 +4,10 @@ template
   form
     label(for="search-field")
       yi-icon(icon="search")
-    input(id="search-field", type="search", autofocus, placeholder="Search requests and complains made by other people")
+    input(
+      id="search-field", 
+      value.bind="query"
+      type="search", 
+      autofocus,
+      placeholder="Search requests and complains made by other people"
+    )

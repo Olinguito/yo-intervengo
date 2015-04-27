@@ -1,16 +1,11 @@
 import {Router} from 'aurelia-router';
 import {inject, BindingLanguage} from 'aurelia-framework';
-import cats from 'categories.json!';
-
-//
-export const categories = cats;
 
 /**
  * Aurelia Application
  */
 @inject(Router, BindingLanguage)
 export class App {
-
 
     constructor(router, bindingLang) {
         // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix

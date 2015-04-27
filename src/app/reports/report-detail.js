@@ -1,7 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {BackEnd} from './deleteme-backend';
-import {categories} from 'yi/app';
 
 @inject(BackEnd, Router)
 export default
