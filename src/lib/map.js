@@ -39,6 +39,7 @@ export class Marker {
 
 export class Coordinates {
     constructor() {
+        // several possible scenarios for instantiation
         if(arguments[0] instanceof Coordinates) {
             let coords = arguments[0];
             this.lat = coords.lat;
@@ -47,6 +48,9 @@ export class Coordinates {
             && arguments[0].constructor == Object) { // plain object
             this.lat = arguments[0].lat || defCoords.lat;
             this.lng = arguments[0].lng || defCoords.lng;
+        } else if (Array.isArray(arguments[0])){
+            this.lat = arguments[0][0] || defCoords.lat;
+            this.lng = arguments[0][1] || defCoords.lng;
         } else {
             this.lat = arguments[0] || defCoords.lat;
             this.lng = arguments[1] || defCoords.lng;
