@@ -1,0 +1,47 @@
+@import '../../../styles/values'
+
+:host
+  background fade-out(#2d2d2d, 20%)
+  display flex
+  flex-direction column
+  flex-shrink 0
+  padding 2rem 1rem
+  overflow-x hidden
+  overflow-y auto
+
+  &::-webkit-scrollbar
+    width 4px
+    height 4px
+  &::-webkit-scrollbar-thumb
+    background fade-out(#fff, 50%)
+    border-radius 2px
+
+.container
+  display flex
+  flex-direction column
+  justify-content space-around
+  height 100%
+  padding 1rem
+  min-height -webkit-min-content
+  min-height -moz-min-content
+  min-height min-content
+
+.container content::content yi-card
+  margin 0.7rem auto
+  width 100%
+
+// mobile
+@media queryMedium
+  :host
+    flex-direction row
+    min-height bottomPannelMinHeight
+    justify-content center
+    overflow-x auto
+    overflow-y hidden
+    -webkit-overflow-scrolling touch
+
+  .container
+    flex-direction row
+    height auto
+    justify-content space-between
+    padding 1rem
