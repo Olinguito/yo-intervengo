@@ -8,14 +8,12 @@ import style from './yi-selector.css!text';
 @customElement('yi-selector')
 @useShadowDOM
 @inject(Element)
+@bindable({name: 'onSelect', attribute: 'select', defaultValue: ()=>{}})
 export class YiSelector {
-
-    @bindable select;
     selection = [];
 
     constructor(element) {
         this.element = element;
-        this.onSelect = () => {};
     }
 
     /**
@@ -37,8 +35,10 @@ export class YiSelector {
         selectYiButton(btn);
         this.selection.push(btn.yiButton);
         // if can't go deeper in the selection execute onSelect
-        if (btn.querySelectorAll('yi-button').length === 0)
+        if (btn.querySelectorAll('yi-button').length === 0) {
+            console.log(this.onSelect);
             this.onSelect(this.selection);
+        }
     }
 
     navBtnClicked($event) {

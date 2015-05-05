@@ -3,13 +3,13 @@ template
   require(from="yi/elements/selector/yi-selector")
   require(from="yi/elements/selector/yi-button")
 
-  yi-search-tool(query.bind="parent.query")
+  yi-search-tool(query.bind="parentVM.query")
 
   core-toolbar.bottom
     yi-icon-button(icon="map-center")
     //- create report
     //- TODO: class interpolation aurelia/binding#33
-    yi-selector(icon="add", select.call="newReport()")
+    yi-selector(icon="add", select.call="newReport($event)")
       // request or complain
       yi-button(title="${type.name}", value="${type.slug}", class="${type.slug}", repeat.for="type of categories", click.delegate="$parent.selectorType=type.slug")
         // main categories

@@ -17,7 +17,7 @@
     "url": "https://github.com/Olinguito/yo-intervengo"
   },
   "devDependencies": {
-    "browser-sync": "^1.9.1",
+    "browser-sync": "^1.9.2",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",
@@ -32,7 +32,7 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-stylus": "^2.0.1",
     "gulp-vulcanize": "^5.0.0",
-    "jshint-stylish": "^1.0.1",
+    "jshint-stylish": "^1.0.2",
     "jspm": "^0.15.1",
     "karma": "^0.12.32",
     "karma-babel-preprocessor": "^5.1.0",
@@ -50,17 +50,17 @@
       "packages": "vendor"
     },
     "dependencies": {
-      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.11.0",
-      "aurelia-framework": "github:aurelia/framework@^0.10.0",
-      "aurelia-http-client": "github:aurelia/http-client@^0.7.0",
-      "aurelia-router": "github:aurelia/router@^0.7.2",
+      "aurelia-bootstrapper": "github:aurelia/bootstrapper@^0.12.0",
+      "aurelia-framework": "github:aurelia/framework@^0.11.0",
+      "aurelia-http-client": "github:aurelia/http-client@^0.8.0",
+      "aurelia-router": "github:aurelia/router@^0.8.0",
       "json": "github:systemjs/plugin-json@^0.1.0",
       "text": "github:systemjs/plugin-text@^0.0.2"
     },
     "devDependencies": {
-      "babel": "npm:babel@^4.7.16",
-      "babel-runtime": "npm:babel-runtime@^4.7.16",
-      "core-js": "npm:core-js@^0.8.4"
+      "babel": "npm:babel-core@^5.1.13",
+      "babel-runtime": "npm:babel-runtime@^5.1.13",
+      "core-js": "npm:core-js@^0.9.4"
     }
   }
 }

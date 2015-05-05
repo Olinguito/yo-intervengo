@@ -14,24 +14,26 @@ export class Reports {
         // tiles: 'http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
     };
 
-    // serach query property
+    // search query property
     query = '';
 
     constructor(router, backend, mainMap, compiler) {
         this.compiler = compiler;
         this.bE = backend;
-        // reports sub router
-        this.router = router;
-        this.router.configure(config => {
-            config.map([
-                {route: 'new/:type/:category/:subCategory', moduleId: 'yi/reports/report-new', id: 'report-new', title: ''},
-                {route: ':name', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
-                {route: '', moduleId: 'yi/reports/search', id: 'search', title: ''}
-            ]);
-        });
         // Map container
         this.map = mainMap;
+        //
         document.addEventListener('divmarker', (e)=> this.compileMarker(e.detail));
+    }
+
+    configureRouter(config, router) {
+        // reports sub router
+        this.router = router;
+        config.map([
+            {route: 'new/:type/:category/:subCategory', moduleId: 'yi/reports/report-new', id: 'report-new', title: ''},
+            {route: ':name', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
+            {route: '', moduleId: 'yi/reports/search', id: 'search', title: ''}
+        ]);
     }
 
     activate(params, queryString, config) {

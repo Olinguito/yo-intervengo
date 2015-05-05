@@ -9,7 +9,7 @@ export class Search {
     constructor(router, http) {
         this.http = http;
         this.router = router;
-        this.parent = this.router.parent.container.viewModel;
+        this.parentVM = this.router.container.viewModel;
     }
 
     activate() {
@@ -22,6 +22,6 @@ export class Search {
      * @param selection array with selected options
      */
     newReport(selection) {
-        this.router.parent.navigate(`new/${selection.map(ele=>ele.value).join('/')}`);
+        this.router.navigate(`new/${selection.map(ele=>ele.value).join('/')}`);
     }
 }

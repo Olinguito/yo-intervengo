@@ -9,10 +9,10 @@ import style from './yi-icon.css!text';
 @useShadowDOM
 @customElement('yi-icon')
 @inject(Element)
+@bindable({name: 'icon'})
 export class YiIcon {
-    @bindable icon;
     shownIcon = null;
-
+    
     constructor(element) {
         this.element = element;
     }

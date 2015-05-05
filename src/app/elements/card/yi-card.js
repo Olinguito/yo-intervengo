@@ -7,9 +7,8 @@ import {Router} from 'aurelia-router';
 @customElement('yi-card')
 @useShadowDOM
 @inject(Element, Router)
+@bindable({ name: 'report' })
 export class YiCard {
-
-    @bindable report;
 
     constructor(element, router) {
         this.element = element;
