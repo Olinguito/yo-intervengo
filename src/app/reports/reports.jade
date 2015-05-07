@@ -22,10 +22,14 @@ template
         latitude.bind="report.location.lat",
         longitude.bind="report.location.lng",
         icon.bind="report.category.icon",
-        class="${report.typeText == 'request'?'alt':''}"
+        class="${report.typeText == 'request'?'alt':''}",
+        click.delegate="$parent.highlightReportCard(report)"
       )
 
   router-view(id="${activeSubSection}")
 
   yi-card-list
-    yi-card(repeat.for="report of reports | search:query", report.bind="report")
+    yi-card(
+      repeat.for="report of reports | search:query", 
+      report.bind="report"
+    )

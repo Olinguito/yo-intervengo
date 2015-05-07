@@ -41,6 +41,15 @@
     min-width rightPanelWidth
     z-index 2
 
+    yi-card
+      transition transform 0.3s
+
+      &.selected
+        transform scale(1.05)
+      &.not-selected
+        transform scale(0.90)
+
+
   yi-selector
     absolute bottom 0 right rightPanelWidth
     z-index 1
