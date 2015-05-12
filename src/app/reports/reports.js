@@ -75,7 +75,7 @@ export class Reports {
     }
 
     attached() {
-        this.map.mapElement = document.querySelector('leafletMap');
+        this.map.mapElement = document.querySelector('leaflet-map');
     }
 
     /**

@@ -9,9 +9,9 @@ template
       yi-icon-button(icon="search")
 
     leaflet-map(
-      latitude.bind="map.center.lat",
-      longitude.bind="map.center.lng",
-      zoom.bind="map.zoom",
+      latitude.two-way="map.center.lat",
+      longitude.two-way="map.center.lng",
+      zoom.two-way="map.zoom",
       options.bind="mapConf",
       tileserver.bind="mapConf.tiles"
     )

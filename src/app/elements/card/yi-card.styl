@@ -31,13 +31,13 @@
   .category,
   .backups:hover
     background-color colorOrange
-  header:hover .category
+  figure.category:hover
     background-color colorOrange - 20%
 :host(.request)
   .category,
   .backups:hover
     background-color colorBlue
-  header:hover .category
+  figure.category:hover
     background-color colorBlue - 20%
 
 header
@@ -47,12 +47,6 @@ header
   width 100%
   cursor pointer
 
-  &:hover
-    figure.title
-      figcaption
-        background linear-gradient(top,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.9))
-    .category
-      background-color: #e35620 - 20%
 
   figure
     display inline-block
@@ -73,6 +67,10 @@ header
       overflow hidden
       padding 1rem 0.8rem
       position relative
+
+      &:hover
+        figcaption
+          background linear-gradient(top,rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.9))
 
       img
         left 0
