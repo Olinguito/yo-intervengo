@@ -1,0 +1,29 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "strict": 0,
+    "quotes": [1, "single"],
+    "no-use-before-define": [2, "nofunc"],
+    "no-console": 1,
+    "no-unused-vars": 1,
+    "no-extra-parens": 2,
+
+    "indent": 2,
+    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
+    "consistent-this": [2, "self"],
+    "no-multiple-empty-lines": [2, {"max": 2}],
+    "object-shorthand": [2, "always"],
+    "space-in-parens": [2, "never"],
+
+    "space-before-function-paren": [2, "never"],
+    "space-before-blocks": [2, "always"],
+    "space-after-keywords": [2, "always"]
+  },
+  "globals": {
+    "window": true,
+    "document": true
+  },
+  "env": {
+    "browser": true
+  }
+}

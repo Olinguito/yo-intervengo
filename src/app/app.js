@@ -9,7 +9,7 @@ export class App {
 
     constructor(bindingLang) {
         // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix
-        bindingLang.attributeMap['tileserver'] = 'tileServer';
+        bindingLang.attributeMap.tileserver = 'tileServer';
     }
 
     configureRouter(config, router) {
