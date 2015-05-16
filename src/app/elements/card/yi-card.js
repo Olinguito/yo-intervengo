@@ -20,7 +20,7 @@ export class YiCard {
     bind() {
         //
         if (this.report) {
-            this.element.classList.add(this.report.typeText);
+            this.element.classList.add(this.report.typeName);
             if (!this.report.id) {
                 this.element.classList.add('new');
             }

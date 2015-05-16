@@ -1,8 +1,44 @@
+import {Backend, RemoteBackend, MemoryBackend} from 'lib/backend/backend';
+
+const API_URL = 'http://api.yointervengo.co/v1';
 // minimum time for the loading animation
 const MIN_WAIT = 2.5; // seconds
 var minWait = wait(MIN_WAIT);
-// bootstrap on module load
-bootstrap();
+
+/**
+ * Configures aurelia application, used by the framework
+ * @param aurelia
+ */
+export function configure(aurelia) {
+    var backend, di = aurelia.container;
+
+    // Aurelia default modules
+    aurelia.use
+        .defaultBindingLanguage()
+        .defaultResources()
+        .router()
+        .eventAggregator();
+
+    // Make resources global
+    aurelia.globalizeResources('yi/elements/marker/yi-marker');
+
+    // register default backend and configure
+    /* global DEV_MODE */
+    if (typeof DEV_MODE !== 'undefined') {
+        // backend = di.invoke(MemoryBackend);
+        backend = di.invoke(RemoteBackend);
+        backend.config({baseUrl: 'http://localhost:3000/v1'});
+    } else {
+        backend = di.invoke(RemoteBackend);
+        backend.config({baseUrl: API_URL});
+    }
+    di.registerInstance(Backend, backend);
+
+    Promise.all([
+        aurelia.start(),
+        minWait
+    ]).then(r => r[0].setRoot('yi/app'));
+}
 
 /**
  * Check browser compatibility and run application
@@ -16,30 +52,12 @@ function bootstrap() {
         if (browserCompatible()) {
             loadDocument('polymer-elements.html');
             System.import('aurelia-bootstrapper');
-        } else showCompatMessage();
+        } else {
+            showCompatMessage();
+        }
     }).catch(err => {
         console.error(err);
     });
-}
-
-/**
- * Configures aurelia application, used by the framework
- * @param aurelia
- */
-export function configure(aurelia) {
-
-    aurelia.use
-        .defaultBindingLanguage()
-        .defaultResources()
-        .router()
-        .eventAggregator();
-
-    aurelia.globalizeResources('yi/elements/marker/yi-marker');
-
-    Promise.all([
-        aurelia.start(),
-        minWait
-    ]).then(r => r[0].setRoot('yi/app'));
 }
 
 function loadDocument(url) {
@@ -78,3 +96,5 @@ function supportsWC() {
         && 'import' in document.createElement('link');
 }
 
+// bootstrap on module load
+bootstrap();

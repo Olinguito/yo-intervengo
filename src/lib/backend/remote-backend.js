@@ -17,13 +17,20 @@ export class RemoteBackend extends Backend {
     constructor(http) {
         super();
         this.http = http;
-        this.config();
+        this.config({
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     config(conf = {}) {
         // TODO allow more configuration options
         this.http.configure(x => {
             x.withBaseUrl(conf.baseUrl || this.baseUrl);
+            if ('headers' in conf) {
+                for (var header in conf.headers) {
+                    x.withHeader(header, conf.headers[header]);
+                }
+            }
         });
     }
 
@@ -38,7 +45,7 @@ export class RemoteBackend extends Backend {
             response = id ?
                 this.http.put(`${endpoint}/${id}`, serialize(res)) :
                 this.http.post(`${endpoint}`, serialize(res));
-        return response.then(r => deserialize(r, type));
+        return response.then(r => deserialize(r.content, type));
     }
 
     delete(res) {
@@ -51,17 +58,27 @@ export class RemoteBackend extends Backend {
             response = id ?
                 this.http.delete(`${endpoint}/${id}`) :
                 Promise.reject(NON_EXISTENT_MSG);
-        return response.then(r => deserialize(r, type));
+        return response.then(r => deserialize(r.content, type));
     }
 
     find(type, query = {}) {
         if (!isValidResource(type)) {
             return Promise.reject(INVALID_MSG);
         }
-        var params = query ? '?' + urlParams(query) : '',
+        var params = Object.keys(query).length > 0 ? '?' + urlParams({filter: {where: query}}) : '',
             endpoint = getPluralIdentifier(type),
             response = this.http.get(`${endpoint}${params}`);
-        return response.then(r => deserialize(r, type));
+        return response.then(r => deserialize(r.content, type));
+    }
+
+    findOne(type, query = {}) {
+        if (!isValidResource(type)) {
+            return Promise.reject(INVALID_MSG);
+        }
+        var params = Object.keys(query).length > 0 ? '?' + urlParams({filter: {where: query}}) : '',
+            endpoint = getPluralIdentifier(type),
+            response = this.http.get(`${endpoint}/findOne${params}`);
+        return response.then(r => deserialize(r.content, type));
     }
 
     get(type, id) {
@@ -69,13 +86,14 @@ export class RemoteBackend extends Backend {
             return Promise.reject(INVALID_MSG);
         }
         return this.http
-            .get(`${getPluralIdentifier(type)}/${getResId(id)}`)
-            .then(r => deserialize(r, type));
+            .get(`${getPluralIdentifier(type)}/${id}`)
+            .then(r => deserialize(r.content, type));
     }
 }
 
 function getResId(res) {
-    return res.idProperty ? res.idProperty : res.id;
+    var idProp = res.constructor.idProperty;
+    return idProp ? res[idProp] : res.id;
 }
 
 function isValidResource(type) {

@@ -1,3 +1,4 @@
+/*eslint-env node*/
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var del = require('del');
@@ -33,7 +34,7 @@ var path = {
 };
 path.elementsStyleOut = path.output;
 
-var inProd = function(){
+var inProd = function() {
     return process.env.NODE_ENV === 'production' ? true : false;
 };
 
@@ -51,17 +52,17 @@ var compilerOptions = {
 
 var jshintConfig = {esnext: true};
 
-gulp.task('clean', function () {
+gulp.task('clean', function() {
     return gulp.src([path.output])
         .pipe(vinylPaths(del));
 });
 
-gulp.task('clean-dist', function () {
+gulp.task('clean-dist', function() {
     return gulp.src([path.custElementsStyleCompiled, path.output + '**/*.map'])
         .pipe(vinylPaths(del));
 });
 
-gulp.task('build-system', function () {
+gulp.task('build-system', function() {
     return gulp.src(path.scripts, {base: path.src})
         .pipe(plumber())
         .pipe(changed(path.output, {extension: '.js'}))
@@ -71,7 +72,7 @@ gulp.task('build-system', function () {
         .pipe(gulp.dest(path.output));
 });
 
-gulp.task('build-style', function () {
+gulp.task('build-style', function() {
     return gulp.src([path.src + 'styles/app.styl'])
         .pipe(sourcemaps.init())
         .pipe(stylus({use: [nib()], import: 'nib', compress: inProd()}))
@@ -80,7 +81,7 @@ gulp.task('build-style', function () {
         .pipe(gulp.dest(path.output));
 });
 
-gulp.task('build-elements-style', function () {
+gulp.task('build-elements-style', function() {
     return gulp.src([path.custElementsStyle], {base: path.src})
         .pipe(changed(path.output, {extension: '.styl'}))
         .pipe(sourcemaps.init())
@@ -89,7 +90,7 @@ gulp.task('build-elements-style', function () {
         .pipe(gulp.dest(path.elementsStyleOut));
 });
 
-gulp.task('build-html', function () {
+gulp.task('build-html', function() {
     //var lang = 'es'; // TODO: be able to specify language on build
 
     return gulp.src(path.html)
@@ -104,19 +105,20 @@ gulp.task('build-html', function () {
 //    }
 });
 
-gulp.task('lint', function () {
+gulp.task('lint', function() {
     return gulp.src(path.scripts)
         .pipe(jshint(jshintConfig))
         .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('bump-version', function () {
+gulp.task('bump-version', function() {
     return gulp.src(['./package.json'])
         .pipe(bump({type: 'patch'})) //major|minor|patch|prerelease
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('build', function (callback) {
+gulp.task('build', function(callback) {
+    process.env.NODE_ENV = 'development';
     return runSequence(
         'clean',
         ['build-system', 'build-elements-style', 'build-style', 'build-html'],
@@ -124,7 +126,7 @@ gulp.task('build', function (callback) {
     );
 });
 
-gulp.task('serve', ['build'], function (done) {
+gulp.task('serve', ['build'], function(done) {
     browserSync({
         open: false,
         port: 9000,
@@ -133,7 +135,7 @@ gulp.task('serve', ['build'], function (done) {
             routes: {
                 '/vendor': 'vendor'
             },
-            middleware: function (req, res, next) {
+            middleware: function(req, res, next) {
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 next();
             }
@@ -145,7 +147,7 @@ function reportChange(event) {
     console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
 }
 
-gulp.task('watch', ['serve'], function () {
+gulp.task('watch', ['serve'], function() {
     gulp.watch(path.scripts, ['build-system', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.html, ['build-html', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.style, ['build-style', browserSync.reload]).on('change', reportChange);
@@ -154,17 +156,17 @@ gulp.task('watch', ['serve'], function () {
 
 // bundling/dist/deploy stuff
 
-gulp.task('copy-lib', function () {
+gulp.task('copy-lib', function() {
     return gulp.src('vendor/{system,es6-module-loader}.js', { base: '.'})
         .pipe(gulp.dest(path.out));
 });
 
-gulp.task('copy-assets', function () {
+gulp.task('copy-assets', function() {
     return gulp.src([path.src + '**/*.{png,jpg,svg,json}', path.src + 'config.js'])
         .pipe(gulp.dest(path.out));
 });
 
-gulp.task('vulcanize', function () {
+gulp.task('vulcanize', function() {
     return gulp.src(path.output + 'polymer-elements.html')
         .pipe(vulcanize({
             dest: path.output,
@@ -175,7 +177,7 @@ gulp.task('vulcanize', function () {
         .pipe(gulp.dest(path.output));
 });
 
-gulp.task('jspm-bundle', function (done) {
+gulp.task('jspm-bundle', function(done) {
     var dependencies = [
         'yi/**/*',
         'lib/**/*',
@@ -200,7 +202,7 @@ gulp.task('jspm-bundle', function (done) {
     ).then(done);
 });
 
-gulp.task('dist', function (done) {
+gulp.task('dist', function(done) {
     path.output = 'dist/';
     path.elementsStyleOut = path.src;
     // manually set NODE_ENV to 'production' // is it the best way?
@@ -214,7 +216,7 @@ gulp.task('dist', function (done) {
     );
 });
 
-gulp.task('deploy-preprod', ['dist'], function () {
+gulp.task('deploy-preprod', ['dist'], function() {
     var origin = 'me';
     return gulp.src('dist/**/*')
         .pipe(ghPages({origin: origin, force: true}));

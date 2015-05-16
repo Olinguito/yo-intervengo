@@ -3,7 +3,7 @@ template
   require(from="yi/elements/controls/yi-photo-button")
   require(from="yi/elements/icon/yi-icon")
 
-  responsive-form(class="${report.typeText}", submit.call="saveReport()")
+  responsive-form(class="${report.typeName}", submit.call="saveReport()")
     section.info.left
       .cat
         figure: yi-icon(icon="${report.category.icon}")
@@ -15,11 +15,11 @@ template
     section.map.right
       i Locate your report on the map
       leaflet-map(
-      latitude.bind="center.lat",
-      longitude.bind="center.lng",
-      zoom="17",
-      options.one-time="mapConf",
-      tileServer.one-time="mapConf.tiles"
+        latitude.two-way="center.lat",
+        longitude.two-way="center.lng",
+        zoom="17",
+        options.one-time="mapConf",
+        tileServer.one-time="mapConf.tiles"
       )
         yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
 

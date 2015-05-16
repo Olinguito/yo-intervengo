@@ -2,34 +2,33 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Map} from 'lib/map';
 import {Compiler} from 'lib/util';
-import {BackEnd} from './deleteme-backend';
+import {Report} from './models/report';
 
 // mapbox custom map access token
 const MAP_TOKEN = 'pk.eyJ1Ijoib2xhbm9kIiwiYSI6IjdZdV9iTTQifQ.HP-razZKsNmITPgHs4ugIA';
+const TILES_URL = 'http://api.tiles.mapbox.com/v4/robjalkh.a4368786/{z}/{x}/{y}.png';
 
-@inject(BackEnd, Map, Compiler)
+@inject(Map, Compiler)
 export class Reports {
     // leaflet map configurations
     mapConf = {
         zoomControl: false,
         attributionControl: false,
         minZoom: 5,
-        // tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-        tiles: `http://api.tiles.mapbox.com/v4/robjalkh.a4368786/{z}/{x}/{y}.png?access_token=${MAP_TOKEN}`
+        tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
     };
     // search query property
     query = '';
     // current selected report
     activeReport = null;
 
-    constructor(backend, mainMap, compiler) {
+    constructor(mainMap, compiler) {
         this.compiler = compiler;
-        this.bE = backend;
         // Map container
         this.map = mainMap;
         //
         document.addEventListener('divmarker', e=> this.compileMarker(e.detail));
-        //
+        // TODO move to card list
         document.addEventListener('click', deactivateCardsOnClick);
     }
 
@@ -37,9 +36,9 @@ export class Reports {
         // reports sub router
         this.router = router;
         config.map([
-            {route: 'new/:type/:category/:subCategory', moduleId: 'yi/reports/report-new', id: 'report-new', title: ''},
-            {route: ':name', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
-            {route: '', moduleId: 'yi/reports/search', id: 'search', title: ''}
+            {route: 'new/:type/:category', moduleId: 'yi/reports/report-new', id: 'report-new', title: ''},
+            {route: ':slug', moduleId: 'yi/reports/report-detail', id: 'report-detail', title: ''},
+            {route: '', moduleId: 'yi/reports/report-main', id: 'search', title: ''}
         ]);
     }
 
@@ -67,11 +66,11 @@ export class Reports {
             }
         }
         // scroll to card
-        list.scrollTop = activeCard.offsetTop - (list.offsetHeight/2) + (activeCard.offsetHeight/2)
+        list.scrollTop = activeCard.offsetTop - list.offsetHeight / 2 + activeCard.offsetHeight / 2;
     }
 
-    activate(params, queryString, config) {
-        this.reports = this.bE.getReports();
+    activate() {
+        Report.find().then(reports => this.reports = reports);
     }
 
     attached() {
@@ -93,9 +92,10 @@ export class Reports {
 
 function deactivateCardsOnClick(e) {
     var name = e.target.tagName.toLowerCase();
-    if (name !== 'leaflet-map' && name != 'yi-card')
+    if (name !== 'leaflet-map' && name !== 'yi-card') {
         for (let card of document.querySelectorAll('yi-card')) {
             card.classList.remove('selected');
             card.classList.remove('not-selected');
         }
+    }
 }

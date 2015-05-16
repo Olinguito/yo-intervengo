@@ -14,6 +14,6 @@ export class Backend {
 
     findOne(type, query = {}) {
         return this.find(type, query)
-            .then(data => data.length ? data[1] : Promise.reject('not found'));
+            .then(data => data.length > 0 ? data[0] : Promise.reject('not found'));
     }
 }

@@ -1,26 +1,25 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {BackEnd} from './deleteme-backend';
+import {Report} from './models';
 
-@inject(BackEnd, Router)
+@inject(Router, Element)
 export default
 class ReportDetail {
-    report = {};
+    report = null;
 
-    constructor(backend, router) {
-        this.bE = backend;
+    constructor(router, ele) {
         this.r = router;
     }
 
-    activate(params) {
-        // FIXME: replace with api call
-        this.report = this.bE.getReports()
-            .find( r => r.id === params.name);
-        // TODO: urgent! find correct method to do this
-        setTimeout(()=> {
-            var view = document.querySelector('#report-detail');
-            view.className = this.report.typeText;
+    attached() {
+        // TODO find fix
+        setTimeout(() => {
+            document.querySelector('#report-detail').className = this.report.typeName;
         }, 500);
     }
 
+    activate(params) {
+        // get report
+        return Report.get(params.slug).then(r=> this.report = r);
+    }
 }

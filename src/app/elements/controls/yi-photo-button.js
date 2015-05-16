@@ -5,10 +5,10 @@ import style from './yi-photo-button.css!text';
 @customElement('yi-photo-button')
 @useShadowDOM
 @inject(Element)
+@bindable({name: 'filechange'})
 export class YiPhotoButton {
 
     @bindable title;
-    @bindable filechange;
     inputFile = null;
 
     constructor(ele) {

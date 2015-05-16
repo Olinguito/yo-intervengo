@@ -52,3 +52,25 @@ function templateFromElement(element) {
     tpl.content.appendChild(element);
     return tpl;
 }
+
+
+/**
+ * List as tree
+ * transform a list of objects into a tree like structure
+ */
+export function asTree(list, id = 'id', children = 'children', parent = 'parent') {
+    var treeList = [], lookup = {};
+
+    for (let obj of list) {
+        lookup[obj[id]] = obj;
+        obj[children] = [];
+    }
+    for (let obj of list) {
+        if (typeof obj[parent] !== 'undefined' && obj[parent] !== null) {
+            lookup[obj[parent]][children].push(obj);
+        } else {
+            treeList.push(obj);
+        }
+    }
+    return treeList;
+}

@@ -26,8 +26,16 @@ function assignProperties(form, to) {
  * Serialize objects
  */
 export function serialize(obj) {
-    // TODO: detect serializable properties
-    return JSON.parse(JSON.stringify(obj));
+    var properties = obj.constructor.serializable,
+        serialized = {};
+    for (let prop of properties) {
+        if (prop in obj) {
+            serialized[prop] = obj[prop] && typeof obj[prop].serialize === 'function'
+                ? obj[prop].serialize()
+                : obj[prop];
+        }
+    }
+    return serialized;
 }
 
 /**
@@ -99,8 +107,16 @@ export function getPluralIdentifier(type) {
  * Encode object as vaild URL param string
  * @param {Object} object
  */
-export function urlParams(object) {
-    return Object.keys(object).map(k => {
-        return encodeURIComponent(k) + '=' + encodeURIComponent(object[k]);
-    }).join('&');
+export function urlParams(object, prefix) {
+    var str = [];
+    for (var p in object) {
+        if (object.hasOwnProperty(p)) {
+            var k = prefix ? prefix + '[' + p + ']' : p,
+                v = object[p];
+            str.push(typeof v === 'object' ?
+                urlParams(v, k) :
+                encodeURIComponent(k) + '=' + encodeURIComponent(v));
+        }
+    }
+    return str.join('&');
 }
