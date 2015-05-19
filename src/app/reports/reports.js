@@ -90,6 +90,38 @@ export class Reports {
     }
 }
 
+/**
+ * Card sorting
+ * TODO check if comparisons are correct
+ */
+export class SortValueConverter {
+    toView(reports, sort) {
+        if (sort) {
+            return reports.sort(this[sort+'Sort']);
+        } else {
+            return reports;
+        }
+        console.log(value, a);
+    }
+
+    alphaSort(a, b) {
+        return a.title < b.title ? -1 : 1;
+    }
+
+    locationSort(a, b) {
+        // TODO
+        return -1;
+    }
+
+    supportsSort(a, b) {
+        return a.supporters < b.supporters ? -1 : 1;
+    }
+
+    dateSort(a, b) {
+        return (a.valueOf() > b.valueOf()) - (a.valueOf() < b.valueOf());
+    }
+}
+
 function deactivateCardsOnClick(e) {
     var name = e.target.tagName.toLowerCase();
     if (name !== 'leaflet-map' && name !== 'yi-card') {

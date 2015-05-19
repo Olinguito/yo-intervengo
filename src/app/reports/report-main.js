@@ -4,7 +4,7 @@ import {Category} from './models';
 import {asTree} from 'lib/util';
 
 @inject(Router)
-export class Search {
+export class ReportMain {
     categories = [];
 
     constructor(router) {

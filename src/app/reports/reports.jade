@@ -28,8 +28,8 @@ template
 
   router-view(id="${activeSubSection}")
 
-  yi-card-list
+  yi-card-list(order.bind="sort")
     yi-card(
-      repeat.for="report of reports | search:query", 
+      repeat.for="report of reports | search:query | sort:sort",
       report.bind="report"
     )

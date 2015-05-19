@@ -1,3 +1,10 @@
 template
-  .container
-    content(select="yi-card")
+  require(from="yi/elements/icon/yi-icon")
+  
+  header.sort
+    button(repeat.for="o of orderOptions", title.bind="o.title", click.delegate="$parent.select(o)")
+      yi-icon(icon.bind="o.icon")
+      
+  section
+    .container
+      content(select="yi-card")
