@@ -10,9 +10,9 @@ template
     //- create report
     //- TODO: class interpolation aurelia/binding#33
     yi-selector(icon="add", select.call="newReport($event)")
-      yi-button(title="Request", value="request", class="request", click.delegate="$parent.selectorType='request'")
+      yi-button(title="Nueva Petición", value="request", class="request", click.delegate="$parent.selectorType='request'")
         yi-button(title.bind="cat.name", value="${cat.slug}", icon="${cat.icon}", repeat.for="cat of categories", class="request")
           yi-button(title.bind="subcat.name", value="${subcat.slug}", icon="${subcat.icon}", repeat.for="subcat of cat.categories", class="request")
-      yi-button(title="Complain", value="complain", class="complain", click.delegate="$parent.selectorType='complain'")
+      yi-button(title="Nueva Queja", value="complain", class="complain", click.delegate="$parent.selectorType='complain'")
         yi-button(title.bind="cat.name", value="${cat.slug}", icon="${cat.icon}", repeat.for="cat of categories", class="complain")
           yi-button(title.bind="subcat.name", value="${subcat.slug}", icon="${subcat.icon}", repeat.for="subcat of cat.categories", class="complain")

@@ -17,18 +17,20 @@ export class App {
 
         config.title = 'Yo Intervengo';
         config.map([
-            // TODO: module names should start with 'yi' (aurelia fix pending)
-            {route: 'reports', moduleId: 'yi/reports/reports', nav: true},
-            {route: 'wiki', moduleId: 'yi/wiki/wiki', nav: true},
-            {route: 'stats', moduleId: 'yi/stats/stats', nav: true},
-            {route: 'profile', moduleId: 'yi/profile/profile', nav: true},
-            {route: 'about', moduleId: 'yi/about/about', nav: true},
-            {route: 'login', moduleId: 'yi/login/login'},
-            {route: '', redirect: '/reports'}
+            // TODO: dynamic generation with i18n
+            {name: 'Reportes', id: 'reports', route: 'reports', moduleId: 'yi/reports/reports', nav: true},
+            {name: 'Wiki', id: 'wiki', route: 'wiki', moduleId: 'yi/wiki/wiki'},
+            {name: 'Estadisticas', id: 'stats', route: 'stats', moduleId: 'yi/stats/stats'},
+            {name: 'Perfil', id: 'profile', route: 'profile', moduleId: 'yi/profile/profile'},
+            {name: 'Acerca de', id: 'about', route: 'about', moduleId: 'yi/about/about', nav: true},
+            {id: 'login', route: 'login', moduleId: 'yi/login/login'},
+            {id: 'error', route: 'error/:error', moduleId: 'yi/error/error'},
+            {route: '', redirect: 'reports'}
         ]);
     }
 
     get activeRoute() {
-        return this.router.currentInstruction ? this.router.currentInstruction.fragment.split('/')[0] : '';
+        return this.router.currentInstruction ?
+            this.router.currentInstruction.config.id : '';
     }
 }

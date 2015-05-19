@@ -70,7 +70,7 @@ export class Reports {
     }
 
     activate() {
-        Report.find().then(reports => this.reports = reports);
+        return Report.find().then(reports => this.reports = reports);
     }
 
     attached() {

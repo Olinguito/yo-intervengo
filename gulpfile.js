@@ -3,14 +3,12 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var del = require('del');
 var vinylPaths = require('vinyl-paths');
-var to5 = require('gulp-babel');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var fs = require('fs');
 var bump = require('gulp-bump');
 var browserSync = require('browser-sync');
 var changed = require('gulp-changed');
-var plumber = require('gulp-plumber');
 var data = require('gulp-data');
 var jade = require('gulp-jade');
 var stylus = require('gulp-stylus');
@@ -24,7 +22,7 @@ var jspm = require('jspm');
 
 var path = {
     src: 'src/',
-    scripts: 'src/app/**/*.js',
+    scripts: 'src/**/*.js',
     html: 'src/**/*.jade',
     style: 'src/styles/**/*.styl',
     custElementsStyle: 'src/app/elements/**/*.styl',
@@ -38,18 +36,6 @@ var inProd = function() {
     return process.env.NODE_ENV === 'production' ? true : false;
 };
 
-var compilerOptions = {
-    modules: 'system',
-    moduleIds: false,
-    comments: false,
-    compact: false,
-    stage: 2,
-    optional: [
-        'es7.decorators',
-        'es7.classProperties'
-    ]
-};
-
 var jshintConfig = {esnext: true};
 
 gulp.task('clean', function() {
@@ -60,16 +46,6 @@ gulp.task('clean', function() {
 gulp.task('clean-dist', function() {
     return gulp.src([path.custElementsStyleCompiled, path.output + '**/*.map'])
         .pipe(vinylPaths(del));
-});
-
-gulp.task('build-system', function() {
-    return gulp.src(path.scripts, {base: path.src})
-        .pipe(plumber())
-        .pipe(changed(path.output, {extension: '.js'}))
-//        .pipe(sourcemaps.init())
-        .pipe(to5(compilerOptions))
-//        .pipe(sourcemaps.write({includeContent: false, sourceRoot: '/' + path.output }))
-        .pipe(gulp.dest(path.output));
 });
 
 gulp.task('build-style', function() {
@@ -121,7 +97,7 @@ gulp.task('build', function(callback) {
     process.env.NODE_ENV = 'development';
     return runSequence(
         'clean',
-        ['build-system', 'build-elements-style', 'build-style', 'build-html'],
+        ['build-elements-style', 'build-style', 'build-html'],
         callback
     );
 });
@@ -148,7 +124,7 @@ function reportChange(event) {
 }
 
 gulp.task('watch', ['serve'], function() {
-    gulp.watch(path.scripts, ['build-system', browserSync.reload]).on('change', reportChange);
+    gulp.watch(path.scripts, browserSync.reload).on('change', reportChange);
     gulp.watch(path.html, ['build-html', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.style, ['build-style', browserSync.reload]).on('change', reportChange);
     gulp.watch(path.custElementsStyle, ['build-elements-style', browserSync.reload]).on('change', reportChange);

@@ -10,10 +10,10 @@ template
         h2 ${report.category.parent.name}
         h3 ${report.category.name}
       .fields
-        input(placeholder="Title", tabindex="1", autofocus, value.bind="report.title", required)
-        textarea(placeholder="Report Description", tabindex="1", value.bind="report.description", required)
+        input(placeholder="título", tabindex="1", autofocus, value.bind="report.title", required)
+        textarea(placeholder="descripcción", tabindex="1", value.bind="report.description", required)
     section.map.right
-      i Locate your report on the map
+      i ubica tu ${report.type == 0 ? 'petición' : 'queja'} en el mapa
       leaflet-map(
         latitude.two-way="center.lat",
         longitude.two-way="center.lng",
@@ -23,8 +23,8 @@ template
       )
         yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
 
-      input(placeholder="Address", tabindex="1", required)
+      input(placeholder="dirección", tabindex="1", required)
     section.photo.right
-      i Add a photo to your report
+      i Añade una foto al reporte
       figure
-        yi-photo-button(title="Add photo", filechange.call="photoSelected()")
+        yi-photo-button(title="buscar foto", filechange.call="photoSelected()")

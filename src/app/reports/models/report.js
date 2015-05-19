@@ -18,6 +18,7 @@ export class Report {
     @property address = '';
     @property photo = '';
     @property supporters = 0;
+
     @property(Category) category;
     @property(Date) date;
     @property(Coords) location;
