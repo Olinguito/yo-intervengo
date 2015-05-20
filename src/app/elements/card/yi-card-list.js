@@ -11,15 +11,18 @@ export class YiCardList {
             title: 'Orden alfabético',
             icon: 'hand',
             name: 'alpha'
-        },{
+        },
+        {
             title: 'Mas cercanos',
             icon: 'location',
             name: 'location'
-        },{
+        },
+        {
             title: 'Número de respaldos',
             icon: 'hand',
             name: 'supports'
-        },{
+        },
+        {
             title: 'Fecha de creación',
             icon: 'hand',
             name: 'date'

@@ -2,7 +2,12 @@ template
   require(from="yi/elements/icon/yi-icon")
   
   header.sort
-    button(repeat.for="o of orderOptions", title.bind="o.title", click.delegate="$parent.select(o)")
+    button(
+        repeat.for="o of orderOptions", 
+        title.bind="o.title",
+        click.delegate="$parent.select(o)",
+        class="${$parent.order==o.name ? 'active' : ''}"
+      )
       yi-icon(icon.bind="o.icon")
       
   section

@@ -25,12 +25,17 @@
       transform scale(0.8)
       &::shadow
         path
-          transition stroke 0.3s
+          transition 0.3s
           stroke #7f7f7f
     &:hover
       yi-icon::shadow
         path
           stroke white
+
+    &.active
+      yi-icon::shadow path
+        stroke white
+        filter url(#drop-shadow)
 
 section
   absolute top headerHeight left 0

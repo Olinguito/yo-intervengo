@@ -97,15 +97,21 @@ export class Reports {
 export class SortValueConverter {
     toView(reports, sort) {
         if (sort) {
-            return reports.sort(this[sort+'Sort']);
+            return reports.sort(this[sort + 'Sort']);
         } else {
             return reports;
         }
-        console.log(value, a);
     }
 
     alphaSort(a, b) {
-        return a.title < b.title ? -1 : 1;
+        var title1 = a.title.toLowerCase(), title2 = b.title.toLowerCase();
+        if (title1 < title2) {
+            return -1;
+        }
+        if (title1 > title2) {
+            return 1;
+        }
+        return 0;
     }
 
     locationSort(a, b) {
@@ -114,11 +120,11 @@ export class SortValueConverter {
     }
 
     supportsSort(a, b) {
-        return a.supporters < b.supporters ? -1 : 1;
+        return b.supporters - a.supporters;
     }
 
     dateSort(a, b) {
-        return (a.valueOf() > b.valueOf()) - (a.valueOf() < b.valueOf());
+        return (a.date.valueOf() < b.date.valueOf()) - (a.date.valueOf() > b.date.valueOf());
     }
 }
 
