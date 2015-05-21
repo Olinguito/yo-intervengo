@@ -1,4 +1,4 @@
-@import 'values'
+@require 'values'
 
 #reports
   display flex
@@ -7,9 +7,7 @@
     absolute top 0 left 0
     z-index 1
     width 100%
-    background linear-gradient(top, fade-out(black, 50%), fade-out(black, 99.9%))
     &.bottom
-      background linear-gradient(bottom, fade-out(black, 50%), fade-out(black, 99.9%))
       absolute bottom 0 left 0
       top initial
 
@@ -51,16 +49,14 @@
 
 
   yi-selector
-    absolute bottom 0 right rightPanelWidth
+    absolute bottom 1rem right rightPanelWidth
+    color colorGray1
     z-index 1
     margin 0
 
     &.opened
       left 0
       height 100vh
-
-      &::shadow yi-button#main
-        transform scale(1) rotate(-45deg)
 
     @media queryMedium
       right 0

@@ -1,16 +1,19 @@
 @import '../../../styles/values'
+@import '../../../styles/colors'
 
 :host
-  background fade-out(#2d2d2d, 20%)
+  background fade-out(colorGray1, 15%)
   display box
   position relative
 
 .sort
   absolute top 0 left 0
   display flex
-  background #555
+  background colorGray1
   width 100%
   height headerHeight
+
+  @import '../../../styles/util/bottom-shadow'
 
   button
     border none

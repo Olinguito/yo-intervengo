@@ -3,6 +3,7 @@ import {Router} from 'aurelia-router';
 import {Category, Report, reportType as t} from './models';
 import {serialize} from 'lib/backend/backend';
 import {Map, Coords} from 'lib/map';
+import {TILES_URL, MAP_TOKEN} from './reports';
 
 @inject(Map, Router)
 export class ReportNew {
@@ -10,8 +11,8 @@ export class ReportNew {
     mapConf = {
         zoomControl: false,
         attributionControl: false,
-        minZoom: 12,
-        tiles: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
+        minZoom: 14,
+        tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
     };
 
     constructor(mainMap, router) {

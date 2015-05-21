@@ -5,8 +5,8 @@ import {Compiler} from 'lib/util';
 import {Report} from './models/report';
 
 // mapbox custom map access token
-const MAP_TOKEN = 'pk.eyJ1Ijoib2xhbm9kIiwiYSI6IjdZdV9iTTQifQ.HP-razZKsNmITPgHs4ugIA';
-const TILES_URL = 'http://api.tiles.mapbox.com/v4/robjalkh.a4368786/{z}/{x}/{y}.png';
+export const MAP_TOKEN = 'pk.eyJ1Ijoib2xhbm9kIiwiYSI6IjdZdV9iTTQifQ.HP-razZKsNmITPgHs4ugIA';
+export const TILES_URL = 'http://api.tiles.mapbox.com/v4/robjalkh.a4368786/{z}/{x}/{y}.png';
 
 @inject(Map, Compiler)
 export class Reports {

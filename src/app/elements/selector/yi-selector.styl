@@ -1,4 +1,4 @@
-@import '../../../styles/values'
+@require '../../../styles/values'
 
 :host
   align-items flex-end
@@ -19,9 +19,8 @@
     padding 1rem
 
   yi-button#main
-    margin 0.8rem
     transition transform 0.3s
-    transform scale(1.4)
+    transform scale(1.2)
 
     &::shadow .title
       display none
@@ -44,7 +43,7 @@
           display none
 
 :host(.opened)
-  background-color fade-out(#000, 60%)
+  background fade-out(white, 30%)
 
   section
     display flex
@@ -52,4 +51,4 @@
     flex-direction column-reverse
 
   yi-button#main
-    transform scale(1)
+    transform scale(1) rotate(-45deg)

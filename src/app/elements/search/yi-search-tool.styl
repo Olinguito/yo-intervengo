@@ -1,7 +1,8 @@
-@import '../../../styles/values'
+@require '../../../styles/values'
+@require '../../../styles/colors'
 
 :host
-  background fade-out(#fff, 50%)
+  background fade-out(white, 15%)
   display block
   height headerHeight
   width 100%
@@ -10,29 +11,38 @@
     box-sizing border-box
 
 form
-  padding 0.5rem 1rem
+  padding 0.3rem 0.6rem
   height 100%
+  position relative
   width 100%
   white-space nowrap
+
+  @import '../../../styles/util/bottom-shadow'
 
   input
     background none
     border none
-    color #fff
+    color colorGray1
     display inline-block
-    font-size 1.5em
+    font-size 1.4em
     height 100%
     outline none
-    text-shadow 0 0 3px fade-out(black, 30%)
+    text-shadow 0 1px 3px fade-out(colorGray1, 80%)
     width calc(100% - 3rem)
 
     &::-webkit-input-placeholder
       font-style italic
+      font-size 0.9em
 
   label
     display inline-block
     position relative
+    top -2px
     height 2rem
     margin-right 0.5rem
     vertical-align middle
     width 2rem
+
+    yi-icon::shadow
+      path.show
+        stroke colorGray1

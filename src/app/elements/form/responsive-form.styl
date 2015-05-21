@@ -2,7 +2,6 @@
 @import '../../../styles/colors'
 
 :host
-  color white
   display flex
   flex-direction column
 
@@ -27,12 +26,12 @@
       transition background 0.2s
 
       &:hover
-        background fade-out(colorBlack, 20%)
+        background fade-out(white, 30%)
 
 nav
   box-sizing border-box
   height headerHeight
-  padding 0.5rem
+  margin 1rem 0
   align-items center
 
   &.mobile

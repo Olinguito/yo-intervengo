@@ -1,6 +1,7 @@
-@import 'reset'
-@import 'fonts'
-@import 'colors'
+@require 'reset'
+@require 'fonts'
+@require 'colors'
+@require 'values'
 
 body
   background colorBlack
@@ -18,7 +19,6 @@ nav[drawer]
   core-toolbar
     display flex
     justify-content flex-end
-    background none
 
   a
     padding 0 1em
@@ -45,6 +45,10 @@ core-drawer-panel > router-view
   position relative
   width 100%
   height 100%
+
+core-toolbar
+  height headerHeight
+  background none
 
 // sections
 #error

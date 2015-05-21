@@ -1,12 +1,12 @@
-@import 'values'
-@import 'colors'
+@require 'values'
+@require 'colors'
 
 inputLineHeight = 1.5rem
 itemsMaxWidth = 500px
 
 #report-new
-  background fade-out(black, 40%)
-  color white
+  background fade-out(white, 30%)
+  color colorBlack
   height 100%
   position relative
 
@@ -15,10 +15,9 @@ itemsMaxWidth = 500px
 
     input, textarea
       background transparent
-      border 1px solid white
+      border 1px solid colorGray1
       border-radius 3px
-      box-shadow 0 0 25px fade-out(black, 60%) inset
-      color white
+      box-shadow 0 0 25px fade-out(black, 90%) inset
       display inline-block
       font-size 1.06em
       line-height inputLineHeight
@@ -31,9 +30,6 @@ itemsMaxWidth = 500px
 
       &::-webkit-input-placeholder
         text-align center
-
-      &:focus
-        box-shadow 0 0 25px fade-out(black, 60%) inset, 0 0 0 1px white
 
     textarea
       min-height (inputLineHeight*5)
@@ -83,7 +79,7 @@ itemsMaxWidth = 500px
       background-size cover
       background-position center
       background-repeat no-repeat
-      border 1px solid white
+      border 1px solid colorGray1
       border-radius 5px
       max-width itemsMaxWidth
       overflow hidden
@@ -120,9 +116,19 @@ itemsMaxWidth = 500px
     .cat figure
       background colorBlue
 
+    input, textarea
+      &:focus
+        border 1px solid colorBlue
+        box-shadow 0 0 25px fade-out(black, 85%) inset, 0 0 0 1px colorBlue
+
   .complain
     .cat figure
       background colorOrange
+
+    input, textarea
+      &:focus
+        border 1px solid colorOrange
+        box-shadow 0 0 25px fade-out(black, 85%) inset, 0 0 0 1px colorOrange
 
   // mobile version
   @media queryMobile
