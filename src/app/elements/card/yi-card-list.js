@@ -9,7 +9,7 @@ export class YiCardList {
     orderOptions = [
         {
             title: 'Orden alfabético',
-            icon: 'hand',
+            icon: 'az',
             name: 'alpha'
         },
         {
@@ -24,7 +24,7 @@ export class YiCardList {
         },
         {
             title: 'Fecha de creación',
-            icon: 'hand',
+            icon: 'recent',
             name: 'date'
         }
     ];
