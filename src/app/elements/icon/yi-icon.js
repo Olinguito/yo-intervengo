@@ -1,4 +1,4 @@
-import {Decorators, inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-icon.css!text';
 
@@ -12,7 +12,7 @@ import style from './yi-icon.css!text';
 @bindable({name: 'icon'})
 export class YiIcon {
     shownIcon = null;
-    
+
     constructor(element) {
         this.element = element;
     }

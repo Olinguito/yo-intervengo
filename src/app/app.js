@@ -28,7 +28,7 @@ export class App {
             {name: 'Reportes', id: 'reports', route: 'reports', moduleId: 'yi/reports/reports', nav: true},
             {name: 'Wiki', id: 'wiki', route: 'wiki', moduleId: 'yi/wiki/wiki'},
             {name: 'Estadisticas', id: 'stats', route: 'stats', moduleId: 'yi/stats/stats'},
-            {name: 'Perfil', id: 'profile', route: 'profile', moduleId: 'yi/profile/profile', nav: true},
+            {name: 'Perfil', id: 'profile', route: 'profile', moduleId: 'yi/profile/profile'},
             {name: 'Acerca de', id: 'about', route: 'about', moduleId: 'yi/about/about', nav: true},
             {id: 'login', route: 'login', moduleId: 'yi/login/login'},
             {id: 'error', route: 'error/:error', moduleId: 'yi/error/error'},
@@ -36,10 +36,19 @@ export class App {
         ]);
     }
 
+    attached() {
+        // show beta dialog
+        this.beta = document.querySelector('body > dialog');
+        this.beta.showModal();
+    }
+
     toggleNav() {
         this.navOpened = !this.navOpened;
         this.navWidth = this.navOpened ? NAV_WIDTH : NAV_WIDTH_NARROW;
     }
+
+    //
+
 
     get activeRoute() {
         return this.router.currentInstruction ?

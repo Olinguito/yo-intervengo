@@ -108,6 +108,61 @@ core-toolbar
   &::shadow .toolbar-tools
     height headerHeight
 
+dialog
+  border none
+  border-radius 3px
+  margin auto
+  position relative
+  box-shadow 0 2px 5px fade-out(black, 50%)
+
+  button.close
+    absolute right 0.5rem top 0.5rem
+    background none
+    border 1px solid colorGray2
+    border-radius 1.3rem
+    color colorGray2
+    font-size 1.4rem
+    height 1.3rem
+    line-height 1.3rem
+    width 1.3rem
+    transition background 0.2s, transform 0.1s
+
+    &:hover
+      background colorGray2
+      color white
+    &:active
+      line-height 1.4rem
+      transform scale(0.9)
+  p
+    user-select none
+    cursor default
+
+  // beta dialog
+  &#beta
+    max-width 360px
+
+    yi-icon
+      background colorOrange
+      border-radius 0 0 3px 3px
+      display block
+      height 4rem
+      margin auto
+      width 4rem
+      padding 0.5rem
+
+    p
+      margin 1rem
+
+      strong
+        font-weight normal
+      a
+        color colorOrange
+        font-style italic
+        &::before
+          content ' '
+        &:hover
+          text-decoration underline
+
 // sections
 #error
   p

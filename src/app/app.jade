@@ -11,3 +11,12 @@ template
         i ${route.title}
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")
+
+  // beta version dialog
+  dialog#beta
+    button.close(click.trigger="beta.close()") &times;
+    //- dialog content
+    yi-icon(icon='construction')
+    p Esta versión <strong>Beta</strong> no tiene todas las funciones disponibles. 
+    p Escríbenos tus dudas, comentarios, ¡e ideas! a 
+      a(href="mailto:olinguito.lab@gmail.com?subject=Yo Intervengo") olinguito.lab@gmail.com
