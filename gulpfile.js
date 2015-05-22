@@ -18,6 +18,7 @@ var rename = require('gulp-rename');
 var p = require('path');
 var vulcanize = require('gulp-vulcanize');
 var ghPages = require('gulp-gh-pages');
+var file = require('gulp-file');
 var jspm = require('jspm');
 
 var path = {
@@ -196,4 +197,10 @@ gulp.task('deploy-preprod', ['dist'], function() {
     var origin = 'me';
     return gulp.src('dist/**/*')
         .pipe(ghPages({origin: origin, force: true}));
+});
+
+gulp.task('deploy', ['dist'], function() {
+    return gulp.src('dist/**/*')
+        .pipe(file('CNAME', 'app.yointervengo.co'))
+        .pipe(ghPages());
 });
