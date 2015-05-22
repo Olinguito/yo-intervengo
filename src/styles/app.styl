@@ -12,33 +12,89 @@ core-drawer-panel::shadow core-selector > #drawer
   z-index 999
 
 nav[drawer]
-  background fade-out(colorBlack, 2%)
+  background colorGray1
   display flex
   flex-direction column
 
   core-toolbar
+    background colorOrange
     display flex
     justify-content flex-end
+    margin-bottom 2rem
+    transition background 0.6s
+    &:hover
+      transition background 0.2s
+      background colorOrange + 5%
+    &:active
+      background desaturate(colorOrange, 40%)
+
+    @import 'util/bottom-shadow'
+
+  &.opened
+    core-toolbar
+      background colorBlue
+      &:hover
+        background colorBlue + 5%
+      &:active
+        background desaturate(colorBlue, 40%)
+    a i
+      opacity 1
 
   a
-    padding 0 1em
+    color colorGray3
     display block
-    width 100%
+    font-size 1.05em
     line-height 3em
-    font-size 1.2em
-    letter-spacing -1px
+    letter-spacing 3px
+    padding 0 0.6rem
     text-transform uppercase
-    color #fff
-    transition color 0.2s
-    font-style italic
+    text-shadow 0 0 5px fade-out(black, 80%)
+    transition 0.2s
+    width 100%
+    white-space nowrap
+
+    i
+      cursor pointer
+      font-style normal
+      opacity 0
+      transition opacity 0.2s
+
+    yi-icon
+      cursor pointer
+      margin-right 0.6rem
+      opacity 1
+      vertical-align middle
+      height 40px
+      width 40px
+      -webkit-filter drop-shadow(0 0 5px fade-out(black, 80%))
+      &::shadow path.show
+        transition stroke 0.2s
+        stroke colorGray3
 
     &.active
-      color colorOrange
-      &:before
-        content: '...'
-  yi-logo
-    margin auto
-    margin-bottom 1rem
+      color white
+      text-shadow 0 0 5px fade-out(white, 50%)
+      yi-icon
+        -webkit-filter drop-shadow(0 0 2px fade-out(white, 50%))
+        &::shadow path.show
+          stroke white
+
+      &:hover
+        color white
+        text-shadow 0 0 7px fade-out(white, 40%)
+        yi-icon
+          -webkit-filter drop-shadow(0 0 3px fade-out(white, 40%))
+          &::shadow path.show
+            stroke white
+
+    &:hover
+      color colorGray3 + 40%
+      yi-icon::shadow path.show
+        stroke colorGray3 + 40%
+
+    &:last-of-type
+      margin-top auto
+      margin-bottom 0.6rem
 
 core-drawer-panel > router-view
   display block
@@ -49,6 +105,8 @@ core-drawer-panel > router-view
 core-toolbar
   height headerHeight
   background none
+  &::shadow .toolbar-tools
+    height headerHeight
 
 // sections
 #error

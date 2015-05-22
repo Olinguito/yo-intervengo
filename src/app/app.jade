@@ -1,13 +1,13 @@
 template
-  require(from='yi/elements/logo/yi-logo')
-
-  core-drawer-panel
+  core-drawer-panel(drawerWidth.bind="navWidth")
     //- left side navigation bar
-    nav(drawer)
-      core-toolbar
-        yi-icon-button(icon="back", core-drawer-toggle)
-      a(repeat.for="route of router.navigation", href.bind="route.href", class="${route.isActive?'active':''}").
-        ${route.title}
-      yi-logo()
+    nav(drawer, class="${navOpened?'opened':''}")
+      core-toolbar(click.trigger="toggleNav()"): yi-icon(icon="menu")
+      a(repeat.for="route of router.navigation", 
+        href.bind="route.href", 
+        class="${route.isActive?'active':''}"
+        )
+        yi-icon(icon.bind="route.config.id", title.bind="route.title")
+        i ${route.title}
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")

@@ -20,7 +20,10 @@ export function configure(aurelia) {
         .eventAggregator();
 
     // Make resources global
-    aurelia.globalizeResources('yi/elements/marker/yi-marker');
+    aurelia.globalizeResources(
+        'yi/elements/icon/yi-icon',
+        'yi/elements/marker/yi-marker'
+        );
 
     // register default backend and configure
     /* global DEV_MODE */
