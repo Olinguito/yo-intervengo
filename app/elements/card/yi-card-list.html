@@ -1,0 +1,1 @@
+<template><require from="yi/elements/icon/yi-icon"></require><header class="sort"><button repeat.for="o of orderOptions" title.bind="o.title" click.delegate="$parent.select(o)" class="${$parent.order==o.name ? 'active' : ''}"><yi-icon icon.bind="o.icon"></yi-icon></button></header><section><div class="container"><content select="yi-card"></content></div></section></template>
