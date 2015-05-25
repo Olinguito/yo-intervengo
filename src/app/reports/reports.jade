@@ -27,5 +27,6 @@ template
   yi-card-list(order.bind="sort")
     yi-card(
       repeat.for="report of reports | search:query | sort:sort",
-      report.bind="report"
+      report.bind="report",
+      class="${report.typeName} ${report == $parent.activeReport ? 'selected': ''}"
     )

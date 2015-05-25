@@ -2,16 +2,21 @@ template
   require(from="../icon/yi-icon")
 
   header
-    figure.title(click.delegate="openDetail()", title="Show detail")
-      img(src.bind='report.photo')
+    figure.title(
+      click.delegate="openDetail()", 
+      title="Mas informacion ...", 
+      style="background-image:url(${report.photo})"
+    )
       figcaption
         h1(if.bind="report.title") ${report.title}
         h1.empty(if.bind="!report.title")
-        h2 ${report.category.parent.name} - ${report.category.name}
-    figure.category(click.delegate="centerMarker()", title="Show on map")
+        h2 ${report.category.name}
+    figure.category(click.delegate="centerMarker()", title="Mostrar en el mapa")
       yi-icon(icon="${report.category.icon}")
   p.description(if.bind="report.description") ${report.description}
   p.description.empty(if.bind="!report.description")
-  p.backups
-    yi-icon(icon="hand")
-    | ${report.supporters} respaldos
+  footer
+    button
+      | Respaldar
+      yi-icon(icon="hand")
+    output(title="${report.supporters} Respaldos") ${report.supporters}

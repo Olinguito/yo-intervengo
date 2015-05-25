@@ -28,8 +28,6 @@ export class Reports {
         this.map = mainMap;
         //
         document.addEventListener('divmarker', e=> this.compileMarker(e.detail));
-        // TODO move to card list
-        document.addEventListener('click', deactivateCardsOnClick);
     }
 
     configureRouter(config, router) {
@@ -50,23 +48,10 @@ export class Reports {
      * adds selected or not-selected class to the corresponding yi-cards
      */
     highlightReportCard(report) {
-        var cards = document.querySelectorAll('yi-card'),
-            list = document.querySelector('yi-card-list'),
-            activeCard;
-
-        // switch classes
-        for (let card of cards) {
-            if (report === card.yiCard.report) {
-                activeCard = card;
-                card.classList.add('selected');
-                card.classList.remove('not-selected');
-            } else {
-                card.classList.add('not-selected');
-                card.classList.remove('selected');
-            }
-        }
-        // scroll to card
-        list.scrollTop = activeCard.offsetTop - list.offsetHeight / 2 + activeCard.offsetHeight / 2;
+        this.activeReport = report;
+        // scroll card to top
+        // setTimeout to execute in future when the 'selected' class is aplied
+        setTimeout(() => document.querySelector('yi-card.selected').scrollIntoView(), 0);
     }
 
     activate() {
@@ -125,15 +110,5 @@ export class SortValueConverter {
 
     dateSort(a, b) {
         return (a.date.valueOf() < b.date.valueOf()) - (a.date.valueOf() > b.date.valueOf());
-    }
-}
-
-function deactivateCardsOnClick(e) {
-    var name = e.target.tagName.toLowerCase();
-    if (name !== 'leaflet-map' && name !== 'yi-card') {
-        for (let card of document.querySelectorAll('yi-card')) {
-            card.classList.remove('selected');
-            card.classList.remove('not-selected');
-        }
     }
 }

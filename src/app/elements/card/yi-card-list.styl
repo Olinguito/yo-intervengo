@@ -2,7 +2,7 @@
 @import '../../../styles/colors'
 
 :host
-  background fade-out(colorGray1, 15%)
+  background fade-out(colorGray1, 10%)
   display box
   position relative
 
@@ -29,16 +29,17 @@
       &::shadow
         path
           transition 0.3s
-          stroke #7f7f7f
+          stroke colorGray3
     &:hover
       yi-icon::shadow
         path
-          stroke white
+          stroke colorGray3 + 40%
 
     &.active
-      yi-icon::shadow path
-        stroke white
-        filter url(#drop-shadow)
+      yi-icon
+        -webkit-filter drop-shadow(0 0 3px fade-out(white, 50%))
+        &::shadow path
+          stroke white
 
 section
   absolute top headerHeight left 0
@@ -56,7 +57,7 @@ section
   .container
     display flex
     flex-direction column
-    justify-content space-around
+    justify-content flex-start
     height 100%
     padding 1rem
     min-height -webkit-min-content

@@ -19,14 +19,11 @@ export class YiCard {
 
     bind() {
         //
-        if (this.report) {
-            this.element.classList.add(this.report.typeName);
-            if (!this.report.id) {
-                this.element.classList.add('new');
-            }
-            // observe id change to remove 'new' class
-            Object.observe(this.report, this.onIdChange.bind(this));
+        if (!this.report.id) {
+            this.element.classList.add('new');
         }
+        // observe id change to remove 'new' class
+        Object.observe(this.report, this.onIdChange.bind(this));
     }
 
     onIdChange(changes) {
