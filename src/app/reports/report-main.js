@@ -2,14 +2,25 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Category} from './models';
 import {asTree} from 'lib/util';
+import {Map} from 'lib/map';
+import {Geolocation} from 'lib/geolocation';
 
-@inject(Router)
+// default zoom level when locating user
+const DEF_ZOOM = 14;
+
+@inject(Router, Map, Geolocation)
 export class ReportMain {
     categories = [];
+    locating = false;
 
-    constructor(router) {
+    constructor(router, map, geoloc) {
+        // main map
+        this.map = map;
+        this.loc = geoloc;
         this.router = router;
         this.parentVM = this.router.container.viewModel;
+        // locate user on load
+        this.centerMapOnUser();
     }
 
     activate() {
@@ -29,6 +40,21 @@ export class ReportMain {
         // navigate to route when all promises are resolved
         promises.push(catsPromise);
         return Promise.all(promises);
+    }
+
+    centerMapOnUser() {
+        this.locating = true;
+        // TODO add rightPanel offset
+        this.loc.getPosition()
+        .then(pos => this.map.center.setLatLng(pos.coords.latitude, pos.coords.longitude))
+        .then(() => this.locating = false)
+        .then(() => new Promise(res => setTimeout(res, 500)))
+        .then(() => {
+            // zoom in if current zoom is lower than default
+            if (this.map.zoom < DEF_ZOOM) {
+                this.map.zoom = DEF_ZOOM;
+            }
+        });
     }
 
     /**

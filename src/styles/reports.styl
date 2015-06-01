@@ -11,6 +11,18 @@
       absolute bottom 0 left 0
       top initial
 
+      // location button
+      yi-button[icon=location]
+        margin 0
+        padding 1rem
+        absolute bottom 0 left 0
+        &::shadow button
+          height 100%
+          width 100%
+          box-shadow none
+        &.loading::shadow yi-icon
+          animation pulse 0.8s infinite
+
   #map-area
     absolute left 0 top 0
     height 100%
