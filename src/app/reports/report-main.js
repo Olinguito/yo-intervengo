@@ -4,9 +4,10 @@ import {Category} from './models';
 import {asTree} from 'lib/util';
 import {Map} from 'lib/map';
 import {Geolocation} from 'lib/geolocation';
+import {CARD_LIST_WIDTH} from 'yi/app';
 
 // default zoom level when locating user
-const DEF_ZOOM = 14;
+const DEF_ZOOM = 15;
 
 @inject(Router, Map, Geolocation)
 export class ReportMain {
@@ -43,16 +44,17 @@ export class ReportMain {
     }
 
     centerMapOnUser() {
+        var offset = [CARD_LIST_WIDTH / 2, 0];
         this.locating = true;
-        // TODO add rightPanel offset
+
         this.loc.getPosition()
-        .then(pos => this.map.center.setLatLng(pos.coords.latitude, pos.coords.longitude))
-        .then(() => this.locating = false)
-        .then(() => new Promise(res => setTimeout(res, 500)))
+        .then(pos => this.map.setCenter(pos.coords.latitude, pos.coords.longitude, offset))
+        .then(() => new Promise(res=> setTimeout(res, 500)))
         .then(() => {
+            this.locating = false;
             // zoom in if current zoom is lower than default
             if (this.map.zoom < DEF_ZOOM) {
-                this.map.zoom = DEF_ZOOM;
+                this.map.setZoom(DEF_ZOOM, offset);
             }
         });
     }

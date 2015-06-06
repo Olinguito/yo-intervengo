@@ -58,10 +58,6 @@ export class Reports {
         return Report.find().then(reports => this.reports = reports);
     }
 
-    attached() {
-        this.map.mapElement = document.querySelector('leaflet-map');
-    }
-
     /**
      * compile the aurelia yi-marker custom element
      */

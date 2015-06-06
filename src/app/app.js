@@ -1,8 +1,9 @@
 import {Router} from 'aurelia-router';
 import {inject, BindingLanguage} from 'aurelia-framework';
 
-const NAV_WIDTH = '250px';
-const NAV_WIDTH_NARROW = '60px';
+export const CARD_LIST_WIDTH = 296;
+export const NAV_WIDTH = 250;
+export const NAV_WIDTH_NARROW = 60;
 
 /**
  * Aurelia Application
@@ -11,7 +12,7 @@ const NAV_WIDTH_NARROW = '60px';
 export class App {
 
     navOpened = true;
-    navWidth = NAV_WIDTH;
+    navWidth = NAV_WIDTH + 'px';
 
     constructor(bindingLang) {
         // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix
@@ -44,7 +45,7 @@ export class App {
 
     toggleNav() {
         this.navOpened = !this.navOpened;
-        this.navWidth = this.navOpened ? NAV_WIDTH : NAV_WIDTH_NARROW;
+        this.navWidth = this.navOpened ? NAV_WIDTH + 'px' : NAV_WIDTH_NARROW + 'px';
     }
 
     //

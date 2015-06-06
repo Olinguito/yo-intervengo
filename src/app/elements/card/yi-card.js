@@ -4,6 +4,7 @@ import {addStyleToTemplate} from 'lib/util';
 import style from './yi-card.css!text';
 import {Router} from 'aurelia-router';
 import {Map} from 'lib/map';
+import {CARD_LIST_WIDTH} from 'yi/app';
 
 @customElement('yi-card')
 @useShadowDOM
@@ -42,17 +43,18 @@ export class YiCard {
     }
 
     centerMarker() {
+        const DEF_ZOOM = 15;
         var {lat, lng} = this.report.location,
-            // leaflet map instance
-            lfMap = this.map.mapElement.map,
-            // marker lat,lng to pixels
-            {x, y} = lfMap.latLngToContainerPoint([lat, lng]),
-            cardListWidth = document.querySelector('yi-card-list').offsetWidth,
-            // add offset to the map center
-            coords = lfMap.containerPointToLatLng([x + cardListWidth / 2, y]);
-        this.map.center.lat = coords.lat;
-        this.map.center.lng = coords.lng;
-        this.map.zoom = 16;
+            offset = [CARD_LIST_WIDTH / 2, 0];
+        // center map on marker location + offset
+        this.map.setCenter(lat, lng, offset)
+        .then(() => new Promise(res=> setTimeout(res, 500)))
+        .then(() => {
+            // zoom if far
+            if (this.map.zoom < DEF_ZOOM) {
+                this.map.setZoom(DEF_ZOOM, offset);
+            }
+        });
     }
 
     static beforeCompile(template) {
