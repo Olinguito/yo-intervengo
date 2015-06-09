@@ -6,7 +6,12 @@ template
   yi-search-tool(query.bind="parentVM.query")
 
   core-toolbar.bottom
-    yi-button(icon="location", click.delegate="centerMapOnUser()", class="${locating?'loading':''}")
+    yi-button(
+      title="Ubicarme en el mapa"
+      icon="location", 
+      click.delegate="centerMapOnUser()", 
+      class="${locating?'loading':''}"
+    )
     //- create report
     //- TODO: class interpolation aurelia/binding#33
     yi-selector(icon="add", select.call="newReport($event)")

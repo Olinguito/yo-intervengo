@@ -15,6 +15,7 @@ nav[drawer]
   background colorGray1
   display flex
   flex-direction column
+  overflow hidden
 
   core-toolbar
     background colorOrange
@@ -26,9 +27,16 @@ nav[drawer]
       transition background 0.2s
       background colorOrange + 5%
     &:active
-      background desaturate(colorOrange, 40%)
+      background desaturate(colorOrange, 20%) - 20%
 
     @import 'util/bottom-shadow'
+
+    yi-icon
+      margin auto 6px
+      transition transform 0.2s
+
+    &:active yi-icon
+      transform scale(0.95)
 
   &.opened
     core-toolbar
@@ -36,7 +44,7 @@ nav[drawer]
       &:hover
         background colorBlue + 5%
       &:active
-        background desaturate(colorBlue, 40%)
+        background desaturate(colorBlue, 20%) - 20%
     a i
       opacity 1
 

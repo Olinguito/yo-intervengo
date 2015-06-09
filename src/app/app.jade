@@ -2,11 +2,13 @@ template
   core-drawer-panel(drawerWidth.bind="navWidth")
     //- left side navigation bar
     nav(drawer, class="${navOpened?'opened':''}")
-      core-toolbar(click.trigger="toggleNav()"): yi-icon(icon="menu")
-      a(repeat.for="route of router.navigation", 
+      core-toolbar(click.trigger="toggleNav()")
+        yi-icon(icon="menu", animate.bind="router.isNavigating")
+      a(
+        repeat.for="route of router.navigation", 
         href.bind="route.href", 
         class="${route.isActive?'active':''}"
-        )
+      )
         yi-icon(icon.bind="route.config.id", title.bind="route.title")
         i ${route.title}
     //- applicaiton sections
