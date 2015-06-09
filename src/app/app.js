@@ -1,5 +1,6 @@
 import {Router} from 'aurelia-router';
 import {inject, BindingLanguage} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-http-client';
 
 export const CARD_LIST_WIDTH = 296;
 export const NAV_WIDTH = 250;
@@ -8,13 +9,14 @@ export const NAV_WIDTH_NARROW = 60;
 /**
  * Aurelia Application
  */
-@inject(BindingLanguage)
+@inject(BindingLanguage, HttpClient)
 export class App {
 
     navOpened = true;
     navWidth = NAV_WIDTH + 'px';
 
-    constructor(bindingLang) {
+    constructor(bindingLang, http) {
+        this.http = http;
         // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix
         bindingLang.attributeMap.tileserver = 'tileServer';
         bindingLang.attributeMap.drawerwidth = 'drawerWidth';
@@ -49,8 +51,6 @@ export class App {
     }
 
     //
-
-
     get activeRoute() {
         return this.router.currentInstruction ?
             this.router.currentInstruction.config.id : '';

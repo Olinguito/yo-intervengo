@@ -3,7 +3,8 @@ template
     //- left side navigation bar
     nav(drawer, class="${navOpened?'opened':''}")
       core-toolbar(click.trigger="toggleNav()")
-        yi-icon(icon="menu", animate.bind="router.isNavigating")
+        yi-icon(icon="menu", animate.bind="router.isNavigating || http.isRequesting")
+      // list of sections links
       a(
         repeat.for="route of router.navigation", 
         href.bind="route.href", 
@@ -14,7 +15,7 @@ template
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")
 
-  // beta version dialog
+  //- beta version dialog
   dialog#beta
     button.close(click.trigger="beta.close()") &times;
     //- dialog content

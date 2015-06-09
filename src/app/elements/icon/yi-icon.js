@@ -35,6 +35,7 @@ export class YiIcon {
             shownIcon = this.element.shadowRoot.getElementById(this.icon);
             if (shownIcon) {
                 shownIcon.classList.add('show');
+                // TODO debug performance
                 delSiblings(shownIcon);
             }
         }
