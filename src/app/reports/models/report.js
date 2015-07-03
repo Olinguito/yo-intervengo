@@ -1,7 +1,6 @@
 import {Coords} from 'lib/map';
 import {Category} from './category';
 import {resource, property} from 'lib/backend/decorators';
-import {deserialize} from 'lib/backend/backend';
 
 export const reportType = { request: 0, complain: 1 };
 
@@ -12,7 +11,7 @@ export const reportType = { request: 0, complain: 1 };
 export class Report {
     static resName = 'report';
 
-    @property id = null;
+    @property id;
     @property title = '';
     @property description = '';
     @property address = '';
@@ -20,7 +19,7 @@ export class Report {
     @property supporters = 0;
 
     @property(Category) category;
-    @property(Date) date;
+    @property(Date) date = new Date();
     @property(Coords) location;
     @property type = reportType.request;
 

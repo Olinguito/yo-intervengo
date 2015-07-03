@@ -25,22 +25,12 @@ export class ReportMain {
     }
 
     activate() {
-        var promises = [], catsPromise;
-        catsPromise = Category.find()
+        return Category.find()
         .then(cats => {
-            // get parent categories
-            cats.forEach(cat => {
-                cat._parent = cat.parent;
-                if (cat.parent) {
-                    promises.push(Category.findOne({slug: cat.parent}).then(c=> cat.parent = c));
-                }
-            });
-            return cats;
-        })
-        .then(cats => this.categories = asTree(cats, 'slug', 'categories', '_parent'));
-        // navigate to route when all promises are resolved
-        promises.push(catsPromise);
-        return Promise.all(promises);
+            this.categories = asTree(cats, 'slug', 'categories');
+            // TODO create tree templateController
+            Array.observe(cats, c => this.categories = asTree(c[c.length - 1].object, 'slug', 'categories'));
+        });
     }
 
     centerMapOnUser() {

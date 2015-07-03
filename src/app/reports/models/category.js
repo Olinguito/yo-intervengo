@@ -1,5 +1,4 @@
 import {resource, property} from 'lib/backend/decorators';
-import {deserialize} from 'lib/backend/backend';
 
 /**
  * Category
@@ -10,14 +9,9 @@ export class Category {
     static resName = 'category';
     static resNamePlural = 'categories';
 
-    @property id = null;
-    @property slug = '';
-    @property name = '';
-    @property icon = '';
-    @property(Category) parent = null;
-
-    serialize() {
-        var {id, slug, name, icon, parent} = this;
-        return {id, slug, name, icon, parent: parent.slug};
-    }
+    @property id;
+    @property slug;
+    @property name;
+    @property icon;
+    @property(Category) parent;
 }

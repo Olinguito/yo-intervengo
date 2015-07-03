@@ -11,25 +11,12 @@ export function addStyleToTemplate(template, style = '') {
     }
 }
 
-export function mergeImages(img1, img2) {
-    return new Promise((resolve, reject) => {
-
-    });
-}
-
-function createContext(width, height) {
-    var canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
-    return canvas.getContext("2d");
-}
-
 /**
  * Compiler service
  * compiles an HTML element with aurelia behaviors
  */
 export class Compiler {
-    static inject() {return [ViewCompiler, ResourceRegistry, Container]}
+    static inject() { return [ViewCompiler, ResourceRegistry, Container]; }
     constructor(compiler, appResources, diContainer) {
         this.compiler = compiler;
         this.resources = appResources;

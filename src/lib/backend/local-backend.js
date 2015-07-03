@@ -21,16 +21,13 @@ export class LocalBackend extends Backend {
     }
 
     delete(res) {
-        var key = this.getKey(res.constructor);
-        var resources = this.storage.getItem(key);
-        resources = fromString(resources, res.constructor);
-        if (resources && resources.length) {
-            let i = Array.findIndex(resources, ele=> asString(ele)===asString(res));
-            if (i >= 0) {
-                let deleted = resources.splice(i, 1)[0];
-                this.storage.setItem(key, asString(resources));
-                return Promise.resolve(deleted);
-            }
+        var key = this.getKey(res.constructor),
+            resources = fromString(this.storage.getItem(key), res.constructor) || [];
+        var i = Array.findIndex(resources, ele=> asString(ele) === asString(res));
+        if (i >= 0) {
+            let deleted = resources.splice(i, 1)[0];
+            this.storage.setItem(key, asString(resources));
+            return Promise.resolve(deleted);
         }
         return Promise.reject('not found');
     }
@@ -40,6 +37,14 @@ export class LocalBackend extends Backend {
         result = fromString(result, type);
         result = result.filter(res => intersection(res, query));
         return Promise.resolve(result);
+    }
+
+    saveAll(type, ress) {
+        var key = this.getKey(type),
+            resources = fromString(this.storage.getItem(key), type) || [];
+        ress.forEach(ele => arrayPushOrReplace(resources, ele));
+        this.storage.setItem(key, asString(resources));
+        return Promise.resolve(resources);
     }
 
     getKey(type) {
@@ -53,5 +58,6 @@ function asString(obj) {
 }
 
 function fromString(string, type) {
-    return deserialize(JSON.parse(atob(string)), type);
+    var jsonString = string ? atob(string) : 'null';
+    return deserialize(JSON.parse(jsonString), type);
 }

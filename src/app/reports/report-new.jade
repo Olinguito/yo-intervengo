@@ -15,8 +15,8 @@ template
     section.map.right
       i ubica tu ${report.type == 0 ? 'petición' : 'queja'} en el mapa
       leaflet-map(
-        latitude.two-way="center.lat",
-        longitude.two-way="center.lng",
+        latitude.two-way="report.location.lat",
+        longitude.two-way="report.location.lng",
         zoom="17",
         options.one-time="mapConf",
         tileServer.one-time="mapConf.tiles"

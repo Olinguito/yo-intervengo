@@ -1,7 +1,7 @@
 import {Container} from 'aurelia-framework';
-import {Backend, RemoteBackend, LocalBackend, MemoryBackend, deserialize} from './backend';
+import {Backend, RemoteBackend, LocalBackend, MemoryBackend, UltimateBackend} from './backend';
 
-const allowedBackends = [RemoteBackend, LocalBackend, MemoryBackend];
+const allowedBackends = [RemoteBackend, LocalBackend, MemoryBackend, UltimateBackend];
 /**
  * resource decorator
  * Decorate model classes for easy persistance in one the possible backends
@@ -66,50 +66,56 @@ function getAureliaContainer() {
  * Tells the backend what properties are serializable
  */
 export function property() {
-    var PropType, // {Class} optional type of the property
-        propInstances = new WeakMap(); // holds instances with values of properties
+    var type;//, // {Class} optional type of the property
+        // propInstances = new WeakMap(); // holds instances with values of properties
 
     if (arguments.length === 1) {
-        PropType = arguments[0];
+        type = arguments[0];
         return propertyDecorator;
     } else {
         return propertyDecorator.apply(this, arguments);
     }
 
     function propertyDecorator(target, name, desc) {
-        var constructor = target.constructor, propTypeDescriptor;
+        var constructor = target.constructor;//, propTypeDescriptor;
         // add property to list of serializables
         if (!('serializable' in constructor)) {
             Object.defineProperty(constructor, 'serializable', { value: [] });
         }
-        constructor.serializable.push(name);
+        constructor.serializable.push({name, type});
+        // TODO babel bug?
+        if (!desc.initializer) {
+            desc.initializer = function() { return null; };
+            desc.writable = true;
+        }
+        return desc;
         // special object descriptor for typed properties
-        propTypeDescriptor = {
-            enumerable: true,
-            configurable: false,
-            set(val) {
-                privates(this)[name] = typeof val === 'object' && !(val instanceof PropType)
-                    // if value is an object convert it to the provided type
-                    ? deserialize(val, PropType)
-                    : PropType.length > 0
-                    // if constructor function accepts argumente pass value to constructor
-                    ? new PropType(val)
-                    // just assign value in any other case
-                    : val;
-            },
-            get() {
-                return privates(this)[name];
-            }
-        };
+        // propTypeDescriptor = {
+        //     enumerable: true,
+        //     configurable: false,
+        //     set(val) {
+        //         privates(this)[name] = typeof val === 'object' && !(val instanceof PropType)
+        //             // if value is an object convert it to the provided type
+        //             ? deserialize(val, PropType)
+        //             : PropType.length > 0
+        //             // if constructor function accepts argumente pass value to constructor
+        //             ? new PropType(val)
+        //             // just assign value in any other case
+        //             : val;
+        //     },
+        //     get() {
+        //         return privates(this)[name];
+        //     }
+        // };
         // if no type provided keep the property descriptor the same
         // helps Object.observe to work by not having set/get methods
-        return PropType ? propTypeDescriptor : desc;
+        // return PropType ? propTypeDescriptor : desc;
     }
 
-    function privates(instance) {
-        if (!propInstances.has(instance)) {
-            propInstances.set(instance, {});
-        }
-        return propInstances.get(instance);
-    }
+    // function privates(instance) {
+    //     if (!propInstances.has(instance)) {
+    //         propInstances.set(instance, {});
+    //     }
+    //     return propInstances.get(instance);
+    // }
 }

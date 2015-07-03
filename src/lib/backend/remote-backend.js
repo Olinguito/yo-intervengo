@@ -68,7 +68,9 @@ export class RemoteBackend extends Backend {
         var params = Object.keys(query).length > 0 ? '?' + urlParams({filter: {where: query}}) : '',
             endpoint = getPluralIdentifier(type),
             response = this.http.get(`${endpoint}${params}`);
-        return response.then(r => deserialize(r.content, type));
+        return response.then(r =>
+            deserialize(r.content, type)
+            );
     }
 
     findOne(type, query = {}) {
@@ -88,6 +90,11 @@ export class RemoteBackend extends Backend {
         return this.http
             .get(`${getPluralIdentifier(type)}/${id}`)
             .then(r => deserialize(r.content, type));
+    }
+
+    count(type) {
+        return this.http.get(`${getPluralIdentifier(type)}/count`)
+            .then(res => res.content.count);
     }
 }
 

@@ -16,4 +16,18 @@ export class Backend {
         return this.find(type, query)
             .then(data => data.length > 0 ? data[0] : Promise.reject('not found'));
     }
+
+    saveAll(type, resources) {
+        var result = [];
+        if (resources.length > 0) {
+            for (let res of resources) {
+                result.push(this.save(res));
+            }
+        }
+        return Promise.all(result).then(() => this.find(type));
+    }
+
+    count(type) {
+        return this.find(type).then(ress => ress.length);
+    }
 }

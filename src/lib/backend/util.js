@@ -1,41 +1,82 @@
 /**
  * De-serialize obcjects(or array of objects) with the right type
  */
-export function deserialize(object, Type = Object) {
-    var instance;
+export function deserialize(object, Type) {
+    var deserialized;
     if (Array.isArray(object)) {
-        let array = object;
-        for (let [key, obj] of array.entries()) {
-            let newObj = new Type();
-            assignProperties(obj, newObj);
-            array[key] = newObj;
+        deserialized = [];
+        if (object.length > 0) {
+            object.forEach(o => deserialized.push(deserialize(o, Type)));
         }
-        instance = array;
+    } else if (Object.isObject(object)) {
+        deserialized = deserializeObj(object);
     } else {
-        instance = new Type();
-        assignProperties(object, instance);
+        // object is a primitive.
+        // if Type is defined and allows passing arguments create an instance of Type
+        deserialized = Type && Type.length > 0 ? new Type(object) : object;
     }
-    return instance;
+    return deserialized;
+
+    function deserializeObj(obj) {
+        // array of serializable properties defined in the model
+        var props = Type ? Type.serializable || [] : [],
+            deserializedObj,
+            // find the type of a property as defined in the model of undefined otherwise
+            typeOfProp = prop => {
+                var {type} = Array.find(props, p => prop === p.name) || {};
+                return type;
+            };
+        // if model defines its own deserialization strategy
+        if (Type && Type.prototype.deserialize === 'function') {
+            deserializedObj = obj.deserialize();
+        } else { // De-serialize each property in the object recursively
+            deserializedObj = Type ? new Type() : {};
+            for (let p in obj) {
+                deserializedObj[p] = deserialize(obj[p], typeOfProp(p));
+            }
+        }
+        return deserializedObj;
+    }
 }
 
-function assignProperties(form, to) {
-    for (let i in form) to[i] = form[i];
-}
 
 /**
- * Serialize objects
+ * Serialize objects or arrays
  */
 export function serialize(obj) {
-    var properties = obj.constructor.serializable,
-        serialized = {};
-    for (let prop of properties) {
-        if (prop in obj) {
-            serialized[prop] = obj[prop] && typeof obj[prop].serialize === 'function'
-                ? obj[prop].serialize()
-                : obj[prop];
+    var serialized;
+    if (Array.isArray(obj)) {
+        serialized = [];
+        if (obj.length > 0) {
+            obj.forEach(o => serialized.push(serialize(o)));
         }
+    } else if (Object.isObject(obj)) {
+        serialized = serializeObj(obj);
+    } else {
+        serialized = obj;
     }
     return serialized;
+
+    function serializeObj(o) {
+        var serializedObj = {},
+            properties = o.constructor.serializable || [];
+        properties = properties.map(p => p.name);
+        // class defines its own serialization
+        if (typeof o.serialize === 'function') {
+            serializedObj = o.serialize();
+        } else if (properties.length > 0) {
+            // check if object's properties are in 'serializable' list
+            properties.forEach(prop => serializedObj[prop] = serialize(o[prop]));
+        } else {
+            // normal object serialize own properties
+            for (let prop in o) {
+                if (o.hasOwnProperty(prop)) {
+                    serializedObj[prop] = serialize(o[prop]);
+                }
+            }
+        }
+        return serializedObj;
+    }
 }
 
 /**
@@ -54,14 +95,15 @@ export function intersection(element, query) {
  * @param {Array} array
  * @param {Object} ele Element to insert into the array
  * @param {string} id Name of the field used to compare elments(Default: 'id')
+ * @return {integer} index of added/modified element
  */
 export function arrayPushOrReplace(array, ele, id = 'id') {
     var i = Array.findIndex(array, e => ele[id] === e[id]);
     if (i >= 0) {
-        array[i] = ele;
+        Object.assign(array[i], ele);
         return i;
     } else {
-        return array.push(ele);
+        return array.push(ele) - 1;
     }
 }
 

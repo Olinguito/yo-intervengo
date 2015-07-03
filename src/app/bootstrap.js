@@ -1,4 +1,4 @@
-import {Backend, RemoteBackend, MemoryBackend} from 'lib/backend/backend';
+import {Backend, UltimateBackend} from 'lib/backend/backend';
 
 const API_URL = 'http://api.yointervengo.co/v1';
 // minimum time for the loading animation
@@ -29,10 +29,10 @@ export function configure(aurelia) {
     /* global DEV_MODE */
     if (typeof DEV_MODE !== 'undefined') {
         // backend = di.invoke(MemoryBackend);
-        backend = di.invoke(RemoteBackend);
+        backend = di.invoke(UltimateBackend);
         backend.config({baseUrl: 'http://localhost:3000/v1'});
     } else {
-        backend = di.invoke(RemoteBackend);
+        backend = di.invoke(UltimateBackend);
         backend.config({baseUrl: API_URL});
     }
     di.registerInstance(Backend, backend);

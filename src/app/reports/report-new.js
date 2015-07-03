@@ -1,11 +1,11 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Category, Report, reportType as t} from './models';
-import {serialize} from 'lib/backend/backend';
+import {serialize, MemoryBackend} from 'lib/backend/backend';
 import {Map, Coords} from 'lib/map';
 import {TILES_URL, MAP_TOKEN} from './reports';
 
-@inject(Map, Router)
+@inject(Map, Router, MemoryBackend)
 export class ReportNew {
     report = null;
     mapConf = {
@@ -15,8 +15,9 @@ export class ReportNew {
         tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
     };
 
-    constructor(mainMap, router) {
-        this.center = new Coords(mainMap.center);
+    constructor(mainMap, router, memory) {
+        this.memory = memory;
+        this.mainMap = mainMap;
         this.router = router;
     }
 
@@ -34,30 +35,39 @@ export class ReportNew {
     saveReport() {
         var errors = validateReport(this.report);
         if (!errors.length) {
-            this.report.date = new Date();
-            this.report.location = this.center;
-            this.report.save().then(()=>this.router.navigateBack());
+            this.report.save()
+                .then(()=> this.router.navigateBack());
         } else {
             // TODO show errors
             console.error('report has errors ->', errors);
         }
     }
 
+    attached() {
+        // scroll to card on list
+        document.querySelector('yi-card.new').scrollIntoView();
+    }
+
     activate(params) {
         var {type, category} = params;
         this.report = new Report();
         this.report.type = type === 'request' ? t.request : t.complain;
+        this.report.location = new Coords(this.mainMap.center);
 
         return Category.findOne({slug: category})
             .then(c=> this.report.category = c)
             // get and assign parent to category
             // TODO server should include parent data on respose
             .then(c=> Category.findOne({slug: c.parent}))
-            .then(p => this.report.category.parent = p);
+            .then(p => this.report.category.parent = p)
+            // save on memory to show it in the card list
+            .then(() => this.memory.save(this.report));
     }
 
     deactivate() {
-        // TODO delete unsaved report
+        if (!this.report.id) {
+            return this.memory.delete(this.report);
+        }
     }
 }
 
