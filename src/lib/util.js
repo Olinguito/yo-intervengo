@@ -45,7 +45,7 @@ function templateFromElement(element) {
  * List as tree
  * transform a list of objects into a tree like structure
  */
-export function asTree(list, id = 'id', children = 'children', parent = 'parent') {
+export function asTree(list, id = 'id', children = 'children', parent = 'parent', copy = true) {
     var treeList = [], lookup = {};
 
     for (let obj of list) {
@@ -54,10 +54,20 @@ export function asTree(list, id = 'id', children = 'children', parent = 'parent'
     }
     for (let obj of list) {
         if (typeof obj[parent] !== 'undefined' && obj[parent] !== null) {
-            lookup[obj[parent]][children].push(obj);
+            lookup[obj[parent]][children].push(copy ? simpleCopy(obj) : obj);
         } else {
-            treeList.push(obj);
+            treeList.push(copy ? simpleCopy(obj) : obj);
         }
     }
     return treeList;
+}
+
+function simpleCopy(obj) {
+    var object = {};
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            object[p] = obj[p];
+        }
+    }
+    return object;
 }

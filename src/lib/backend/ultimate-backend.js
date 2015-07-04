@@ -34,7 +34,6 @@ export class UltimateBackend extends Backend {
     }
 
     save(resource) {
-        this.memory.save(resource);
         return this.remote.save(resource)
             .then(res => this.memory.save(res));
     }
@@ -46,16 +45,15 @@ export class UltimateBackend extends Backend {
     }
 
     find(type, query = {}) {
-        // TODO handle query
         // send request to server and update memory later
-        this.remote.find(type).then(rr => this.memory.saveAll(type, rr));
+        this.remote.find(type, query).then(rs => this.memory.saveAll(type, rs));
         // resolve quickly with local data
-        return this.memory.find(type)
+        return this.memory.find(type, query)
             .then(resources => resources.length > 0 ?
                 // get from memory
                 resources :
                 // get from localStorage if memory empty
-                this.local.find(type).then(ress => this.memory.saveAll(type, ress))
+                this.local.find(type, query).then(rs => this.memory.saveAll(type, rs))
             );
     }
 
