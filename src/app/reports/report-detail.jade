@@ -2,7 +2,7 @@ template
   main
     nav
       button.previous &lt;
-      button.close(click.delegate="r.navigate('')") x
+      button.close(cl.urlick.delegate="r.navigate('')") x
       button.next &gt;
 
     ul.pics
@@ -19,7 +19,7 @@ template
 
     article.info-card
       header
-        figure: img(src.bind='report.photo')
+        figure: img(src.bind='report.photo.url')
         section.left-side
           h1.title ${report.title}
           h3.cat-subcat ${report.category.parent.name} - ${report.category.name}

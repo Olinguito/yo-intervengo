@@ -15,7 +15,7 @@ export class Report {
     @property title = '';
     @property description = '';
     @property address = '';
-    @property photo = '';
+    @property photo = {};
     @property supporters = 0;
 
     @property(Category) category;
