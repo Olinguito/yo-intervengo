@@ -22,14 +22,11 @@ export class ReportNew {
     }
 
     photoSelected(file) {
-        var reader = new FileReader(),
-            img = document.querySelector('#report-new .photo figure');
-        reader.onload = () => {
-            img.style.backgroundImage = `url(${reader.result})`;
-            //
-            this.report.photo = reader.result;
-        };
-        reader.readAsDataURL(file);
+        var imgArea = document.querySelector('#report-new .photo figure'),
+            url = URL.createObjectURL(file);
+        // set photo-button image
+        imgArea.style.backgroundImage = `url(${url})`;
+        this.report.photo.url = url;
     }
 
     saveReport() {

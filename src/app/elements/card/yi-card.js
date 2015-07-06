@@ -1,4 +1,4 @@
-import {inject, customElement, useShadowDOM, bindable} from 'aurelia-framework';
+import {inject, customElement, useShadowDOM, bindable, computedFrom} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-card.css!text';
@@ -18,12 +18,19 @@ export class YiCard {
         this.map = mainMap;
     }
 
+    // @computedFrom('this.report.photo.url', 'this.report.photo.thumbUrl') // why isn't it working? :'(
+    get photoCover() {
+        var photo = this.report.photo,
+            url = photo && photo.thumbUrl || photo.url || '';
+        return { 'background-image': `url(${url})` };
+    }
+
     bind() {
-        //
         if (!this.report.id) {
             this.element.classList.add('new');
         }
         // observe id change to remove 'new' class
+        // TODO use pollyfill
         Object.observe(this.report, this.onIdChange.bind(this));
     }
 

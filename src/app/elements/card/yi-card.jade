@@ -4,8 +4,8 @@ template
   header
     figure.title(
       click.delegate="openDetail()", 
-      title="Mas informacion ...", 
-      style="background-image:url(${report.photo.thumbUrl})"
+      title="Mas informacion ...",
+      style.bind="photoCover"
     )
       figcaption
         h1(if.bind="report.title") ${report.title}
