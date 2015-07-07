@@ -11,7 +11,7 @@ template
         class="${route.isActive?'active':''}"
       )
         yi-icon(icon.bind="route.config.id", title.bind="route.title")
-        i ${route.title}
+        i ${route.config.name}
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")
 

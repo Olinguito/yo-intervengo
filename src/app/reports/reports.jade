@@ -19,7 +19,7 @@ template
         longitude.bind="report.location.lng",
         icon.bind="report.category.icon",
         class="${report.typeName == 'request'?'alt':''}",
-        click.delegate="$parent.highlightReportCard(report)"
+        click.trigger="$parent.highlightReportCard(report)"
       )
 
   router-view(id="${activeSubSection}")

@@ -3,7 +3,7 @@ template
 
   header
     figure.title(
-      click.delegate="openDetail()", 
+      click.trigger="openDetail()",
       title="Mas informacion ...",
       style.bind="photoCover"
     )
@@ -11,7 +11,7 @@ template
         h1(if.bind="report.title") ${report.title}
         h1.empty(if.bind="!report.title")
         h2 ${report.category.name}
-    figure.category(click.delegate="centerMarker()", title="Mostrar en el mapa")
+    figure.category(click.trigger="centerMarker()", title="Mostrar en el mapa")
       yi-icon(icon="${report.category.icon}")
   p.description(if.bind="report.description") ${report.description}
   p.description.empty(if.bind="!report.description")

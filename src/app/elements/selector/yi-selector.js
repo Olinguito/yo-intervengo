@@ -8,8 +8,8 @@ import style from './yi-selector.css!text';
 @customElement('yi-selector')
 @useShadowDOM
 @inject(Element)
-@bindable({name: 'onSelect', attribute: 'select', defaultValue() {}})
 export class YiSelector {
+    @bindable onSelect = ()=> {};
     selection = [];
 
     constructor(element) {

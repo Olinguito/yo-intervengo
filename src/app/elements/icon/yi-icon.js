@@ -9,9 +9,9 @@ import style from './yi-icon.css!text';
 @useShadowDOM
 @customElement('yi-icon')
 @inject(Element)
-@bindable({name: 'icon'})
-@bindable({name: 'animate'})
 export class YiIcon {
+    @bindable icon;
+    @bindable animate;
     shownIcon = null;
     animation = null;
 

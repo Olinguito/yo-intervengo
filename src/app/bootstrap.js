@@ -1,8 +1,9 @@
 import {Backend, UltimateBackend} from 'lib/backend/backend';
 
 const API_URL = 'http://api.yointervengo.co/v1';
+const API_URL_DEV = 'http://localhost:3000/v1';
 // minimum time for the loading animation
-const MIN_WAIT = 2.5; // seconds
+const MIN_WAIT = 1; // seconds
 var minWait = wait(MIN_WAIT);
 
 /**
@@ -14,10 +15,8 @@ export function configure(aurelia) {
 
     // Aurelia default modules
     aurelia.use
-        .defaultBindingLanguage()
-        .defaultResources()
-        .router()
-        .eventAggregator();
+        .standardConfiguration();
+        // .plugin('aurelia-animator-css');
 
     // Make resources global
     aurelia.globalizeResources(
@@ -30,7 +29,7 @@ export function configure(aurelia) {
     if (typeof DEV_MODE !== 'undefined') {
         // backend = di.invoke(MemoryBackend);
         backend = di.invoke(UltimateBackend);
-        backend.config({baseUrl: 'http://localhost:3000/v1'});
+        backend.config({baseUrl: API_URL_DEV});
     } else {
         backend = di.invoke(UltimateBackend);
         backend.config({baseUrl: API_URL});

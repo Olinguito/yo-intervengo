@@ -3,7 +3,7 @@ import {inject, BindingLanguage} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 
 export const CARD_LIST_WIDTH = 296;
-export const NAV_WIDTH = 250;
+export const NAV_WIDTH = 220;
 export const NAV_WIDTH_NARROW = 60;
 
 /**

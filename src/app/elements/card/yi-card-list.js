@@ -1,11 +1,13 @@
-import {customElement, useShadowDOM, bindable, bindingMode} from 'aurelia-framework';
+import {customElement, useShadowDOM, bindable, bindingMode as b} from 'aurelia-framework';
 import {addStyleToTemplate} from 'lib/util';
 import style from './yi-card-list.css!text';
 
 @customElement('yi-card-list')
 @useShadowDOM
-@bindable({name: 'order', defaultBindingMode: bindingMode.twoWay, defaultValue: 'date'})
 export class YiCardList {
+    @bindable({defaultBindingMode: b.twoWay})
+    order = 'date';
+
     orderOptions = [
         {
             title: 'Orden alfabético',

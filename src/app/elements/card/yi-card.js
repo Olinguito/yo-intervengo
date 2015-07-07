@@ -9,8 +9,8 @@ import {CARD_LIST_WIDTH} from 'yi/app';
 @customElement('yi-card')
 @useShadowDOM
 @inject(Element, Router, Map)
-@bindable({ name: 'report' })
 export class YiCard {
+    @bindable report;
 
     constructor(element, router, mainMap) {
         this.element = element;

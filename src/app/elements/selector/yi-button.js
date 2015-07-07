@@ -6,11 +6,13 @@ import style from './yi-button.css!text';
 @useShadowDOM
 @inject(Element)
 // has 3 states true, false, null(attribute removed)
-@bindable({name: 'selected', defaultValue: null, changeHandler: 'selectedChanged'})
-@bindable({name: 'title', defaultValue: ''})
-@bindable({name: 'icon', defaultValue: ''})
-@bindable({name: 'value'})
 export class YiButton {
+    @bindable title = '';
+    @bindable icon = '';
+    @bindable value;
+    @bindable({changeHandler: 'selectedChanged'})
+    selected = null;
+
     constructor(element) {
         this.element = element;
     }

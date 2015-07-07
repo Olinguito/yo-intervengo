@@ -6,8 +6,8 @@ import style from './yi-marker.css!text';
 @customElement('yi-marker')
 @useShadowDOM
 @inject(Element)
-@bindable({name:'icon'})
 export class YiMarker {
+    @bindable icon;
 
     constructor(element) {
         this.element = element;

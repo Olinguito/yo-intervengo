@@ -4,9 +4,8 @@ import style from './responsive-form.css!text';
 
 @customElement('responsive-form')
 @useShadowDOM
-@bindable({name: 'onSubmit', attribute: 'submit', defaultValue() {}})
 export class ResponsiveForm {
-
+    @bindable submit = ()=> {};
     currStep = 0;
     numberOfSteps = 3;
 
@@ -23,7 +22,7 @@ export class ResponsiveForm {
     }
 
     done() {
-        this.onSubmit();
+        this.submit();
     }
 
     get inLastStep() {
