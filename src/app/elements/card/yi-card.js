@@ -18,7 +18,7 @@ export class YiCard {
         this.map = mainMap;
     }
 
-    // @computedFrom('this.report.photo.url', 'this.report.photo.thumbUrl') // why isn't it working? :'(
+    @computedFrom('this.report.photo.url', 'this.report.photo.thumbUrl') // why isn't it working? :'(
     get photoCover() {
         var photo = this.report.photo,
             url = photo && photo.thumbUrl || photo.url || '';
