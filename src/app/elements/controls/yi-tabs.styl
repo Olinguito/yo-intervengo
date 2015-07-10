@@ -1,0 +1,37 @@
+@import '../../../styles/colors'
+
+:host
+  background-color light-grey
+  border-bottom 1px solid light-grey
+  display flex
+  position relative
+
+#tip
+  absolute bottom 0 left 0
+  background-color white
+  border-top 1px solid light-grey
+  border-left 1px solid light-grey
+  height 10px
+  margin-left -6px
+  margin-bottom -6px
+  transition transform 0.5s
+  width 10px
+
+content::content yi-tab
+  align-items center
+  color colorBlack
+  cursor pointer
+  display flex
+  flex 1
+  justify-content center
+  position relative
+  transition background-color 0.5s, color 0.5s
+
+  &.active
+    background-color white
+
+  &::shadow yi-icon
+    absolute left 0.5rem
+    &::shadow .show
+      transition stroke 0.5s
+      stroke colorBlack

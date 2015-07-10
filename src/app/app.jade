@@ -10,8 +10,8 @@ template
         href.bind="route.href", 
         class="${route.isActive?'active':''}"
       )
-        yi-icon(icon.bind="route.config.id", title.bind="route.title")
-        i ${route.config.name}
+        yi-icon(icon.bind="route.config.name", title.bind="route.config.text")
+        i ${route.config.text}
     //- applicaiton sections
     router-view(main, flex, id="${activeRoute}")
 

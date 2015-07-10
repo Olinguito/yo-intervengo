@@ -1,280 +1,231 @@
 @require 'values'
 @require 'colors'
+@require 'util/scrollbar'
 
-cardRadius = 8px
+cardRadius = 5px
 colorTiltedBg = #E8E8E8 + 16%
+cardHeight = 200px
+mapWidth = 180px
+cardWidth = 780px
+photoSize = 10rem
+
+asCard()
+  background white
+  border-radius cardRadius
+  box-shadow 0 2px 10px fade-out(black, 95%)
+  display flex
+  min-height cardHeight
+  overflow hidden
+
+supportButton(typeColor)
+  section.detail ul.stats .backed
+    button
+      background typeColor
+      &:active
+        background activeColor(typeColor)
+      yi-icon::shadow .show
+        stroke white
+        stroke-width 1.8 !important
+    output
+      color typeColor
 
 #report-detail
-  // TODO: find better hack
-  background-image linear-gradient(top, colorTiltedBg, colorTiltedBg)
-  background-size 100% 50%
-  background-position bottom
-  background-repeat no-repeat
-  text-align center
-  min-height 100vh
-  overflow-x hidden
-  overflow-y auto
+  display flex
+  flex-direction column
+  background pale-grey
   position relative
 
-  &::-webkit-scrollbar
-    width 4px
-  &::-webkit-scrollbar-thumb
-    border-radius 2px
-
+  // type variant styles
   &.request
-    &::-webkit-scrollbar
-      background-color fade-out(colorBlack, 30%)
-    &::-webkit-scrollbar-thumb
-      background-color fade-out(colorBlue, 20%)
-    p.wiki-text a, button:hover, .history-card .title
-      color colorBlue
-    .tabs .history
-      background-color colorBlue
-
+    supportButton colorBlue
+    main
+      scrollbar colorBlue
+      yi-tab.active
+        color colorBlue
+        &::shadow yi-icon::shadow .show
+          stroke colorBlue
   &.complain
-    &::-webkit-scrollbar
-      background-color fade-out(colorBlack, 30%)
-    &::-webkit-scrollbar-thumb
-      background-color fade-out(colorOrange, 20%)
-    p.wiki-text a, button:hover, .history-card .title
-      color colorOrange
-    .tabs .history
-      background-color colorOrange
+    supportButton colorOrange
+    main
+      scrollbar colorOrange
+      yi-tab.active
+        color colorOrange
+        &::shadow yi-icon::shadow .show
+          stroke colorOrange
 
-  main
-    margin auto
-    max-width 800px
-    padding 0 1rem 2rem 1rem
-    position relative
-    width 100%
+  > nav
+    flex-shrink 0
     z-index 1
-
-  .tilted-bg
-    absolute top 13rem bottom 0
-    left 0
-    right 0
-    overflow hidden
-    z-index 0
-
-    &:before
-      absolute left -50% top 0
-      background-image url('assets/bg.svg')
-      background-color colorTiltedBg
-      border solid 5px colorTiltedBg
-      box-shadow inset 0 5px 15px fade-out(black, 95%)
-      content ''
-      height 200%
-      transform rotate(-5deg)
-      transform-origin 80% center
-      width 200%
-      z-index 0
-
-  nav
-    align-items center
-    display flex
-    margin auto
-    height headerHeight
+    @import 'util/top-bar'
+    .container
+      align-items center
+      display flex
+      height 100%
+      justify-content space-between
+      margin auto
+      max-width cardWidth
+      width 90%
 
     button
-      width 40px
-      color #ffffff
-      height 40px
-      cursor pointer
-      background-color rgba(0, 0, 0, .0)
+      background none
       border none
-      font-size 1.3em
-      font-weight 300
-    button.close
-      margin auto
+      yi-icon
+        vertical-align bottom
+      &:last-of-type yi-icon
+        transform rotate(180deg)
+      &:active
+        transform scale(0.9)
 
-  ul.pics
-    text-align center
+  yi-cover
+    absolute top 0 left 0
+    align-items center
+    background-color light-grey
+    clip-path polygon(0 0,100% 0,100% 80%,0 100%)
     display flex
-    justify-content space-between
-    margin 1rem auto
+    height 280px
+    justify-content center
+    overflow hidden
+    width 100%
+    z-index 0
+    -webkit-clip-path polygon(0 0,100% 0,100% 80%,0 100%)
+    &::after
+      absolute top 0 left 0
+      background-color colorGray3
+      clip-path polygon(0 0,100% 0,100% 80%,0 100%)
+      content ''
+      height 100%
+      width 100%
+      z-index 1
+      -webkit-clip-path polygon(0 99.2%, 100% 79.2%, 100% 80%, 0 100%)
+    img
+      width 100%
+      filter blur(10px)
+      -webkit-filter blur(10px)
 
-    li
-      border-radius cardRadius
-      box-shadow 0 0 0 3pt rgba(180, 180, 180, .4)
+  main
+    flex 1
+    overflow-x hidden
+    overflow-y auto
+    padding 2rem 0
+    position relative
+    scrollbar()
+    > section
+      width 90%
+      margin 0.5rem auto
+      max-width cardWidth
+
+  section.detail
+    asCard()
+
+    article
       display flex
-      height 9rem
+      flex 1
+      flex-direction column
+
+      h1
+        font-size 1.5em
+        padding-left 1rem
+        padding-top 1rem
+      p.category
+        font-weight normal
+        font-size 0.9em
+        line-height 1.5em
+        padding-left 1rem
+        text-transform uppercase
+      p.address
+        color colorGray2
+        font-size 0.8em
+        height 2.8em
+        line-height 2.8em
+        padding-left 1rem
+      p.description
+        flex 1
+        padding 1rem
+        background-color pale-grey
+        font-family 'Roboto Slab'
+        &::first-letter
+          text-transform capitalize
+
+    ul.stats
+      display flex
+      height 2rem
+      li
+        flex 1
+        display flex
+        .indicator
+          background light-grey
+          display inline-block
+          width 2rem
+          yi-icon
+            transform scale(0.7)
+            &::shadow .show
+              stroke colorBlack
+        button
+          border none
+          cursor pointer
+          &:active
+            background activeColor(light-grey)
+          yi-icon
+            cursor pointer
+        output
+          color colorBlack
+          flex 1
+          text-align center
+          line-height 2rem
+        &.status
+          background light-grey
+
+    leaflet-map
+      width mapWidth
+
+  section.photos
+    margin 1.5rem auto
+    ul
+      display flex
+      justify-content space-between
+      flex-direction row
+    li
+      border 2px solid light-grey
+      border-radius cardRadius
+      display flex
+      height photoSize
       min-width 9rem
-      margin 6pt
       overflow hidden
-      width 9rem
+      width photoSize
 
       &.pic
         align-items center
         justify-content center
+        img
+          height 100%
 
       &.gallery
         flex-wrap wrap
         img
           height  50%
 
-      &:first-of-type
-        margin-left 3pt
-      &:last-of-type
-        margin-right 3pt
-
-    li.mapmask
-      background-color: rgba(255, 255, 255, .0)
-
-    @media query1200
-      li:nth-of-type(3)
-        display none
-
-    @media queryMobile
-      display none
-
-  article.info-card
-    width 100%
-    text-align center
-    background-color #FFF
-    border-radius cardRadius
-    box-shadow 0 2px 10px rgba(0, 0, 0, .2)
-    margin 1rem auto
-    position relative
-
-    header
-      text-align left
-      color #FFF
-      vertical-align top
-      clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
-      -webkit-clip-path polygon(0 0, 100% 0, 100% 65%, 0 100%)
-      border-radius cardRadius cardRadius 0 0
-      padding-bottom 8px
-      position relative
-
-      > figure
-        absolute top 0 left 0
-        align-items center
-        background-color white - 20%
-        border-radius cardRadius cardRadius 0 0
-        bottom 0
-        display flex
-        overflow hidden
-        right 0
-        z-index -1
-
-        img
-          width 100%
-
-      section.left-side
-        display inline-block
-        width 70%
-        height 100%
-        text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-        h1.title
-          font-size 1.6em
-          padding 20px 0 20px 20px
-        h3.cat-subcat
-          font-size 1.3em
-          padding 0 0 10px 20px
-          text-transform capitalize
-        h4.address-city
-          font-size 1.1em
-          padding 0 0 0 20px
-      section.right-side
-        display inline-block
-        position relative
-        top - 25px
-        width 29%
-        height 100%
-        text-align right
-        padding 0 5px 0 0
-        margin 0 0 40px 0
-        text-shadow 0 1px 3px rgba(0, 0, 0, .95)
-        button
-          display inline-block
-          cursor: pointer
-          margin-bottom 42px
-          color #ffffff
-          width 20px
-          height 40px
-          border-radius 50%
-          background-color rgba(0, 0, 0, .0)
-          border none
-          font-size 1.3em
-          font-style italic
-
-        i
-          display inline-block
-          font-size 15px
-          width 100%
-          padding-right 10px
-
-    .content
+  section.actions
+    asCard()
+    flex-direction column
+    yi-tabs
+      height 2.2rem
+    .action
+      align-items center
       display flex
-      padding 1rem
+      flex 1
+      flex-direction column
+      justify-content center
 
-      .description
-        font-size 1.1em
-        font-family 'Roboto Slab'
-        font-weight 100
-        flex 1
-        text-align left
-        &::first-letter
-          text-transform capitalize
+  // dialogs
+  dialog
+    padding 0 1rem 1rem
 
-      aside
-        border-left solid 1px #e5e5e5
-        text-align right
-        flex-shrink 0
-        li
-          margin 1rem
-          white-space nowrap
-
-  p.wiki-text
-    text-align center
-    font-size 1.1em
-    margin 1.6rem auto
-    color colorBlack
-
-    a
-      margin-left 0.5em
-      white-space nowrap
-
-  section.tab-card
-    background-color #FFF
-    border-radius cardRadius
-    overflow hidden
-    text-align left
-    vertical-align text-top
-    box-shadow 0 2px 10px rgba(0, 0, 0, .2)
-    min-height 20rem
-
-    nav.tabs
-      display inline-block
-      ul
-        width 50px
-        border-right solid 1px #e5e5e5
-
-        li
-          height 50px
-          width 100%
-          display inline-block
-          border-bottom solid 1px #e5e5e5
-          text-align center
-          line-height 50px
-          background-color #fff
-          cursor pointer
-          &:hover
-            background-color #e5e5e5
-            color white
-            border-bottom none
-
-        li.history
-          color #fff
-          border-bottom none
-
-    section.history-card
-      display inline-block
-      position relative
-      text-align left
-      vertical-align top
-      margin 10px
-      margin-top 15px
-      h2.title
-        font-size 1.3em
-        margin-bottom 30px
+    yi-icon
+      background light-grey
+      border-radius 0 0 3px 3px
+      display block
+      height 4rem
+      margin auto
+      margin-bottom 1rem
+      width 4rem
+      padding 0.5rem

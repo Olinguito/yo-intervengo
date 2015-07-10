@@ -1,19 +1,17 @@
 @import '../../../styles/values'
 @import '../../../styles/colors'
+@require '../../../styles/util/scrollbar'
+
+cardWidth = 245px
 
 :host
-  background fade-out(colorGray1, 10%)
-  display box
-  position relative
+  background colorGray1
+  display flex
+  flex-direction column
 
 .sort
-  absolute top 0 left 0
+  @import '../../../styles/util/top-bar'
   display flex
-  background colorGray1
-  width 100%
-  height headerHeight
-
-  @import '../../../styles/util/bottom-shadow'
 
   button
     border none
@@ -38,47 +36,39 @@
     &.active
       yi-icon
         -webkit-filter drop-shadow(0 0 3px fade-out(white, 50%))
+        filter drop-shadow(0 0 3px fade-out(white, 50%))
         &::shadow path
           stroke white
 
 section
-  absolute top headerHeight left 0
   bottom 0
-  right 0
+  flex 1
   display flex
   flex-direction column
+  justify-content flex-start
   overflow auto
-  &::-webkit-scrollbar
-    width 4px
-    height 4px
-  &::-webkit-scrollbar-thumb
-    background fade-out(#fff, 50%)
-    border-radius 2px
-  .container
-    display flex
-    flex-direction column
-    justify-content flex-start
-    height 100%
-    padding 1rem
-    min-height -webkit-min-content
-    min-height -moz-min-content
-    min-height min-content
+  z-index 0
+  scrollbar()
 
-
-.container content::content yi-card
-  margin 0.7rem auto
-  width 100%
+content[select='yi-card']::content yi-card
+  margin 0.6rem auto
+  &:first-of-type
+    margin-top 1.5rem
+  &:last-of-type
+    margin-bottom 1.5rem
 
 // mobile
 @media queryMedium
+  .sort
+    display none
   section
     flex-direction row
-    min-height bottomPannelMinHeight
-    justify-content center
     -webkit-overflow-scrolling touch
-
-  .container
-    flex-direction row
-    height auto
-    justify-content space-between
-    padding 1rem
+  content[select='yi-card']::content yi-card
+    margin auto 0.6em
+    &:first-of-type
+      margin-top auto
+      margin-left calc(50vw - 122px)
+    &:last-of-type
+      margin-bottom auto
+      margin-right calc(50vw - 122px)

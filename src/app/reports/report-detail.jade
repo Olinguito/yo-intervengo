@@ -1,51 +1,71 @@
 template
+  nav: .container
+    button: yi-icon(icon="arrow")
+    button: yi-icon(icon="close", click.delegate="r.navigateToRoute('reports')")
+    button: yi-icon(icon="arrow")
+      
+  yi-cover: img(src.bind="report.photo.url")
+      
   main
-    nav
-      button.previous &lt;
-      button.close(cl.urlick.delegate="r.navigate('')") x
-      button.next &gt;
-
-    ul.pics
-      li.mapmask
-      li.pic
-        img(src='http://lorempixel.com/200/200/city', alt="")
-      li.pic
-        img(src='http://lorempixel.com/200/200/city', alt="")
-      li.gallery(title="Ir a galería")
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-
-    article.info-card
-      header
-        figure: img(src.bind='report.photo.url')
-        section.left-side
-          h1.title ${report.title}
-          h3.cat-subcat ${report.category.parent.name} - ${report.category.name}
-          h4.address-city ${report.address}
-        section.right-side
-          button.alert i
-          i.state Reportado
-      .content
+    section.detail
+      article
+        h1 ${report.title}
+        p.category ${report.category.name}
+        p.address ${report.address || 'Sin dirección exacta'}
         p.description ${report.description}
-        aside: ul
-          li.backed Respaldos ${report.supporters}
-          li.commented Comentarios 0
-          li.shared Compartido 0
+        
+        ul.stats
+          li.backed
+            button.indicator(title="Respaldar"): yi-icon(icon="hand")
+            output(title="${report.supporters} respaldos") ${report.supporters}
+          li.shared
+            button.indicator(title="Compartir", click.delegate="share.showModal()"): yi-icon(icon="share")
+            output(title="Compartido ${report.supporters} veces") 0
+          li.commented
+            span.indicator(title="Comentarios"): yi-icon(icon="comment")
+            output(title="0 comentarios") 0
+          li.status
+            span.indicator(title="Estado"): yi-icon(icon="status-reported")
+            output Reportado
+          
+      leaflet-map(
+        latitude.bind="report.location.lat",
+        longitude.bind="report.location.lng",
+        zoom="17",
+        options.one-time="mapConf",
+        tileServer.one-time="mapConf.tiles"
+      )
+        yi-marker(
+          latitude.bind="report.location.lat",
+          longitude.bind="report.location.lng",
+          icon.bind="report.category.icon"
+          class="${report.type==0?'alt':''}",
+        )
 
-    p.wiki-text Para lograr un mayor impacto asocia este reporte a un contrato.
-      a Enlazar a Wiki
-
-    section.tab-card
-      nav.tabs
-        ul
-          li.history H
-          li.links E
-          li.comments C
-          li.more +
-      section.history-card
-        h2.title Historial
-        yi-history Módulo del historial
-
-  .tilted-bg
+    section.photos: ul
+      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
+      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
+      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
+      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
+      //- li.gallery(title="Ir a galería")
+        img(src='http://lorempixel.com/100/100/city')
+        img(src='http://lorempixel.com/100/100/city')
+        img(src='http://lorempixel.com/100/100/city')
+        img(src='http://lorempixel.com/100/100/city')
+          
+    section.actions
+      yi-tabs(selected.bind="tab")
+        yi-tab(icon='paper') Historial
+        yi-tab(icon='link') Enlaces
+      #history.action(if.bind="tab==0")
+        p Ningún hito se ha registrado en este reporte
+      #links.action(if.bind="tab==1")
+        p Ningun enlace se ha añadido a este reporte
+        
+  //- pop-ups
+  dialog#share(ref="share")
+    button.close(click.trigger="share.close()"): &times;
+    //- dialog content
+    yi-icon(icon='share')
+    p La función de compartir está deshabilitada por el momento.
+    

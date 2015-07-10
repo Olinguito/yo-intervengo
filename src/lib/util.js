@@ -40,6 +40,14 @@ function templateFromElement(element) {
     return tpl;
 }
 
+export function compileMarker(compiler, marker) {
+    var ctx = marker.element.primaryBehavior.boundProperties[0].binding.source;
+    compiler.compile(marker.icon, ctx);
+    // workaround to set the lat/lng of the marker correctly
+    // TODO: investigate why it doesn't set them automatically
+    // marker.element.latitude = ctx.report.location.lat;
+    // marker.element.longitude = ctx.report.location.lng;
+}
 
 /**
  * List as tree

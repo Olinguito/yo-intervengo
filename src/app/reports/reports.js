@@ -1,7 +1,7 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Map} from 'lib/map';
-import {Compiler} from 'lib/util';
+import {Compiler, compileMarker} from 'lib/util';
 import {Report} from './models/report';
 
 // mapbox custom map access token
@@ -27,7 +27,7 @@ export class Reports {
         // Map container
         this.map = mainMap;
         //
-        document.addEventListener('divmarker', e=> this.compileMarker(e.detail));
+        document.addEventListener('divmarker', e=> compileMarker(this.compiler, e.detail));
     }
 
     configureRouter(config, router) {
@@ -56,18 +56,6 @@ export class Reports {
 
     activate() {
         return Report.find().then(reports => this.reports = reports);
-    }
-
-    /**
-     * compile the aurelia yi-marker custom element
-     */
-    compileMarker(marker) {
-        var ctx = marker.element.primaryBehavior.boundProperties[0].binding.source;
-        this.compiler.compile(marker.icon, ctx);
-        // workaround to set the lat/lng of the marker correctly
-        // TODO: investigate why it doesn't set them automatically
-        marker.element.latitude = ctx.report.location.lat;
-        marker.element.longitude = ctx.report.location.lng;
     }
 }
 

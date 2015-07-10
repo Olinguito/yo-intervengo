@@ -27,7 +27,7 @@ nav[drawer]
       transition background 0.2s
       background colorOrange + 5%
     &:active
-      background desaturate(colorOrange, 20%) - 20%
+      background activeColor(colorOrange)
 
     @import 'util/bottom-shadow'
 
@@ -44,7 +44,7 @@ nav[drawer]
       &:hover
         background colorBlue + 5%
       &:active
-        background desaturate(colorBlue, 20%) - 20%
+        background activeColor(colorBlue)
     a i
       opacity 1
 
@@ -122,6 +122,8 @@ dialog
   margin auto
   position relative
   box-shadow 0 2px 5px fade-out(black, 50%)
+  &::backdrop
+    background-color fade-out(colorGray1, 40%)
 
   button.close
     absolute right 0.5rem top 0.5rem

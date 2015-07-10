@@ -57,14 +57,14 @@ styleByType(type, typeColor)
           color typeColor
 
       &:active
-        background-color desaturate(typeColor, 20%) - 20%
+        background-color activeColor(typeColor)
         transition background-color 0.1s
         + output::after
-          background-color desaturate(typeColor, 20%) - 20%
+          background-color activeColor(typeColor)
           transition background-color 0.1s
 
     figure.category:hover
-      background-color desaturate(typeColor, 100%)
+      background-color activeColor(typeColor)
 
 // set styles by type
 styleByType(complain, colorOrange)

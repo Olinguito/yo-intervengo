@@ -1,0 +1,9 @@
+scrollbar(thumbColor = #AAA)
+  &::-webkit-scrollbar
+    width 5px
+    height 4px
+  &::-webkit-scrollbar-thumb
+    background fade-out(thumbColor, 50%)
+    border-radius 2px
+  &:hover::-webkit-scrollbar-thumb
+    background fade-out(thumbColor, 5%)

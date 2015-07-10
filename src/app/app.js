@@ -28,11 +28,11 @@ export class App {
         config.title = 'Yo Intervengo';
         config.map([
             // TODO: dynamic generation with i18n
-            {name: 'Reportes', id: 'reports', route: 'reports', moduleId: 'yi/reports/reports', nav: true},
-            {name: 'Wiki', id: 'wiki', route: 'wiki', moduleId: 'yi/wiki/wiki'},
-            {name: 'Estadisticas', id: 'stats', route: 'stats', moduleId: 'yi/stats/stats'},
-            {name: 'Perfil', id: 'profile', route: 'profile', moduleId: 'yi/profile/profile'},
-            {name: 'Acerca de', id: 'about', route: 'about', moduleId: 'yi/about/about', nav: true},
+            {name: 'reports', text: 'Reportes', route: 'reports', moduleId: 'yi/reports/reports', nav: true},
+            {name: 'wiki', text: 'Wiki', route: 'wiki', moduleId: 'yi/wiki/wiki'},
+            {name: 'stats', text: 'Estadisticas', route: 'stats', moduleId: 'yi/stats/stats'},
+            {name: 'profile', text: 'Perfil', route: 'profile', moduleId: 'yi/profile/profile'},
+            {name: 'about', text: 'Acerca de', route: 'about', moduleId: 'yi/about/about', nav: true},
             {id: 'login', route: 'login', moduleId: 'yi/login/login'},
             {id: 'error', route: 'error/:error', moduleId: 'yi/error/error'},
             {route: '', redirect: 'reports'}
@@ -53,6 +53,6 @@ export class App {
     //
     get activeRoute() {
         return this.router.currentInstruction ?
-            this.router.currentInstruction.config.id : '';
+            this.router.currentInstruction.config.name : '';
     }
 }
