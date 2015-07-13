@@ -21,10 +21,10 @@ export function configure(aurelia) {
 
     // Make resources global
     aurelia.globalizeResources(
-        'yi/elements/icon/yi-icon',
-        'yi/elements/marker/yi-marker',
-        'yi/elements/controls/yi-tabs',
-        'yi/elements/controls/yi-tab'
+        'yi/elements/icon/yi-icon'
+        // 'yi/elements/marker/yi-marker',
+        // 'yi/elements/controls/yi-tabs',
+        // 'yi/elements/controls/yi-tab'
         );
 
     // register default backend and configure
@@ -55,6 +55,9 @@ function bootstrap() {
     var webComp = Promise.resolve();
     webComp.then(()=> {
         if (browserCompatible()) {
+            if (typeof DEV_MODE === 'undefined') {
+                loadDocument('bundle.html', {'aurelia-view-bundle': ''});
+            }
             loadDocument('polymer-elements.html');
             System.import('aurelia-bootstrapper');
         } else {
@@ -65,9 +68,10 @@ function bootstrap() {
     });
 }
 
-function loadDocument(url) {
+function loadDocument(url, attrs = {}) {
     return new Promise((resolve) => {
         var link = document.createElement('link');
+        Object.keys(attrs).forEach(name => link.setAttribute(name, attrs[name]));
         link.rel = 'import';
         link.href = url;
         link.addEventListener('load', resolve);

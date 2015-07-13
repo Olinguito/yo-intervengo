@@ -19,12 +19,13 @@ var p = require('path');
 var vulcanize = require('gulp-vulcanize');
 var ghPages = require('gulp-gh-pages');
 var file = require('gulp-file');
-var jspm = require('jspm');
+var aureliaBundle = require('aurelia-cli/dist/lib/bundler');
+// var jspm = require('jspm');
 
 var path = {
     src: 'src/',
     scripts: 'src/**/*.js',
-    html: 'src/**/*.jade',
+    html: ['src/index.jade', 'src/polymer-elements.jade', 'src/app/**/*.jade'],
     style: 'src/styles/**/*.styl',
     custElementsStyle: 'src/app/elements/**/*.styl',
     custElementsStyleCompiled: 'src/app/elements/**/*.{css,css.map}',
@@ -45,32 +46,36 @@ gulp.task('clean', function() {
 });
 
 gulp.task('clean-dist', function() {
-    return gulp.src([path.custElementsStyleCompiled, path.output + '**/*.map'])
-        .pipe(vinylPaths(del));
+    return gulp.src([
+        path.custElementsStyleCompiled,
+        path.out + '**/*.map',
+        path.out + 'app/*',
+        path.out + 'app/'
+    ]).pipe(vinylPaths(del));
 });
 
 gulp.task('build-style', function() {
     return gulp.src([path.src + 'styles/app.styl'])
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(stylus({use: [nib()], import: 'nib', compress: inProd()}))
         .pipe(rename('style.css'))
-        .pipe(sourcemaps.write('.'))
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.output));
 });
 
 gulp.task('build-elements-style', function() {
     return gulp.src([path.custElementsStyle], {base: path.src})
         .pipe(changed(path.output, {extension: '.styl'}))
-        .pipe(sourcemaps.init())
+        // .pipe(sourcemaps.init())
         .pipe(stylus({use: [nib()], import: 'nib', compress: inProd()}))
-        .pipe(sourcemaps.write('.'))
+        // .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(path.elementsStyleOut));
 });
 
 gulp.task('build-html', function() {
     //var lang = 'es'; // TODO: be able to specify language on build
 
-    return gulp.src(path.html)
+    return gulp.src(path.html, {base: path.src})
         .pipe(changed(path.output, {extension: '.html'}))
 //        .pipe(data(stringsFile))
         .pipe(jade({pretty: !inProd()}))
@@ -154,29 +159,30 @@ gulp.task('vulcanize', function() {
         .pipe(gulp.dest(path.output));
 });
 
-gulp.task('jspm-bundle', function(done) {
-    var dependencies = [
-        'yi/**/*',
-        'lib/**/*',
-        // ninja dependencies
-        'aurelia-bootstrapper',
-        'aurelia-loader-default',
-        'core-js',
-        'aurelia-templating-binding',
-        'aurelia-templating-resources',
-        'aurelia-history-browser',
-        'aurelia-templating-router'
-    ];
-    // TODO: create jspm plugin
-    jspm.setPackagePath('.');
-    jspm.bundle(
-        dependencies.join(' + '),
-        path.out + 'build.js',
-        {
-            minify: true,
-            sourceMaps: false
+gulp.task('bundle', function(done) {
+    aureliaBundle({
+        js: {
+            'dist/bundle': {
+                modules: [
+                    'yi/**/*',
+                    'aurelia-bootstrapper',
+                    'github:aurelia/loader-default@0.9.0',
+                    'github:aurelia/templating-binding@0.13.0',
+                    'github:aurelia/templating-resources@0.13.0',
+                    'github:aurelia/history-browser@0.6.1',
+                    'github:aurelia/templating-router@0.14.0'
+                ],
+                options: { inject: false, sourcemaps: false, minify: true }
+            }
+        },
+        template: {
+            'dist/bundle': {
+                pattern: '**/*.html',
+                options: { inject: false }
+            }
         }
-    ).then(done);
+    }, { force: true, baseURL: 'dist' });
+    done();
 });
 
 gulp.task('dist', function(done) {
@@ -186,9 +192,10 @@ gulp.task('dist', function(done) {
     process.env.NODE_ENV = 'production';
     return runSequence(
         'clean',
-        ['build-elements-style', 'build-style', 'build-html', 'copy-lib', 'copy-assets'],
-        ['vulcanize', 'jspm-bundle'],
-        'clean-dist',
+        ['build-elements-style', 'build-style', 'build-html'],
+        ['vulcanize', 'bundle'],
+        ['copy-lib', 'copy-assets'],
+        // 'clean-dist', // NOTE can't call imediately until areliaBundle returns a promise
         done
     );
 });

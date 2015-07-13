@@ -17,6 +17,7 @@
     "url": "https://github.com/Olinguito/yo-intervengo"
   },
   "devDependencies": {
+    "aurelia-cli": "^0.2.1",
     "babel-eslint": "^3.1.14",
     "browser-sync": "^1.9.2",
     "del": "^1.1.1",

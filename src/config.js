@@ -12,8 +12,7 @@ System.config({
     "yi/*": "app/*.js",
     "lib/*": "lib/*.js",
     "github:*": "../vendor/github/*.js",
-    "npm:*": "../vendor/npm/*.js",
-    "yo-intervengo/*": "app/*.js"
+    "npm:*": "../vendor/npm/*.js"
   }
 });
 
@@ -144,3 +143,4 @@ System.config({
     }
   }
 });
+

@@ -11,8 +11,8 @@ html
     //- startup scripts
     script(type="text/javascript",src="vendor/system.js")
     script(type="text/javascript",src="config.js")
-    if 'production' === process.env.NODE_ENV
-      script(type="text/javascript",src="build.js")
+    if process.env.NODE_ENV === 'production'
+      script(type="text/javascript", src="bundle.js")
     else
       script(type="text/javascript") var DEV_MODE = true
     script(type="text/javascript") System.import('yi/bootstrap')
