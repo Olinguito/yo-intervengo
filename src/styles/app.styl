@@ -3,6 +3,9 @@
 @require 'colors'
 @require 'values'
 
+.aurelia-hide
+  display none !important
+
 body
   background colorBlack
   font-family 'Roboto', sans-serif
@@ -21,22 +24,19 @@ nav[drawer]
     background colorOrange
     display flex
     justify-content flex-end
-    margin-bottom 2rem
+    margin-bottom 1.4rem
     transition background 0.6s
+    @import 'util/bottom-shadow'
     &:hover
       transition background 0.2s
       background colorOrange + 5%
     &:active
       background activeColor(colorOrange)
-
-    @import 'util/bottom-shadow'
-
+    &:active yi-icon
+      transform scale(0.95)
     yi-icon
       margin auto 6px
       transition transform 0.2s
-
-    &:active yi-icon
-      transform scale(0.95)
 
   &.opened
     core-toolbar
@@ -54,19 +54,26 @@ nav[drawer]
     font-size 1.05em
     line-height 3em
     letter-spacing 3px
+    margin 0.2rem 0
     padding 0 0.6rem
     text-transform uppercase
     text-shadow 0 0 5px fade-out(black, 80%)
     transition 0.2s
     width 100%
     white-space nowrap
-
+    &:hover
+      color colorGray3 + 40%
+      yi-icon::shadow path.show
+        stroke colorGray3 + 40%
+    &:last-of-type
+      margin-top auto
+      margin-bottom 0.6rem
     i
       cursor pointer
       font-style normal
       opacity 0
       transition opacity 0.2s
-
+      vertical-align middle
     yi-icon
       cursor pointer
       margin-right 0.6rem
@@ -78,7 +85,6 @@ nav[drawer]
       &::shadow path.show
         transition stroke 0.2s
         stroke colorGray3
-
     &.active
       color white
       text-shadow 0 0 5px fade-out(white, 50%)
@@ -86,7 +92,6 @@ nav[drawer]
         -webkit-filter drop-shadow(0 0 2px fade-out(white, 50%))
         &::shadow path.show
           stroke white
-
       &:hover
         color white
         text-shadow 0 0 7px fade-out(white, 40%)
@@ -94,15 +99,6 @@ nav[drawer]
           -webkit-filter drop-shadow(0 0 3px fade-out(white, 40%))
           &::shadow path.show
             stroke white
-
-    &:hover
-      color colorGray3 + 40%
-      yi-icon::shadow path.show
-        stroke colorGray3 + 40%
-
-    &:last-of-type
-      margin-top auto
-      margin-bottom 0.6rem
 
 core-drawer-panel > router-view
   display block
@@ -118,30 +114,23 @@ core-toolbar
 
 dialog
   border none
-  border-radius 3px
-  margin auto
-  position relative
+  border-radius 5px
   box-shadow 0 2px 5px fade-out(black, 50%)
+  margin auto
+  max-width 350px
+  position relative
   &::backdrop
     background-color fade-out(colorGray1, 40%)
 
   button.close
-    absolute right 0.5rem top 0.5rem
+    absolute left 50% top -3rem
     background none
-    border 1px solid colorGray2
-    border-radius 1.3rem
-    color colorGray2
-    font-size 1.4rem
-    height 1.3rem
-    line-height 1.3rem
-    width 1.3rem
-    transition background 0.2s, transform 0.1s
-
-    &:hover
-      background colorGray2
-      color white
-    &:active
-      line-height 1.4rem
+    border none
+    height 3rem
+    margin-left -1.5rem
+    padding 0.5rem
+    width 3rem
+    &:active yi-icon
       transform scale(0.9)
   p
     user-select none
@@ -149,9 +138,7 @@ dialog
 
   // beta dialog
   &#beta
-    max-width 360px
-
-    yi-icon
+    > yi-icon
       background colorOrange
       border-radius 0 0 3px 3px
       display block
@@ -159,10 +146,8 @@ dialog
       margin auto
       width 4rem
       padding 0.5rem
-
     p
       margin 1rem
-
       strong
         font-weight normal
       a
@@ -172,6 +157,64 @@ dialog
           content ' '
         &:hover
           text-decoration underline
+
+  // login
+  &#login
+    color colorGray1
+    width 280px
+    yi-tabs
+      height 3rem
+      border-radius 5px 5px 0 0
+      overflow hidden
+    form
+      padding 0.8rem 1rem
+      input, button
+        border-radius 4px
+        display block
+        font-weight lighter
+        margin 0.5rem 0
+        vertical-align middle
+        width 100%
+      input
+        border 1px solid colorGray1
+        height 2.2rem
+        line-height normal
+        // line-height 2.2rem
+        padding 0 0.6rem
+        transition border 0.3s
+        &.invalid
+          color colorError
+          font-weight bold
+          border 1px solid colorError
+      button
+        border none
+        color white
+        height 3rem
+        text-transform uppercase
+        transition background 0.1s
+      &.register
+        input:focus
+          color colorOrange
+          border 1px solid colorOrange
+        button
+          background-color colorOrange
+          &:active
+            background-color activeColor(colorOrange)
+      p
+        text-align center
+        font-size 0.9em
+      p.errors
+        color colorError
+        height 1.8rem
+
+      &.login
+        input:focus
+          color colorBlue
+          border 1px solid colorBlue
+        button
+          background-color colorBlue
+          &:active
+            background-color activeColor(colorBlue)
 
 // sections
 #error
@@ -184,4 +227,3 @@ dialog
 @require 'boot'
 @require 'reports'
 @require 'about'
-@require 'login'

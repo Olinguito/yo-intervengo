@@ -9,7 +9,6 @@ export class YiTabs {
     @bindable({defaultBindingMode: b.twoWay}) selected;
     value;
     tabs = [];
-    seamless = false;
 
     constructor(ele) {
         this.element = ele;
@@ -22,6 +21,8 @@ export class YiTabs {
         });
         // initialize here so element exsists for tip position computation
         this.selected = +this.selected || 0;
+        // seamless === true -> hide tip
+        // this.seamless = this.element.getAttribute('seamless') !== null;
     }
 
     selectedChanged(n, o) {
