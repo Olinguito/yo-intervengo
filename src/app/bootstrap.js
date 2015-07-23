@@ -1,5 +1,6 @@
 import {Backend, UltimateBackend} from 'lib/backend/backend';
 
+export const APP_VERSION = 1;
 const API_URL = 'http://api.yointervengo.co/v1';
 const API_URL_DEV = 'http://localhost:3000/v1';
 // minimum time for the loading animation
@@ -14,10 +15,11 @@ export function configure(aurelia) {
     var backend, di = aurelia.container;
 
     // Aurelia default modules
-    aurelia.use
-        .standardConfiguration()
-        .developmentLogging();
-        // .plugin('aurelia-animator-css');
+    aurelia.use.standardConfiguration();
+    if (typeof DEV_MODE !== 'undefined') {
+        aurelia.use.developmentLogging();
+    }
+    // .plugin('aurelia-animator-css');
 
     // Make resources global
     aurelia.globalizeResources(
@@ -55,6 +57,9 @@ function bootstrap() {
     var webComp = Promise.resolve();
     webComp.then(()=> {
         if (browserCompatible()) {
+            // do proper cleaning when updating to new version
+            migrate(APP_VERSION);
+
             if (typeof DEV_MODE === 'undefined') {
                 loadDocument('bundle.html', {'aurelia-view-bundle': ''});
             }
@@ -106,6 +111,14 @@ function supportsWC() {
     return 'registerElement' in document
         && 'createShadowRoot' in HTMLElement.prototype
         && 'import' in document.createElement('link');
+}
+
+function migrate(ver) {
+    var version = localStorage.getItem('ver');
+    if (version < ver) {
+        localStorage.clear();
+        localStorage.setItem('ver', ver);
+    }
 }
 
 // bootstrap on module load

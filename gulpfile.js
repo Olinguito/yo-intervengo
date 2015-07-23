@@ -16,10 +16,12 @@ var nib = require('nib');
 var sourcemaps = require('gulp-sourcemaps');
 var rename = require('gulp-rename');
 var p = require('path');
-var vulcanize = require('gulp-vulcanize');
 var ghPages = require('gulp-gh-pages');
 var file = require('gulp-file');
 var aureliaBundle = require('aurelia-cli/dist/lib/bundler');
+var Vulcanize = require('vulcanize');
+var htmlmin = require('gulp-htmlmin');
+// var vulcanize = require('gulp-vulcanize');
 // var jspm = require('jspm');
 
 var path = {
@@ -148,15 +150,24 @@ gulp.task('copy-assets', function() {
         .pipe(gulp.dest(path.out));
 });
 
-gulp.task('vulcanize', function() {
-    return gulp.src(path.output + 'polymer-elements.html')
-        .pipe(vulcanize({
-            dest: path.output,
-            inline: true,
-            abspath: '.',
-            strip: true
-        }))
-        .pipe(gulp.dest(path.output));
+gulp.task('vulcanize', function(done) {
+    var vulcan = new Vulcanize({
+        abspath: '',
+        // inlineScripts: true,
+        inlineCss: true,
+        stripComments: true
+    });
+    vulcan.process('dist/polymer-elements.html', function(err, html) {
+        if (err) { throw err; }
+        require('fs').writeFileSync('dist/polymer-elements.html', html);
+        done();
+    });
+});
+
+gulp.task('min-elements', function() {
+    return gulp.src('dist/polymer-elements.html')
+        .pipe(htmlmin({collapseWhitespace: true, minifyJs: true}))
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('bundle', function(done) {
@@ -167,8 +178,8 @@ gulp.task('bundle', function(done) {
                     'yi/**/*',
                     'aurelia-bootstrapper',
                     'github:aurelia/loader-default@0.9.0',
-                    'github:aurelia/templating-binding@0.13.0',
-                    'github:aurelia/templating-resources@0.13.0',
+                    'github:aurelia/templating-binding@0.13.1',
+                    'github:aurelia/templating-resources@0.13.1',
                     'github:aurelia/history-browser@0.6.1',
                     'github:aurelia/templating-router@0.14.0'
                 ],
@@ -193,14 +204,15 @@ gulp.task('dist', function(done) {
     return runSequence(
         'clean',
         ['build-elements-style', 'build-style', 'build-html'],
-        ['vulcanize', 'bundle'],
+        'vulcanize',
+        'bundle',
         ['copy-lib', 'copy-assets'],
         // 'clean-dist', // NOTE can't call imediately until areliaBundle returns a promise
         done
     );
 });
 
-gulp.task('deploy-preprod', ['dist'], function() {
+gulp.task('deploy-preprod', function() {
     var origin = 'me';
     return gulp.src('dist/**/*')
         .pipe(ghPages({origin: origin, force: true}));

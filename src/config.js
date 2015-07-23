@@ -1,5 +1,4 @@
 System.config({
-  "defaultJSExtensions": true,
   "transpiler": "babel",
   "babelOptions": {
     "optional": [
@@ -9,11 +8,13 @@ System.config({
     ]
   },
   "paths": {
+    "*": "*.js",
     "yi/*": "app/*.js",
     "lib/*": "lib/*.js",
     "github:*": "../vendor/github/*",
     "npm:*": "../vendor/npm/*"
-  }
+  },
+  "defaultJSExtensions": true
 });
 
 System.config({
@@ -144,4 +145,3 @@ System.config({
     }
   }
 });
-
