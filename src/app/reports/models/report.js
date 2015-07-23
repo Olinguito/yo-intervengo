@@ -1,4 +1,4 @@
-import {Coords} from 'lib/map';
+// import {Coords} from 'lib/map';
 import {Category} from './category';
 import {resource, property} from 'lib/backend/decorators';
 
@@ -18,9 +18,9 @@ export class Report {
     @property photo = {};
     @property supporters = 0;
 
+    @property location;
     @property(Category) category;
     @property(Date) date = new Date();
-    @property(Coords) location;
     @property type = reportType.request;
 
     get typeName() {

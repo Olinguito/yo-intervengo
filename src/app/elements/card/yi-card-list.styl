@@ -50,12 +50,34 @@ section
   z-index 0
   scrollbar()
 
-content[select='yi-card']::content yi-card
-  margin 0.6rem auto
-  &:first-of-type
-    margin-top 1.5rem
-  &:last-of-type
-    margin-bottom 1.5rem
+  .card-highlight
+    border-bottom 1px dashed fade-out(white, 60%)
+    display flex
+    flex-shrink 0
+    padding 0.8rem 0
+    position relative
+    &:last-of-type
+      border-bottom none
+    &:before
+      absolute top 0 left 0
+      border-radius 0 4px 4px 0
+      content ''
+      display block
+      height 100%
+      width 0px
+      transition width 0.3s
+    &.request::before
+      background-color colorBlue
+    &.complain::before
+      background-color colorOrange
+    &.active
+      &:before
+        width 5px
+      yi-card
+        transform scale(1.06)
+  yi-card
+    margin auto
+    transition transform 0.3s
 
 // mobile
 @media queryMedium
@@ -64,11 +86,11 @@ content[select='yi-card']::content yi-card
   section
     flex-direction row
     -webkit-overflow-scrolling touch
-  content[select='yi-card']::content yi-card
-    margin auto 0.6em
-    &:first-of-type
-      margin-top auto
-      margin-left calc(50vw - 122px)
-    &:last-of-type
-      margin-bottom auto
-      margin-right calc(50vw - 122px)
+    yi-card
+      margin auto 0.6em
+      &:first-of-type
+        margin-top auto
+        margin-left calc(50vw - 122px)
+      &:last-of-type
+        margin-bottom auto
+        margin-right calc(50vw - 122px)

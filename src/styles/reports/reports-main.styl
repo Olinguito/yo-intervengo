@@ -1,0 +1,66 @@
+#main
+  position relative
+
+  yi-search-tool
+    absolute top 0 left 0
+    width 100%
+    z-index 1
+
+  #map
+    absolute top 0 left 0
+    right 0
+    bottom 0
+    z-index 0
+
+    [marker]
+      height 0
+      width 0
+      yi-marker
+        transform translate(-50%, -95%)
+
+  .tool-bar
+    &.bottom
+      absolute bottom 0 left 0
+      align-items flex-end
+      display flex
+      justify-content space-between
+      height 0
+      width 100%
+      z-index 1
+
+  yi-selector
+    color colorGray1
+    margin 0
+    &.opened
+      absolute bottom 0 right 0
+      left 0
+      height 100vh
+    &.request
+      &::shadow li yi-button::shadow, yi-button::shadow
+        button, .btn
+          background-color colorBlue
+    &.complain
+      &::shadow li yi-button::shadow, yi-button::shadow
+        button, .btn
+          background-color colorOrange
+    yi-button
+      &.request::shadow, &.complain::shadow
+        button, .btn
+          background-color colorBlue !important
+      &.complain::shadow, &.complain::shadow
+        button, .btn
+          background-color colorOrange !important
+
+  // location button
+  yi-button[icon=location]
+    margin 0
+    padding 1rem
+    &::shadow
+      button
+        height 100%
+        width 100%
+        box-shadow none
+      .title
+        display none
+    &.loading::shadow yi-icon
+      animation pulse 0.8s infinite

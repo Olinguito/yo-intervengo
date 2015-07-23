@@ -3,95 +3,23 @@
 #reports
   display flex
 
-  core-toolbar
-    absolute top 0 left 0
-    z-index 1
-    width 100%
-    &.bottom
-      absolute bottom 0 left 0
-      top initial
-
-      // location button
-      yi-button[icon=location]
-        margin 0
-        padding 1rem
-        absolute bottom 0 left 0
-        &::shadow
-          button
-            height 100%
-            width 100%
-            box-shadow none
-          .title
-            display none
-        &.loading::shadow yi-icon
-          animation pulse 0.8s infinite
-
-  #map-area
-    absolute left 0 top 0
-    height 100%
-    width 100%
-    z-index 0
-
-    leaflet-map
-      height 100%
-      width 100%
-      /*tmp style*/
-      display flex
-      justify-content center
-      align-items center
-
   > router-view
-    flex 3
-    width 100%
-
-    yi-search-tool
-      position relative
-      z-index 1
+    flex 1
 
   yi-card-list
     height 100%
     width rightPanelWidth
     z-index 2
 
-    yi-card
-      transition transform 0.3s
+  @media queryMedium
+    flex-direction column
 
-      &.selected
-        transform scale(1.05)
+    yi-card-list
+      width 100%
+      height bottomPannelMinHeight
 
-  yi-selector
-    absolute bottom 0 right rightPanelWidth
-    color colorGray1
-    z-index 1
-    margin 0
 
-    &.opened
-      left 0
-      height 100vh
-
-    @media queryMedium
-      right 0
-
-    &.request
-      &::shadow li yi-button::shadow, yi-button::shadow
-        button, .btn
-          background-color colorBlue
-    &.complain
-      &::shadow li yi-button::shadow, yi-button::shadow
-        button, .btn
-          background-color colorOrange
-
-yi-button
-  &.request::shadow, &.complain::shadow
-    button, .btn
-      background-color colorBlue !important
-  &.complain::shadow, &.complain::shadow
-    button, .btn
-      background-color colorOrange !important
-
-// responsive
-@import 'reports-mobile'
-
-// Sub sections
-@import 'report-detail'
-@import 'report-new'
+  // Sub sections
+  @import 'reports/reports-main'
+  @import 'reports/report-detail'
+  @import 'reports/report-new'

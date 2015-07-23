@@ -1,4 +1,5 @@
 template
+  require(from="yi/elements/card/yi-card")
   require(from="yi/elements/icon/yi-icon")
   
   header.sort
@@ -10,4 +11,13 @@ template
       )
       yi-icon(icon.bind="o.icon")
       
-  section: content(select="yi-card")
+  section
+    .card-highlight(
+      repeat.for="report of reports",
+      class="${report == $parent.active ? 'active': ''} ${report.typeName}"
+    )
+      yi-card(
+        report.bind="report",
+        class="${report.typeName}",
+        on-select.call="$parent.cardSelected($event)"
+      )

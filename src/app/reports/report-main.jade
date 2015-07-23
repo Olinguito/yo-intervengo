@@ -2,15 +2,43 @@ template
   require(from="yi/elements/search/yi-search-tool")
   require(from="yi/elements/selector/yi-selector")
   require(from="yi/elements/selector/yi-button")
-
+  require(from="yi/elements/marker/yi-marker")
+  require(from="./converters/search-filter")
+  
+  //- search bar
   yi-search-tool(query.bind="parentVM.query")
+  //- .tool-bar.top
+    button: yi-icon(icon="menu")
+    button: yi-icon(icon="search")
+  
+  //- main map
+  mgl-map#map(
+    ref="mapElement",
+    lat.bind="map.lat",
+    lng.bind="map.lng",
+    zoom.bind="map.zoom",
+    options.bind="map.config"
+  )
+    div(
+      marker,
+      lat.bind="report.location.lat",
+      lng.bind="report.location.lng",
+      repeat.for="report of reports | search:query"
+    )
+      yi-marker(
+        icon.bind="report.category.icon",
+        class="${report.typeName == 'request'?'alt':''}",
+        click.trigger="$parent.parentVM.list.yiCardList.highlight(report)"
+        title="${report.title}"
+      )
 
-  core-toolbar.bottom
+  .tool-bar.bottom
+    //- center map on user location
     yi-button(
-      title="Ubicarme en el mapa"
+      title="Ubicarme en el mapa",
       icon="location", 
-      click.delegate="centerMapOnUser()", 
-      class="${locating?'loading':''}"
+      click.delegate="map.center()",
+      class="${map.locating?'loading':''}"
     )
     //- create report
     //- TODO: class interpolation aurelia/binding#33

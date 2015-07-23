@@ -206,7 +206,7 @@ gulp.task('deploy-preprod', ['dist'], function() {
         .pipe(ghPages({origin: origin, force: true}));
 });
 
-gulp.task('deploy', ['dist'], function() {
+gulp.task('deploy', function() {
     return gulp.src('dist/**/*')
         .pipe(file('CNAME', 'app.yointervengo.co'))
         .pipe(ghPages());

@@ -2,26 +2,26 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Category, Report, reportType as t} from './models';
 import {MemoryBackend} from 'lib/backend/backend';
-import {Map, Coords} from 'lib/map';
-import {TILES_URL, MAP_TOKEN} from './reports';
+// import {Map, Coords} from 'lib/map';
+// import {TILES_URL, MAP_TOKEN} from './reports';
 
 const IMGUR_ID = 'Client-ID e84b4d7dc9700e0';
 const IMGUR_URL = 'https://api.imgur.com/3/image';
 
-@inject(Map, Router, MemoryBackend)
+@inject(Router, MemoryBackend)
 export class ReportNew {
     report = null;
     photoFile = null;
-    mapConf = {
-        zoomControl: false,
-        attributionControl: false,
-        minZoom: 14,
-        tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
-    };
+    // mapConf = {
+    //     zoomControl: false,
+    //     attributionControl: false,
+    //     minZoom: 14,
+    //     tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
+    // };
 
-    constructor(mainMap, router, memory) {
+    constructor(router, memory) {
         this.memory = memory;
-        this.mainMap = mainMap;
+        // this.mainMap = mainMap;
         this.router = router;
     }
 
@@ -63,14 +63,15 @@ export class ReportNew {
 
     attached() {
         // scroll to card on list
-        document.querySelector('yi-card.new').scrollIntoView();
+        document.querySelector('yi-card-list')
+            .shadowRoot.querySelector('.new').parentElement.scrollIntoView();
     }
 
     activate(params) {
         var {type, category} = params;
         this.report = new Report();
         this.report.type = type === 'request' ? t.request : t.complain;
-        this.report.location = new Coords(this.mainMap.center);
+        // this.report.location = new Coords(this.mainMap.center);
 
         return Category.findOne({slug: category})
             .then(c=> this.report.category = c)

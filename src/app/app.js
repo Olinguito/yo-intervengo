@@ -1,7 +1,3 @@
-import {Router} from 'aurelia-router';
-import {inject, BindingLanguage} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-http-client';
-
 export const CARD_LIST_WIDTH = 296;
 export const NAV_WIDTH = 220;
 export const NAV_WIDTH_NARROW = 60;
@@ -9,18 +5,8 @@ export const NAV_WIDTH_NARROW = 60;
 /**
  * Aurelia Application
  */
-@inject(BindingLanguage, HttpClient)
 export class App {
-
     navOpened = true;
-    navWidth = NAV_WIDTH + 'px';
-
-    constructor(bindingLang, http) {
-        this.http = http;
-        // small fix to be able to bind to 'tileServer' of leaflet-map (browser lowercases it) // TODO: aurelia-fix
-        bindingLang.attributeMap.tileserver = 'tileServer';
-        bindingLang.attributeMap.drawerwidth = 'drawerWidth';
-    }
 
     configureRouter(config, router) {
         this.router = router;
@@ -33,13 +19,14 @@ export class App {
             {name: 'stats', text: 'Estadisticas', route: 'stats', moduleId: 'yi/stats/stats'},
             {name: 'profile', text: 'Perfil', route: 'profile', moduleId: 'yi/profile/profile'},
             {name: 'about', text: 'Acerca de', route: 'about', moduleId: 'yi/about/about', nav: true},
-            {id: 'login', route: 'login', moduleId: 'yi/login/login'},
+            // {id: 'login', route: 'login', moduleId: 'yi/login/login'},
             {id: 'error', route: 'error/:error', moduleId: 'yi/error/error'},
             {route: '', redirect: 'reports'}
         ]);
     }
 
     attached() {
+        this.drawer.drawerWidth = NAV_WIDTH + 'px';
         // show beta dialog
         this.beta = document.querySelector('body > dialog');
         this.beta.showModal();
@@ -47,7 +34,7 @@ export class App {
 
     toggleNav() {
         this.navOpened = !this.navOpened;
-        this.navWidth = this.navOpened ? NAV_WIDTH + 'px' : NAV_WIDTH_NARROW + 'px';
+        this.drawer.drawerWidth = this.navOpened ? NAV_WIDTH + 'px' : NAV_WIDTH_NARROW + 'px';
     }
 
     //

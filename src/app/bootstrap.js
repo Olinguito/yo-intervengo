@@ -1,7 +1,7 @@
 import {Backend, UltimateBackend} from 'lib/backend/backend';
 
 const API_URL = 'http://api.yointervengo.co/v1';
-const API_URL_DEV = 'http://10.11.12.42:3000/v1';
+const API_URL_DEV = 'http://localhost:3000/v1';
 // minimum time for the loading animation
 const MIN_WAIT = 1; // seconds
 var minWait = wait(MIN_WAIT);
@@ -58,6 +58,9 @@ function bootstrap() {
             if (typeof DEV_MODE === 'undefined') {
                 loadDocument('bundle.html', {'aurelia-view-bundle': ''});
             }
+            // use shadow dom
+            window.Polymer = window.Polymer || {};
+            window.Polymer.dom = 'shadow';
             loadDocument('polymer-elements.html');
             System.import('aurelia-bootstrapper');
         } else {

@@ -1,33 +1,9 @@
 template
-  require(from="yi/elements/card/yi-card")
   require(from="yi/elements/card/yi-card-list")
-  require(from="yi/elements/marker/yi-marker")
-  require(from="./search-filter")
+  require(from="./converters/search-filter")
+  require(from="./converters/report-sorting")
 
-  section#map-area
-    leaflet-map(
-      latitude.two-way="map.center.lat",
-      longitude.two-way="map.center.lng",
-      zoom.two-way="map.zoom",
-      options.bind="mapConf",
-      tileserver.bind="mapConf.tiles"
-    )
-      //- leaflet-marker( latitude.one-time="map.center.lat", longitude.one-time="map.center.lng", icon="{'iconUrl':'assets/yi-marker-complain.png'}" )
-      yi-marker(
-        marker,
-        repeat.for="report of reports | search:query"
-        latitude.bind="report.location.lat",
-        longitude.bind="report.location.lng",
-        icon.bind="report.category.icon",
-        class="${report.typeName == 'request'?'alt':''}",
-        click.trigger="$parent.highlightReportCard(report)"
-      )
-
+  //- reports sub-sections go here
   router-view(id="${activeSubSection}")
 
-  yi-card-list(order.bind="sort")
-    yi-card(
-      repeat.for="report of reports | search:query | sort:sort",
-      report.bind="report",
-      class="${report.typeName} ${report == $parent.activeReport ? 'selected': ''}"
-    )
+  yi-card-list(ref="list", order.bind="sort", reports.bind="reports | search:query | sort:sort")
