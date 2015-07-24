@@ -23,7 +23,7 @@ export class YiCardList {
     }
 
     attached() {
-        this.select(this.orderOptions[3]);
+        this.select(this.orderOptions[3]); // by date
     }
 
     select(opt) {

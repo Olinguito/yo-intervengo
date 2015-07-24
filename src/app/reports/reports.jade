@@ -1,9 +1,8 @@
 template
   require(from="yi/elements/card/yi-card-list")
   require(from="./converters/search-filter")
-  require(from="./converters/report-sorting")
 
   //- reports sub-sections go here
   router-view(id="${activeSubSection}")
 
-  yi-card-list(ref="list", order.bind="sort", reports.bind="reports | search:query | sort:sort")
+  yi-card-list(ref="list", reports.bind="reports | search:query")

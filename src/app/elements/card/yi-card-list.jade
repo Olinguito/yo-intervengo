@@ -1,6 +1,7 @@
 template
   require(from="yi/elements/card/yi-card")
   require(from="yi/elements/icon/yi-icon")
+  require(from="./report-sorting")
   
   header.sort
     button(
@@ -13,7 +14,7 @@ template
       
   section
     .card-highlight(
-      repeat.for="report of reports",
+      repeat.for="report of reports | sort:order",
       class="${report == $parent.active ? 'active': ''} ${report.typeName}"
     )
       yi-card(
