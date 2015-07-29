@@ -14,9 +14,9 @@ template
   //- main map
   mgl-map#map(
     ref="mapElement",
-    lat.bind="map.lat",
-    lng.bind="map.lng",
-    zoom.bind="map.zoom",
+    lat.two-way="map.lat",
+    lng.two-way="map.lng",
+    zoom.two-way="map.zoom",
     options.bind="map.config"
   )
     div(
@@ -42,7 +42,7 @@ template
     )
     //- create report
     //- TODO: class interpolation aurelia/binding#33
-    yi-selector(icon="add", on-select.call="newReport($event)")
+    yi-selector(on-select.call="newReport($event)")
       yi-button(title="Nueva Petición", value="request", icon="request", class="request", click.delegate="$parent.selectorType='request'")
         yi-button(title.bind="cat.name", value="${cat.slug}", icon="${cat.icon}", repeat.for="cat of categories", class="request")
           yi-button(title.bind="subcat.name", value="${subcat.slug}", icon="${subcat.icon}", repeat.for="subcat of cat.categories", class="request")

@@ -18,7 +18,7 @@ export class Report {
     @property photo = {};
     @property supporters = 0;
 
-    @property location;
+    @property location = {lat: 0, lng: 0};
     @property(Category) category;
     @property(Date) date = new Date();
     @property type = reportType.request;

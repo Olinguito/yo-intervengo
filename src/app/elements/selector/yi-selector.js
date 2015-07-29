@@ -10,6 +10,7 @@ import style from './yi-selector.css!text';
 @inject(Element)
 export class YiSelector {
     @bindable onSelect = ()=> {};
+    @bindable icon = 'plus';
     selection = [];
 
     constructor(element) {

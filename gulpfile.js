@@ -80,7 +80,7 @@ gulp.task('build-html', function() {
     return gulp.src(path.html, {base: path.src})
         .pipe(changed(path.output, {extension: '.html'}))
 //        .pipe(data(stringsFile))
-        .pipe(jade({pretty: !inProd()}))
+        .pipe(jade({pretty: false}))
         .pipe(gulp.dest(path.output));
 
 //    function stringsFile(file) {

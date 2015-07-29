@@ -2,85 +2,71 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {Category, Report, reportType as t} from './models';
 import {MemoryBackend} from 'lib/backend/backend';
-// import {Map, Coords} from 'lib/map';
-// import {TILES_URL, MAP_TOKEN} from './reports';
+import Map from './map';
 
 const IMGUR_ID = 'Client-ID e84b4d7dc9700e0';
 const IMGUR_URL = 'https://api.imgur.com/3/image';
 
-@inject(Router, MemoryBackend)
+@inject(Router, MemoryBackend, Map)
 export class ReportNew {
     report = null;
     photoFile = null;
-    // mapConf = {
-    //     zoomControl: false,
-    //     attributionControl: false,
-    //     minZoom: 14,
-    //     tiles: `${TILES_URL}?access_token=${MAP_TOKEN}`
-    // };
+    // form errors
+    errors = [];
 
-    constructor(router, memory) {
+    constructor(router, memory, map) {
         this.memory = memory;
-        // this.mainMap = mainMap;
+        this.map = map;
+        this.map.config.maxZoom = 20;
         this.router = router;
     }
 
     photoSelected(file) {
-        var imgArea = document.querySelector('#report-new .photo figure');
         this.photoUrl = URL.createObjectURL(file);
         this.photoFile = file;
         // set photo-button image
-        imgArea.style.backgroundImage = `url(${this.photoUrl})`;
+        this.photoArea.style.backgroundImage = `url(${this.photoUrl})`;
         this.report.photo.url = this.photoUrl;
     }
 
     saveReport() {
-        var errors = validateReport(this.report),
-            photoOk = Promise.resolve();
-        // TODO show errors
-        if (errors.length) {
-            return console.error('report has errors ->', errors);
+        var photoOk = Promise.resolve();
+        if (!this.formValid()) {
+            return;
         }
         // upload photo
         if (this.photoFile) {
-            let data = new FormData();
-            data.append('image', this.photoFile);
-            photoOk = fetch(IMGUR_URL,
-                {method: 'post', headers: {'Authorization': IMGUR_ID}, body: data}
-            ).then(res => {
-                let json = res.json();
-                URL.revokeObjectURL(this.photoUrl);
-                return res.status >= 200 && res.status < 300 ? json : json.then(Promise.reject.bind(Promise));
-            }).then(d => imgurDataToPhoto(d))
-            .then(p => this.report.photo = p);
+            photoOk = uploadPhoto(this.photoFile)
+                .then(p => this.report.photo = p)
+                // delete on memory loaded image
+                .then(URL.revokeObjectURL(this.photoUrl));
         }
         // save report
-        photoOk
-        .then(() => this.report.save())
-        .then(()=> this.router.navigateBack())
-        .catch(e => console.error(e)); // TODO show error
+        photoOk.then(() => this.report.save())
+            .then(()=> this.router.navigateBack())
+            .catch(e => console.error(e));
     }
 
     attached() {
-        // scroll to card on list
-        document.querySelector('yi-card-list')
-            .shadowRoot.querySelector('.new').parentElement.scrollIntoView();
+        // scroll to newly added card in list
+        this.router.container.viewModel //parent viewModel
+            .list.yiCardList.highlight(this.report);
     }
 
     activate(params) {
-        var {type, category} = params;
-        this.report = new Report();
-        this.report.type = type === 'request' ? t.request : t.complain;
-        // this.report.location = new Coords(this.mainMap.center);
+        var {type, category} = params, newReport;
+        newReport = new Report();
+        newReport.type = type === 'request' ? t.request : t.complain;
+        newReport.location = {lat: this.map.lat, lng: this.map.lng};
 
         return Category.findOne({slug: category})
-            .then(c=> this.report.category = c)
+            .then(c=> newReport.category = c)
             // get and assign parent to category
-            // TODO server should include parent data on respose
             .then(c=> Category.findOne({slug: c.parent}))
-            .then(p => this.report.category.parent = p)
+            .then(p => newReport.category.parent = p)
             // save on memory to show it in the card list
-            .then(() => this.memory.save(this.report));
+            .then(() => this.memory.save(newReport))
+            .then(report => this.report = report);
     }
 
     deactivate() {
@@ -89,17 +75,17 @@ export class ReportNew {
             return this.memory.delete(this.report);
         }
     }
-}
 
-function validateReport(report) {
-    var errors = [];
-    if (report.title == null || report.title.trim() === '') {
-        errors.push({msg: 'Title is required'});
+    formValid() {
+        this.errors.length = 0;
+        if (this.report.title == null || this.report.title.trim() === '') {
+            this.errors.push({msg: 'Title is required'});
+        }
+        if (this.report.description == null || this.report.description.trim() === '') {
+            this.errors.push({msg: 'Description is required'});
+        }
+        return this.errors.length === 0;
     }
-    if (report.description == null || report.description.trim() === '') {
-        errors.push({msg: 'Description is required'});
-    }
-    return errors;
 }
 
 function imgurDataToPhoto(res) {
@@ -109,4 +95,18 @@ function imgurDataToPhoto(res) {
         thumbUrl: link.substr(0, link.length - 4) + 'm' + link.substr(link.length - 4),
         date: res.data.datetime
     };
+}
+
+function uploadPhoto(file) {
+    var data = new FormData();
+    data.append('image', file);
+    // NOTE: using window.fetch to post image
+    return fetch(IMGUR_URL, {method: 'post', headers: {'Authorization': IMGUR_ID}, body: data})
+        .then(res => {
+            let json = res.json();
+            return res.status >= 200 && res.status < 300
+                ? json
+                : json.then(Promise.reject.bind(Promise));
+        })
+        .then(d => imgurDataToPhoto(d));
 }

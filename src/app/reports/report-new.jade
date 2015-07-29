@@ -1,29 +1,50 @@
 template
-  require(from="yi/elements/form/responsive-form")
   require(from="yi/elements/controls/yi-photo-button")
+  require(from="yi/elements/selector/yi-button")
+  require(from="yi/elements/marker/yi-marker")
 
-  responsive-form(class="${report.typeName}", submit.call="saveReport()")
-    section.info.left
-      .cat
+  nav
+    button(click.delegate="router.navigateBack()"): yi-icon(icon="close")
+
+  form(ref="reportForm", class="${report.typeName}")
+    .flex
+      //- main description
+      section.info(tabindex="1")
         figure: yi-icon(icon="${report.category.icon}")
         h2 ${report.category.parent.name}
         h3 ${report.category.name}
-      .fields
-        input(placeholder="título", tabindex="1", autofocus, value.bind="report.title", required)
-        textarea(placeholder="descripcción", tabindex="1", value.bind="report.description", required)
-    section.map.right
-      i ubica tu ${report.type == 0 ? 'petición' : 'queja'} en el mapa
-      leaflet-map(
-        latitude.two-way="report.location.lat",
-        longitude.two-way="report.location.lng",
-        zoom="17",
-        options.one-time="mapConf",
-        tileServer.one-time="mapConf.tiles"
-      )
-        yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
-
-      input(placeholder="dirección", tabindex="1", required)
-    section.photo.right
-      i Añade una foto al reporte
-      figure
-        yi-photo-button(title="buscar foto", filechange.call="photoSelected($event)")
+        p.
+          Crea un título y describe tu denuncia,
+          asegurate de no crear un reporte repetido.
+        input(placeholder="Título", tabindex="2", autofocus, value.bind="report.title", required)
+        textarea(placeholder="Descripción", tabindex="2", value.bind="report.description", required)
+      //- add photo
+      section.photo(tabindex="1")
+        h2 Añade una fotografía a tu reporte
+        p.
+          Inserta una fotografía descriptiva del problema
+          que quieres evidenciar.
+        figure(ref="photoArea")
+          yi-photo-button(title="buscar foto", filechange.call="photoSelected($event)", tabindex="2")
+    .flex(tabindex="1")
+      //- address info
+      section.address
+        p.
+          Debes indicar una dirección aproximada y ubicar 
+          el pin en el sitio correspondiente a tu denuncia.
+        input(placeholder="Cidudad/Municipio", tabindex="2")
+        input(placeholder="Dirección", tabindex="2")
+      //- map area
+      section.map
+        mgl-map(
+          lat.two-way="report.location.lat",
+          lng.two-way="report.location.lng",
+          zoom="16",
+          options.bind="map.config"
+        )
+          yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
+    //- actions
+    footer
+      aside: .error(repeat.for="error of errors") ${error.msg}
+      yi-button.save(icon="check", title="Publicar denuncia", click.delegate="saveReport()")
+      yi-button.cancel(icon="plus", title="Cancelar", click.delegate="router.navigateBack()")

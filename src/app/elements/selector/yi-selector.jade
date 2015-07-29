@@ -4,7 +4,7 @@ template
   section: content(select="yi-button")
 
   nav
-    yi-button#main(click.trigger="toggle()", title="Crea un nuevo reporte", icon="plus")
+    yi-button#main(click.trigger="toggle()", title="Crea un nuevo reporte", icon.bind="icon")
     ul#btns-list
       li(repeat.for="btn of selection")
         yi-button(click.trigger="$parent.navBtnClicked($event)", title="${btn.title}", icon="${btn.icon}")
