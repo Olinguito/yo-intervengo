@@ -42,7 +42,7 @@ template
           zoom="16",
           options.bind="map.config"
         )
-          yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}", fixed-marker)
+          yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}")
     //- actions
     footer
       aside: .error(repeat.for="error of errors") ${error.msg}

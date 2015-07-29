@@ -1,18 +1,19 @@
 template
   require(from="yi/elements/controls/yi-tabs")
   require(from="yi/elements/controls/yi-tab")
+  require(from="yi/elements/marker/yi-marker")
   
   nav: .container
-    button: yi-icon(icon="arrow")
-    button: yi-icon(icon="close", click.delegate="rtr.navigateToRoute('reports')")
-    button: yi-icon(icon="arrow")
+    //- button: yi-icon(icon="arrow")
+    button: yi-icon(icon="close", click.delegate="close()")
+    //- button: yi-icon(icon="arrow")
 
   yi-cover: img(src.bind="report.photo.url")
       
   main
     section.detail
       article
-        h1 ${report.title}
+        h1 ${reportCit}
         p.category ${report.category.name}
         p.address ${report.address || 'Sin dirección exacta'}
         p.description ${report.description}
@@ -31,19 +32,18 @@ template
             span.indicator(title="Estado"): yi-icon(icon="status-reported")
             output Reportado
           
-      leaflet-map(
-        latitude.bind="report.location.lat",
-        longitude.bind="report.location.lng",
+      mgl-map(
+        ref="map",
+        lat.bind="report.location.lat",
+        lng.bind="report.location.lng",
         zoom="17",
-        options.one-time="mapConf",
-        tileServer.one-time="mapConf.tiles"
+        options.bind="mainMap.config"
       )
-        yi-marker(
-          latitude.bind="report.location.lat",
-          longitude.bind="report.location.lng",
-          icon.bind="report.category.icon"
-          class="${report.type==0?'alt':''}",
-        )
+        div(
+          marker
+          lat.bind="report.location.lat",
+          lng.bind="report.location.lng"
+        ): yi-marker( icon.bind="report.category.icon" class="${report.type==0?'alt':''}")
 
     section.photos: ul
       li.pic: img(src.bind="report.photo.thumbUrl", alt="")

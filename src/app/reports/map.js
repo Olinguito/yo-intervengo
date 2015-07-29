@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {Geolocation} from 'lib/geolocation';
 
 export const MAP_ACCESS_TOKEN = 'pk.eyJ1Ijoib2xhbm9kIiwiYSI6IjdZdV9iTTQifQ.HP-razZKsNmITPgHs4ugIA';
-const MAP_STYLE = 'https://www.mapbox.com/mapbox-gl-styles/styles/outdoors-v7.json';
+export const MAP_STYLE = 'https://www.mapbox.com/mapbox-gl-styles/styles/outdoors-v7.json';
 const DEF_ZOOM = 15;
 
 /**
