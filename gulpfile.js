@@ -3,8 +3,6 @@ var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var del = require('del');
 var vinylPaths = require('vinyl-paths');
-var jshint = require('gulp-jshint');
-var stylish = require('jshint-stylish');
 var fs = require('fs');
 var bump = require('gulp-bump');
 var browserSync = require('browser-sync');
@@ -18,9 +16,9 @@ var rename = require('gulp-rename');
 var p = require('path');
 var ghPages = require('gulp-gh-pages');
 var file = require('gulp-file');
-var aureliaBundle = require('aurelia-cli/dist/lib/bundler');
+var aureliaBundle = require('aurelia-cli').bundle;
 var Vulcanize = require('vulcanize');
-var htmlmin = require('gulp-htmlmin');
+// var htmlmin = require('gulp-htmlmin');
 // var vulcanize = require('gulp-vulcanize');
 // var jspm = require('jspm');
 
@@ -39,8 +37,6 @@ path.elementsStyleOut = path.output;
 var inProd = function() {
     return process.env.NODE_ENV === 'production' ? true : false;
 };
-
-var jshintConfig = {esnext: true};
 
 gulp.task('clean', function() {
     return gulp.src([path.output])
@@ -90,9 +86,6 @@ gulp.task('build-html', function() {
 });
 
 gulp.task('lint', function() {
-    return gulp.src(path.scripts)
-        .pipe(jshint(jshintConfig))
-        .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('bump-version', function() {
@@ -153,7 +146,7 @@ gulp.task('copy-assets', function() {
 gulp.task('vulcanize', function(done) {
     var vulcan = new Vulcanize({
         abspath: '',
-        // inlineScripts: true,
+        inlineScripts: true,
         inlineCss: true,
         stripComments: true
     });
@@ -177,23 +170,28 @@ gulp.task('bundle', function(done) {
                 modules: [
                     'yi/**/*',
                     'aurelia-bootstrapper',
-                    'github:aurelia/loader-default@0.9.0',
-                    'github:aurelia/templating-binding@0.13.1',
-                    'github:aurelia/templating-resources@0.13.1',
-                    'github:aurelia/history-browser@0.6.1',
-                    'github:aurelia/templating-router@0.14.0'
+                    'github:aurelia/history-browser@0.6.2',
+                    'github:aurelia/loader-default@0.9.1',
+                    'github:aurelia/templating-binding@0.13.2',
+                    'github:aurelia/templating-resources@0.13.3',
+                    'github:aurelia/templating-router@0.14.1'
                 ],
-                options: { inject: false, sourcemaps: false, minify: true }
+                options: { inject: false, sourcemaps: false, minify: false }
             }
         },
         template: {
             'dist/bundle': {
-                pattern: '**/*.html',
+                pattern: 'app/**/*.html',
                 options: { inject: false }
             }
         }
-    }, { force: true, baseURL: 'dist' });
-    done();
+    }, {
+        force: true,
+        baseURL: 'dist'
+    }).then(function() {
+        console.log('bundle finished!');
+        done();
+    });
 });
 
 gulp.task('dist', function(done) {
@@ -207,7 +205,7 @@ gulp.task('dist', function(done) {
         'vulcanize',
         'bundle',
         ['copy-lib', 'copy-assets'],
-        // 'clean-dist', // NOTE can't call imediately until areliaBundle returns a promise
+        'clean-dist', // NOTE can't call imediately until areliaBundle returns a promise
         done
     );
 });

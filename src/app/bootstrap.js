@@ -22,12 +22,12 @@ export function configure(aurelia) {
     // .plugin('aurelia-animator-css');
 
     // Make resources global
-    aurelia.globalizeResources(
-        'yi/elements/icon/yi-icon'
+    // aurelia.globalizeResources(
+        // 'yi/elements/icon/yi-icon'
         // 'yi/elements/marker/yi-marker',
         // 'yi/elements/controls/yi-tabs',
         // 'yi/elements/controls/yi-tab'
-        );
+        // );
 
     // register default backend and configure
     /* global DEV_MODE */
