@@ -6,7 +6,7 @@ template
   require(from="./converters/search-filter")
   
   //- search bar
-  yi-search-tool(query.bind="parentVM.query")
+  yi-search-tool(query.bind="$parent.query")
   //- .tool-bar.top
     button: yi-icon(icon="menu")
     button: yi-icon(icon="search")

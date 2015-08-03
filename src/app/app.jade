@@ -1,6 +1,4 @@
 template
-  require(from="yi/elements/controls/yi-tabs")
-  require(from="yi/elements/controls/yi-tab")
   require(from="yi/elements/icon/yi-icon")
     
   paper-drawer-panel(ref="drawer")
@@ -10,13 +8,13 @@ template
         yi-icon(icon="menu", animate.bind="router.isNavigating || http.isRequesting")
       // list of sections links
       //- when not loggedIn
-      a(click.delegate="login.showModal()", if.bind="!user.loeggedIn")
+      a(click.delegate="showLogin()", if.bind="!user.isLoggedIn")
         yi-icon(icon="profile")
         i Entrar
       //- when loggedIn
-      a(href="#/profile", if.bind="user.loeggedIn")
+      a(href="#/profile", if.bind="user.isLoggedIn")
         yi-icon(icon="profile")
-        i Perfil
+        i Mi Perfil
       //- show the reminding sections
       a(
         repeat.for="route of router.navigation", 
@@ -30,30 +28,13 @@ template
     router-view(main, flex, id="${activeRoute}")
 
   //- beta version dialog
-  dialog#beta
-    button.close(click.trigger="beta.close()"): yi-icon(icon="close")
+  dialog#beta(ref="betaDialog")
+    button.close(click.trigger="betaDialog.close()"): yi-icon(icon="close")
     //- dialog content
     yi-icon(icon='construction')
-    p Esta versión <strong>Beta</strong> no tiene todas las funciones disponibles. 
-    p Escríbenos tus dudas, comentarios, ¡e ideas! a 
+    p Esta versión <strong>Beta</strong> no tiene todas las funciones disponibles.
+    p Escríbenos tus dudas, comentarios, ¡e ideas! a
       a(href="mailto:olinguito.lab@gmail.com?subject=Yo Intervengo") olinguito.lab@gmail.com
   
   //- login
-  dialog#login(ref="login")
-    button.close(click.delegate="login.close()"): yi-icon(icon="close")
-    yi-tabs(selected.bind="tab", seamless)
-      yi-tab Iniciar
-      yi-tab Regístrate
-    //
-    form.login(if.bind="tab==0", method="dialog")
-      input(type="email", placeholder="Correo electrónico", required, autofocus)
-      input(type="password", placeholder="Contraseña", required)
-      p.errors()
-      button Iniciar
-    form.register(if.bind="tab==1", method="dialog")
-      input(type="username", placeholder="Nombre de usuario", required, autofocus)
-      input(type="email", placeholder="Correo electrónico", required)
-      input(type="password", placeholder="Contraseña", required)
-      p.errors()
-      button Regístrate
-      p Al registrarte estas aceptando nuestros términos y condiciones de servicio
+  compose(view-model="yi/shared/login-dialog", compose.ref="login")

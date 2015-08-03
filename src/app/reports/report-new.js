@@ -3,22 +3,24 @@ import {Router} from 'aurelia-router';
 import {Category, Report, reportType as t} from './models';
 import {MemoryBackend} from 'lib/backend/backend';
 import Map from './map';
+import {User} from 'lib/user';
 
 const IMGUR_ID = 'Client-ID e84b4d7dc9700e0';
 const IMGUR_URL = 'https://api.imgur.com/3/image';
 
-@inject(Router, MemoryBackend, Map)
+@inject(Router, MemoryBackend, Map, User)
 export class ReportNew {
     report = null;
     photoFile = null;
     // form errors
     errors = [];
 
-    constructor(router, memory, map) {
+    constructor(router, memory, map, user) {
         this.memory = memory;
         this.map = map;
         this.map.config.maxZoom = 20;
         this.router = router;
+        this.user = user;
     }
 
     photoSelected(file) {
@@ -51,6 +53,10 @@ export class ReportNew {
         // scroll to newly added card in list
         this.router.container.viewModel //parent viewModel
             .list.yiCardList.highlight(this.report);
+    }
+
+    canActivate() {
+        return this.user.isLoggedIn;
     }
 
     activate(params) {

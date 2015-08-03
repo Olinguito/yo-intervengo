@@ -1,0 +1,28 @@
+template
+  require(from="yi/elements/icon/yi-icon")
+  require(from="yi/elements/controls/yi-tabs")
+  require(from="yi/elements/controls/yi-tab")
+
+  dialog#login(ref="dialog")
+    button.close(click.delegate="dialog.close()"): yi-icon(icon="close")
+    yi-tabs(selected.bind="tab", seamless)
+      yi-tab Iniciar
+      yi-tab Regístrate
+    
+    form.login(if.bind="tab==0", method="dialog", submit.delegate="login()")
+      input(type="text", value.bind="data.username", placeholder="Nombre de usuario", required, autofocus)
+      input(type="password", value.bind="data.password", placeholder="Contraseña", required)
+      p.errors(repeat.for="err of loginErrors") ${err}
+      button(disabled.bind="loading") ${loading ? 'Cargando' : 'Iniciar'}
+      
+    form.register(if.bind="tab==1", method="dialog", submit.delegate="register()")
+      input(type="text",
+        value.bind="data.username",
+        pattern="[A-Za-z0-9\\S]{1,15}"
+        placeholder="Nombre de usuario",
+        required, autofocus)
+      input(type="email", value.bind="data.email", placeholder="Correo electrónico", required)
+      input(type="password", value.bind="data.password", placeholder="Contraseña", required)
+      p.errors(repeat.for="err of registerErrors") ${err}
+      button(disabled.bind="loading") ${loading ? 'Cargando' : 'Regístrate'}
+      p Al registrarte estas aceptando nuestros términos y condiciones de servicio

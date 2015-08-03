@@ -5,6 +5,7 @@ export class Reports {
     query = '';
 
     configureRouter(config, router) {
+        this.$parent = router.parent.container.viewModel;
         // reports sub router
         this.router = router;
         config.map([

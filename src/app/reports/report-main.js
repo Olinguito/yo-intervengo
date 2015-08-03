@@ -1,21 +1,25 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {Category, Report} from './models';
 import {asTree} from 'lib/util';
+import {User} from 'lib/user';
 import Map from './map';
 
 var storedLocation;
 
-@inject(Router, Map)
+@inject(Router, Map, User, EventAggregator)
 export class ReportMain {
     categories = [];
     // referenced on view
     mapElement;
 
-    constructor(router, map) {
+    constructor(router, map, user, eventAggregator) {
         this.router = router;
-        this.parentVM = this.router.container.viewModel;
+        this.$parent = this.router.container.viewModel;
         this.map = map;
+        this.user = user;
+        this.events = eventAggregator;
     }
 
     attached() {
@@ -48,6 +52,16 @@ export class ReportMain {
      * @param selection array with selected options
      */
     newReport(selection) {
-        this.router.navigate(`new/${selection[0].value}/${selection[2].value}`);
+        var type = selection[0].value,
+            cat = selection[selection.length-1].value;
+        if (this.user.isLoggedIn) {
+            this.router.navigate(`new/${type}/${cat}`);
+        } else {
+            this.$parent.$parent.login.currentViewModel.dialog.showModal();
+            let disposse = this.events.subscribe('user:loggedin', () => {
+                this.router.navigate(`new/${type}/${cat}`)
+                disposse();
+            });
+        }
     }
 }
