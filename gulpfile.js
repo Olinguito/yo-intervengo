@@ -176,7 +176,7 @@ gulp.task('bundle', function(done) {
                     'github:aurelia/templating-resources@0.13.3',
                     'github:aurelia/templating-router@0.14.1'
                 ],
-                options: { inject: false, sourcemaps: false, minify: false }
+                options: { inject: false, sourcemaps: false, minify: true }
             }
         },
         template: {

@@ -1,2 +1,26 @@
 template
-  core-toolbar Profile
+  require(from="yi/elements/controls/yi-tabs")
+  require(from="yi/elements/controls/yi-tab")
+  require(from="yi/elements/icon/yi-icon")
+  
+  nav
+
+  yi-cover
+    
+  main
+    section.info
+      .content
+        h1 Pepe Veraz
+        p pepe@mail.com
+      figure: yi-icon(icon="profile")
+        
+    section.actions
+      yi-tabs(selected.bind="tab")
+        yi-tab(icon='close') Creados
+        yi-tab(icon='hand') Respaldados
+      //-
+      #own-reports.action(if.bind="tab==0")
+        p No has creado ningún reporte
+      #supported-reports.action(if.bind="tab==1")
+        p No has soportado ningún reporte
+        

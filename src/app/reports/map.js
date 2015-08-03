@@ -11,7 +11,7 @@ const DEF_ZOOM = 15;
 @inject(Geolocation)
 export default
 class Map {
-    config = { token: MAP_ACCESS_TOKEN, style: MAP_STYLE, minZoom: 6, maxZoom: 16 };
+    config = { token: MAP_ACCESS_TOKEN, style: MAP_STYLE, minZoom: 5, maxZoom: 16 };
     lat = 0;
     lng = 0;
     zoom = 10;
