@@ -1,6 +1,12 @@
 import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
+const STORAGE_KEY = 'user:token';
+
+/**
+ * User
+ * Aurelia service for managing user authentication
+ */
 export class User {
     profile = null;
     profileType = Object;
@@ -20,6 +26,13 @@ export class User {
 
     configure(config) {
         Object.assign(this, config);
+        // get profile if credentials exist and after configuring
+        var data = localStorage.getItem(STORAGE_KEY);
+        if (data) {
+            let [id, token] = data.split(':');
+            this.credential = token;
+            this.getProfile(id);
+        }
     }
 
     register(data) {
@@ -37,13 +50,20 @@ export class User {
             .then(res => {
                 this.credential = res.content.id;
                 userId = res.content.userId;
+                // save on storage
+                localStorage.setItem(STORAGE_KEY, [userId, this.credential].join(':'));
             })
-            .then(() => this.http.get(`${this.endpoint}/${userId}`))
+            .then(() => this.getProfile(userId))
+            .then(() => this.events.publish('user:loggedin', this.profile));
+    }
+
+    getProfile(id) {
+        return this.http.get(`${this.endpoint}/${id}`)
             .then(res => {
                 this.profile = new this.profileType();
                 Object.assign(this.profile, res.content);
-            })
-            .then(() => this.events.publish('user:loggedin', this.profile));
+                return this.profile;
+            });
     }
 
     logout() {
@@ -58,6 +78,11 @@ export class User {
         this.http.configure(x =>
             x.withHeader('Authorization', value)
         );
+        Object.defineProperty(this, '_token', {value});
+    }
+
+    get credential() {
+        return this._token;
     }
 }
 
