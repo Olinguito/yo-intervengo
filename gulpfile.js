@@ -170,6 +170,7 @@ gulp.task('bundle', function(done) {
                 modules: [
                     'yi/**/*',
                     'aurelia-bootstrapper',
+                    'github:aurelia/event-aggregator@0.6.2',
                     'github:aurelia/history-browser@0.6.2',
                     'github:aurelia/loader-default@0.9.1',
                     'github:aurelia/templating-binding@0.13.2',
