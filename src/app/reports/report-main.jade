@@ -28,7 +28,7 @@ template
       yi-marker(
         icon.bind="report.category.icon",
         class="${report.typeName == 'request'?'alt':''}",
-        click.trigger="$parent.parentVM.list.yiCardList.highlight(report)"
+        click.trigger="$parent.$parent.list.yiCardList.highlight(report)"
         title="${report.title}"
       )
 
