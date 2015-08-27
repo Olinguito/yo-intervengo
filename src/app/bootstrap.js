@@ -1,7 +1,7 @@
 import {Backend, UltimateBackend} from 'lib/backend/backend';
 
 export const APP_VERSION = 2;
-const API_URL = 'http://api.yointervengo.co/v1';
+const API_URL = 'http://quid-api.herokuapp.com/v1';
 const API_URL_DEV = 'http://localhost:3000/v1';
 // minimum time for the loading animation
 const MIN_WAIT = 1; // seconds

@@ -22,3 +22,4 @@ template
         class="${report.typeName}",
         on-select.call="$parent.cardSelected($event)"
       )
+    p(if.bind="reports.length===0") Sin reportes para mostrar
