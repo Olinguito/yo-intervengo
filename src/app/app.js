@@ -17,9 +17,12 @@ export class App {
         this.user = user;
         this.user.configure({profileType: Citizen, endpoint: Citizen.resNamePlural});
         // show login dialog when server responds with an unauthorized code
-        events.subscribe(NotLoggedInError, () =>
-            this.login.currentViewModel.dialog.showModal()
-        );
+        events.subscribe(NotLoggedInError, () =>{
+            var loginDialog = this.login.currentViewModel.dialog;
+            if (!loginDialog.hasAttribute('open')) {
+                loginDialog.showModal();
+            }
+        });
     }
 
     configureRouter(config, router) {

@@ -14,9 +14,9 @@ export class Report {
     @property id;
     @property title = '';
     @property description = '';
-    @property address = '';
+    @property address = {};
     @property photo = {};
-    @property supporters = 0;
+    @property supporters = [];
 
     @property location = {lat: 0, lng: 0};
     @property(Category) category;
@@ -25,5 +25,9 @@ export class Report {
 
     get typeName() {
         return this.type === reportType.request ? 'request' : 'complain';
+    }
+
+    get supportersNum() {
+        return Array.isArray(this.supporters) ? this.supporters.length : 0;
     }
 }

@@ -1,25 +1,27 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
+import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Category, Report} from './models';
+import {Report} from './models';
 import {asTree} from 'lib/util';
 import {User} from 'lib/user';
 import Map from './map';
 
 var storedLocation;
 
-@inject(Router, Map, User, EventAggregator)
+@inject(Router, Map, User, EventAggregator, HttpClient)
 export class ReportMain {
     categories = [];
     // referenced on view
     mapElement;
 
-    constructor(router, map, user, eventAggregator) {
+    constructor(router, map, user, eventAggregator, http) {
         this.router = router;
         this.$parent = this.router.container.viewModel;
         this.map = map;
         this.user = user;
         this.events = eventAggregator;
+        this.http = http;
     }
 
     attached() {
@@ -34,12 +36,8 @@ export class ReportMain {
 
     activate() {
         Report.find().then(rr => this.reports = rr);
-        return Category.find()
-            .then(cats => {
-                this.categories = asTree(cats, 'slug', 'categories');
-                // TODO create tree templateController
-                Array.observe(cats, c => this.categories = asTree(c[c.length - 1].object, 'slug', 'categories'));
-            });
+        // TODO use backend
+        return this.http.get("/categories").then(res => this.categories = res.content);
     }
 
     deactivate() {

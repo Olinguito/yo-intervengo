@@ -28,9 +28,7 @@ export class ReportDetail {
     }
 
     activate(params) {
-        // get report
-        return Report.get(params.slug)
-            .then(r => this.report = r);
+        return Report.get(params.slug).then(r => this.report = r);
     }
 
     close() {

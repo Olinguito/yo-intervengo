@@ -1,7 +1,8 @@
 export class Citizen {
-    static resName = 'reporter';
-    static resNamePlural = 'reporters';
+    static resName = 'citizen';
+    static resNamePlural = 'citizens';
 
+    username = '';
     email = '';
     name = '';
 

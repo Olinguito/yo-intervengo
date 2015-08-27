@@ -67,9 +67,6 @@ export class ReportNew {
 
         return Category.findOne({slug: category})
             .then(c=> newReport.category = c)
-            // get and assign parent to category
-            .then(c=> Category.findOne({slug: c.parent}))
-            .then(p => newReport.category.parent = p)
             // save on memory to show it in the card list
             .then(() => this.memory.save(newReport))
             .then(report => this.report = report);

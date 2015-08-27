@@ -8,6 +8,10 @@ export class Profile {
     }
 
     canActivate() {
-        return this.user.isLoggedIn;
+        if (this.user) {
+            return this.user.isLoggedIn;
+        } else {
+            return false;
+        }
     }
 }

@@ -16,13 +16,13 @@ template
       article
         h1 ${reportCit}
         p.category ${report.category.name}
-        p.address ${report.address || 'Sin dirección exacta'}
+        p.address ${'Sin dirección exacta'}
         p.description ${report.description}
         
         ul.stats
           li.backed
             button.indicator(title="Respaldar"): yi-icon(icon="hand")
-            output(title="${report.supporters} respaldos") ${report.supporters}
+            output(title="${report.supporters} respaldos") ${report.supportersNum}
           li.shared
             button.indicator(title="Compartir", click.delegate="share.showModal()"): yi-icon(icon="share")
             output(title="Compartido ${report.supporters} veces") 0

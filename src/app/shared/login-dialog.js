@@ -1,6 +1,8 @@
 import {inject} from 'aurelia-framework';
 import {User} from 'lib/user';
 
+const STATUS_CONFLICT = 409;
+
 @inject(User)
 export class LoginDialog {
     data = {};
@@ -22,7 +24,9 @@ export class LoginDialog {
                 this.dialog.close();
             })
             .catch(res => {
-                setLoginErrors(this.loginErrors, res.content.error.code);
+                if (res.content.error) {
+                    setLoginErrors(this.loginErrors, res.content.error);
+                }
                 this.loading = false
             });
     }
@@ -39,28 +43,32 @@ export class LoginDialog {
             })
             .catch(res => {
                 this.loading = false
-                setRegisterErrors(this.registerErrors, res.content.error);
+                if (res.statusCode == STATUS_CONFLICT) {
+                    this.registerErrors.push('Usuario ya existe');
+                } else {
+                    setRegisterErrors(this.registerErrors, res.content);
+                }
             });
     }
 }
 
-function setLoginErrors(arr, code) {
-    switch (code) {
-        case 'LOGIN_FAILED':
+function setLoginErrors(arr, err) {
+    switch (err) {
+        case 'access_denied':
             arr.push('Comprueba tus datos');
             break;
-        case 'USERNAME_EMAIL_REQUIRED':
-            arr.push('Campos requeridos');
     }
 }
 
-function setRegisterErrors(arr, error) {
-    for (let type in error.details.codes) {
+function setRegisterErrors(arr, resContent) {
+    var codes = resContent.errors ? Object.keys(resContent.errors) : [];
+    for (let type of codes) {
         arr.push(getMsg(type));
     }
 
     function getMsg(code) {
         switch (code) {
+            case 'username': return 'Nombre de usuario invalido';
             case 'email': return 'Email invalido';
             case 'password': return 'Password invalido';
         }
