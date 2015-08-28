@@ -9,17 +9,20 @@ export class Category {
     static resName = 'category';
     static resNamePlural = 'categories';
 
-    @property id;
     @property slug;
     @property name;
     @property icon;
     @property(Category) parent;
+}
 
-    deserializeParent(val) {
-        return Category.findOne({slug: val});
-    }
+@resource
+export class CategoryNode {
+    // tell the {RemoteBackend} what is the plural from of category
+    static resName = 'category';
+    static resNamePlural = 'categories';
 
-    serializeParent(parent) {
-        return parent.slug;
-    }
+    @property slug;
+    @property name;
+    @property icon;
+    @property(Array) children;
 }

@@ -8,6 +8,17 @@ import {User} from 'lib/user';
 const IMGUR_ID = 'Client-ID e84b4d7dc9700e0';
 const IMGUR_URL = 'https://api.imgur.com/3/image';
 
+// TODO use translations
+var errorsMsg = {
+    'title': 'Titulo invalido',
+    'title.required': 'El título es obligatorio',
+    'title.length': 'El título es muy corto',
+    'description': 'Descripcción invalida',
+    'description.required': 'La descripcción es obligatoria',
+    'description.length': 'La descripción es muy corta',
+    'location': 'Ubicación invalida'
+}
+
 @inject(Router, MemoryBackend, Map, User)
 export class ReportNew {
     report = null;
@@ -46,7 +57,14 @@ export class ReportNew {
         // save report
         photoOk.then(() => this.report.save())
             .then(()=> this.router.navigateBack())
-            .catch(e => console.error(e));
+            .catch(res => {
+                if (res.content.errors) {
+                    this.errors.length = 0;
+                    this.errors.push.apply(this.errors,
+                        Object.keys(res.content.errors).map(e => errorsMsg[e])
+                    );
+                }
+            });
     }
 
     attached() {
@@ -65,11 +83,13 @@ export class ReportNew {
         newReport.type = type === 'request' ? t.request : t.complain;
         newReport.location = {lat: this.map.lat, lng: this.map.lng};
 
-        return Category.findOne({slug: category})
+        return Category.get(category)
             .then(c=> newReport.category = c)
             // save on memory to show it in the card list
             .then(() => this.memory.save(newReport))
-            .then(report => this.report = report);
+            .then(report =>
+                this.report = report
+            );
     }
 
     deactivate() {
@@ -81,11 +101,17 @@ export class ReportNew {
 
     formValid() {
         this.errors.length = 0;
-        if (this.report.title == null || this.report.title.trim() === '') {
-            this.errors.push({msg: 'Title is required'});
+        if (empty(this.report.title)) {
+            this.errors.push(errorsMsg['title.required']);
         }
-        if (this.report.description == null || this.report.description.trim() === '') {
-            this.errors.push({msg: 'Description is required'});
+        if (minLength(this.report.title, 5)) {
+            this.errors.push(errorsMsg['title.length']);
+        }
+        if (empty(this.report.description)) {
+            this.errors.push(errorsMsg['description.required']);
+        }
+        if (minLength(this.report.description, 10)) {
+            this.errors.push(errorsMsg['description.length']);
         }
         return this.errors.length === 0;
     }
@@ -112,4 +138,15 @@ function uploadPhoto(file) {
                 : json.then(Promise.reject.bind(Promise));
         })
         .then(d => imgurDataToPhoto(d));
+}
+
+// TODO move to utlity lib
+// validations
+
+function minLength(str, length) {
+    return !empty(str) && str.length < length;
+}
+
+function empty(str) {
+    return str == null || str.trim() === '';
 }

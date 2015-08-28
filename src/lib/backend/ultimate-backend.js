@@ -61,6 +61,11 @@ export class UltimateBackend extends Backend {
         // this.remote.findOne(type, query);
         // this.memory.findOne(type, query);
     // }
+    get(type, id) {
+        this.remote.get(type, id);
+        return this.memory.get(type, id)
+            .catch(() => this.remote.get(type, id));
+    }
 
     count(type) {
         return this.remote.count(type);

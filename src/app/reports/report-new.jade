@@ -46,6 +46,6 @@ template
           yi-marker(class="${report.type==0?'alt':''}", icon="${report.category.icon}")
     //- actions
     footer
-      aside: .error(repeat.for="error of errors") ${error.msg}
+      aside: .error(repeat.for="error of errors") ${error}
       yi-button.save(icon="check", title="Publicar denuncia", click.delegate="saveReport()")
       yi-button.cancel(icon="plus", title="Cancelar", click.delegate="router.navigateBack()")
