@@ -10,8 +10,8 @@ template
   main
     section.info
       .content
-        h1 ${user.username}
-        p ${user.email}
+        h1 ${user.profile.username}
+        p ${user.profile.email}
       figure: yi-icon(icon="profile")
         
     section.actions
@@ -20,7 +20,17 @@ template
         yi-tab(icon='hand') Respaldados
       //-
       #own-reports.action(if.bind="tab==0")
-        p No has creado ningún reporte
+        p(if.bind="user.profile.reports.length==0") No has creado ningún reporte
+        ul(if.bind="user.profile.reports.length>0")
+          li.report-mini(repeat.for="r of user.profile.reports", click.delegate="$parent.open(r)")
+            h3 ${r.title}
+            p ${r.category.name}
+            yi-icon(icon.one-time="r.category.icon", class="${r.type?'complain':'request'}")
       #supported-reports.action(if.bind="tab==1")
-        p No has soportado ningún reporte
+        p(if.bind="user.profile.supported.length==0") No has soportado ningún reporte
+        ul(if.bind="user.profile.supported.length>0")
+          li.report-mini(repeat.for="r of user.profile.reports", click.delegate="$parent.open(r)")
+            h3 ${r.title}
+            p ${r.category.name}
+            yi-icon(icon.one-time="r.category.icon", class="${r.type?'complain':'request'}")
         

@@ -1,17 +1,23 @@
 import {inject} from 'aurelia-framework';
+import {Router} from 'aurelia-router';
 import {User} from 'lib/user';
 
-@inject(User)
+@inject(User, Router)
 export class Profile {
-    constructor(user) {
-        this.user = user.profile;
+    constructor(user, router) {
+        this.user = user;
+        this.router = router;
+    }
+
+    activate() {
+        return this.user.getProfile();
     }
 
     canActivate() {
-        if (this.user) {
-            return this.user.isLoggedIn;
-        } else {
-            return false;
-        }
+        return this.user ? this.user.isLoggedIn : false;
+    }
+
+    open(report) {
+        this.router.navigate(`reports/${report.id}`);
     }
 }
