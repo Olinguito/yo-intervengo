@@ -47,7 +47,7 @@ styleByType(type, typeColor)
       yi-icon::shadow .show
         stroke typeColor
 
-      &:hover
+      &:not(:disabled):hover
         background-color typeColor
         color white
         yi-icon::shadow .show
@@ -56,7 +56,7 @@ styleByType(type, typeColor)
           background-color cgray1
           color typeColor
 
-      &:active
+      &:not(:disabled):active
         background-color activeColor(typeColor)
         transition background-color 0.1s
         + output::after
@@ -195,6 +195,10 @@ footer
     padding 0.4rem 1rem
     text-align right
     transition color 0.2s, background-color 0.2s
+    white-space nowrap
+
+    &:disabled
+      cursor default
 
     yi-icon
       height 22px

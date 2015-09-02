@@ -1,22 +1,28 @@
 import {inject, customElement, useShadowDOM, bindable, computedFrom} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-http-client';
+import {Router} from 'aurelia-router';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {addStyleToTemplate} from 'lib/util';
 //TODO: import later from the html (aurelia fix pending)
 import style from './yi-card.css!text';
-import {Router} from 'aurelia-router';
+import {User} from 'lib/user';
 
 @customElement('yi-card')
 @useShadowDOM
-@inject(Element, Router)
+@inject(Element, Router, User, HttpClient, EventAggregator)
 export class YiCard {
     @bindable report;
     @bindable onSelect = ()=> {};
 
-    constructor(element, router) {
+    constructor(element, router, user, http, events) {
         this.element = element;
         this.router = router;
+        this.user = user;
+        this.http = http;
+        this.events = events;
     }
 
-    @computedFrom('this.report.photo.url', 'this.report.photo.thumbUrl') // why isn't it working? :'(
+    @computedFrom('report.photo.url', 'report.photo.thumbUrl') // why isn't it working? :'(
     get photoCover() {
         var photo = this.report.photo,
             url = photo && photo.thumbUrl || photo.url || '';
@@ -30,6 +36,15 @@ export class YiCard {
         // observe id change to remove 'new' class
         // TODO use pollyfill
         Object.observe(this.report, this.onIdChange.bind(this));
+        // set manually because computed property is expensive
+        this.supportText = supportText(this.report, this.user.profile);
+        // reset button text after successful login
+        if (!this.user.loggedIn) {
+            let disposse = this.events.subscribe('user:loggedin', () => {
+                this.supportText = supportText(this.report, this.user.profile);
+                disposse();
+            });
+        }
     }
 
     onIdChange(changes) {
@@ -47,7 +62,36 @@ export class YiCard {
         }
     }
 
+    support() {
+        if (this.user.loggedIn) {
+            // modify locally for quick feedback
+            if (!this.report.supporters) {
+                this.report.supporters = {};
+            }
+            this.report.supporters[this.user.profile.username] = true;
+            this.supportText = supportText(this.report, this.user.profile);
+        }
+        // hit API, no need for loggin check since API responds with 401 opening login dialog
+        // TODO make part of lib/backend?
+        this.http.post(`reports/${this.report.id}/support`);
+    }
+
+    @computedFrom('supportText')
+    get supportBtnDisabled() {
+        return this.supportText === 'Respaldar' ? false : true;
+    }
+
     static beforeCompile(template) {
         addStyleToTemplate(template, style);
+    }
+}
+
+function supportText(report, user) {
+    if (user) {
+        return report.supported(user.username)
+            ? 'Respaldado'
+            : report.owned(user.username) ? 'Mi reporte' : 'Respaldar';
+    } else {
+        return 'Respaldar';
     }
 }

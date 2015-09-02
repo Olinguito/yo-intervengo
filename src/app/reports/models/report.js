@@ -16,7 +16,7 @@ export class Report {
     @property description = '';
     @property address = {};
     @property photo = {};
-    @property supporters = [];
+    @property supporters = {};
 
     @property location = {lat: 0, lng: 0};
     @property(Category) category;
@@ -27,7 +27,15 @@ export class Report {
         return this.type === reportType.request ? 'request' : 'complain';
     }
 
-    get supportersNum() {
-        return Array.isArray(this.supporters) ? this.supporters.length : 0;
+    get supportersCount() {
+        return this.supporters ? Object.keys(this.supporters).length : 0;
+    }
+
+    supported(username) {
+        return this.supporters ? !!this.supporters[username] : false;
+    }
+
+    owned(username) {
+        return this.creator.username === username;
     }
 }

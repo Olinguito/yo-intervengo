@@ -16,7 +16,7 @@ template
   p.description(if.bind="report.description") ${report.description}
   p.description.empty(if.bind="!report.description")
   footer
-    button(click.delegate="report.support()")
-      | Respaldar
+    button(click.delegate="support()", disabled.bind="supportBtnDisabled")
+      | ${supportText}
       yi-icon(icon="hand")
-    output(title="${report.supporters} Respaldos") ${report.supportersNum}
+    output(title="${report.supportersCount} Respaldos") ${report.supportersCount}

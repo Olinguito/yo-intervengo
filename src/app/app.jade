@@ -12,7 +12,7 @@ template
         yi-icon(icon="profile")
         i Entrar
       //- when loggedIn
-      a(href="#/profile", if.bind="user.isLoggedIn")
+      a(href="#/profile", if.bind="user.isLoggedIn", class="${activeRoute=='profile'?'active':''}")
         yi-icon(icon="profile")
         i Mi Perfil
       //- show the reminding sections

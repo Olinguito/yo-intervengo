@@ -29,7 +29,7 @@ template
       #supported-reports.action(if.bind="tab==1")
         p(if.bind="user.profile.supported.length==0") No has soportado ningún reporte
         ul(if.bind="user.profile.supported.length>0")
-          li.report-mini(repeat.for="r of user.profile.reports", click.delegate="$parent.open(r)")
+          li.report-mini(repeat.for="r of user.profile.supported", click.delegate="$parent.open(r)")
             h3 ${r.title}
             p ${r.category.name}
             yi-icon(icon.one-time="r.category.icon", class="${r.type?'complain':'request'}")
