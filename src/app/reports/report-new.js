@@ -1,12 +1,14 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {Category, Report, reportType as t} from './models';
+import {HttpClient} from 'aurelia-http-client';
+import {Category, Report, Picture, CitizenShort, reportType as t} from 'yi/shared/models';
 import {MemoryBackend} from 'lib/backend/backend';
 import Map from './map';
 import {User} from 'lib/user';
 
 const IMGUR_ID = 'Client-ID e84b4d7dc9700e0';
 const IMGUR_URL = 'https://api.imgur.com/3/image';
+const GEOCODE_URL = 'http://nominatim.openstreetmap.org/reverse?format=json&zoom=6';
 
 // TODO use translations
 var errorsMsg = {
@@ -19,18 +21,19 @@ var errorsMsg = {
     'location': 'Ubicación invalida'
 }
 
-@inject(Router, MemoryBackend, Map, User)
+@inject(Router, MemoryBackend, Map, HttpClient, User)
 export class ReportNew {
     report = null;
     photoFile = null;
     // form errors
     errors = [];
 
-    constructor(router, memory, map, user) {
+    constructor(router, memory, map, http, user) {
         this.memory = memory;
         this.map = map;
         this.map.config.maxZoom = 20;
         this.router = router;
+        this.http = http;
         this.user = user;
     }
 
@@ -39,7 +42,7 @@ export class ReportNew {
         this.photoFile = file;
         // set photo-button image
         this.photoArea.style.backgroundImage = `url(${this.photoUrl})`;
-        this.report.photo.url = this.photoUrl;
+        // this.report.pictures[0].url = this.photoUrl;
     }
 
     saveReport() {
@@ -49,8 +52,8 @@ export class ReportNew {
         }
         // upload photo
         if (this.photoFile) {
-            photoOk = uploadPhoto(this.photoFile)
-                .then(p => this.report.photo = p)
+            photoOk = uploadPhoto(this.photoFile, this.user.profile)
+                .then(p => this.report.pictures.push(p))
                 // delete on memory loaded image
                 .then(URL.revokeObjectURL(this.photoUrl));
         }
@@ -82,14 +85,21 @@ export class ReportNew {
         newReport = new Report();
         newReport.type = type === 'request' ? t.request : t.complain;
         newReport.location = {lat: this.map.lat, lng: this.map.lng};
-
+        // reverse geocode city with nominatim
+        this.http
+        .createRequest(`${GEOCODE_URL}&lat=${newReport.location.lat}&lon=${newReport.location.lng}`)
+        .asGet().withBaseUrl('')
+        .send().then(res => {
+            if (!res.content.error) {
+                this.report.address.city = `${res.content.address.city}, ${res.content.address.state}`;
+            }
+        });
+        // get report category before activating the view
         return Category.get(category)
             .then(c=> newReport.category = c)
             // save on memory to show it in the card list
             .then(() => this.memory.save(newReport))
-            .then(report =>
-                this.report = report
-            );
+            .then(report => this.report = report);
     }
 
     deactivate() {
@@ -117,16 +127,18 @@ export class ReportNew {
     }
 }
 
-function imgurDataToPhoto(res) {
+function imgurDataToPhoto(res, username) {
     var link = res.data.link;
-    return {
+    var pic = new Picture();
+    return Object.assign(pic, {
         url: link,
         thumbUrl: link.substr(0, link.length - 4) + 'm' + link.substr(link.length - 4),
-        date: res.data.datetime
-    };
+        date: new Date(res.data.datetime),
+        author: new CitizenShort(username)
+    });
 }
 
-function uploadPhoto(file) {
+function uploadPhoto(file, user) {
     var data = new FormData();
     data.append('image', file);
     // NOTE: using window.fetch to post image
@@ -137,7 +149,7 @@ function uploadPhoto(file) {
                 ? json
                 : json.then(Promise.reject.bind(Promise));
         })
-        .then(d => imgurDataToPhoto(d));
+        .then(d => imgurDataToPhoto(d, user.username));
 }
 
 // TODO move to utlity lib

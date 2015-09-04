@@ -22,10 +22,10 @@ export class YiCard {
         this.events = events;
     }
 
-    @computedFrom('report.photo.url', 'report.photo.thumbUrl') // why isn't it working? :'(
+    @computedFrom('report.pictures.0.url', 'report.pictures.0.thumbnailUrl') // why isn't it working? :'(
     get photoCover() {
-        var photo = this.report.photo,
-            url = photo && photo.thumbUrl || photo.url || '';
+        var photo = this.report.pictures[0],
+            url = photo ? photo.thumbnailUrl || photo.url : '';
         return { 'background-image': `url(${url})` };
     }
 

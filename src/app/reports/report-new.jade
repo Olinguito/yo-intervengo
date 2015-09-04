@@ -33,8 +33,8 @@ template
         p.
           Debes indicar una dirección aproximada y ubicar 
           el pin en el sitio correspondiente a tu denuncia.
-        input(placeholder="Cidudad/Municipio", tabindex="2")
-        input(placeholder="Dirección", tabindex="2")
+        input(placeholder="Cidudad/Municipio", tabindex="2", value.bind="report.address.city")
+        input(placeholder="Dirección", tabindex="2", value.bind="report.address.street")
       //- map area
       section.map
         mgl-map(

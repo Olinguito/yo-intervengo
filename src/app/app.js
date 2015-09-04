@@ -1,6 +1,6 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {User, NotLoggedInError} from 'lib/user';
-import {Citizen} from 'yi/shared/models/citizen';
+import {Citizen} from 'yi/shared/models';
 
 export const CARD_LIST_WIDTH = 296;
 export const NAV_WIDTH = 220;

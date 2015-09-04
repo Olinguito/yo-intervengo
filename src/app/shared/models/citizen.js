@@ -8,3 +8,10 @@ export class Citizen {
     reports = [];
     supported = [];
 }
+
+export class CitizenShort {
+    constructor(uname = '', name = '') {
+        this.username = uname;
+        this.name = name;
+    }
+}

@@ -9,12 +9,12 @@ template
     button: yi-icon(icon="close", click.delegate="close()")
     //- button: yi-icon(icon="arrow")
 
-  yi-cover: img(src.bind="report.photo.url")
+  yi-cover: img(src.bind="cover")
       
   main
     section.detail
       article
-        h1 ${reportCit}
+        h1 ${report.title}
         p.category ${report.category.name}
         p.address ${'Sin dirección exacta'}
         p.description ${report.description}
@@ -22,10 +22,10 @@ template
         ul.stats
           li.backed
             button.indicator(title="Respaldar"): yi-icon(icon="hand")
-            output(title="${report.supporters} respaldos") ${report.supportersNum}
+            output(title="${report.supportersCount} respaldos") ${report.supportersCount}
           li.shared
             button.indicator(title="Compartir", click.delegate="share.showModal()"): yi-icon(icon="share")
-            output(title="Compartido ${report.supporters} veces") 0
+            output(title="Compartido ${0} veces") 0
           li.commented
             span.indicator(title="Comentarios"): yi-icon(icon="comment")
             output(title="0 comentarios") 0
@@ -47,16 +47,11 @@ template
         ): yi-marker( icon.bind="report.category.icon" class="${report.type==0?'alt':''}")
 
     section.photos: ul
-      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
-      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
-      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
-      li.pic: img(src.bind="report.photo.thumbUrl", alt="")
-      //- li.gallery(title="Ir a galería")
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-        img(src='http://lorempixel.com/100/100/city')
-          
+      li.pic(repeat.for="pic of report.pictures.slice(0,4)")
+        img(src.bind="pic.thumbUrl", alt="")
+      li.pic(repeat.for="pic of arrayFrom(4 - report.pictures.length)")
+        yi-icon(icon="picture")
+
     section.actions
       yi-tabs(selected.bind="tab")
         yi-tab(icon='paper') Historial

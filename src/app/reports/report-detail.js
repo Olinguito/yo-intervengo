@@ -1,6 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
-import {Report} from './models';
+import {Report} from 'yi/shared/models';
 import Map from './map';
 
 @inject(Router, Map)
@@ -12,6 +12,7 @@ export class ReportDetail {
     constructor(router, map) {
         this.router = router;
         this.mainMap = map;
+        this.arrayFrom = Array.from;
     }
 
     attached() {
@@ -20,6 +21,9 @@ export class ReportDetail {
         // highlight card
         this.router.container.viewModel //parent viewModel
             .list.yiCardList.highlight(this.report);
+        // cover photo
+        this.cover = this.report.pictures.length > 0 ? this.report.pictures[0].url : '';
+
         // TODO find fix
         setTimeout(() => {
             var view = document.querySelector('#detail');

@@ -50,6 +50,8 @@ export function serialize(obj) {
         if (obj.length > 0) {
             obj.forEach(o => serialized.push(serialize(o)));
         }
+    } else if (obj instanceof Date) {
+        serialized = obj.toISOString();
     } else if (Object.isObject(obj)) {
         serialized = serializeObj(obj);
     } else {

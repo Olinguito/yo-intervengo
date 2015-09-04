@@ -2,7 +2,7 @@ import {inject} from 'aurelia-framework';
 import {Router} from 'aurelia-router';
 import {HttpClient} from 'aurelia-http-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Report} from './models';
+import {Report} from 'yi/shared/models';
 import {asTree} from 'lib/util';
 import {User} from 'lib/user';
 import Map from './map';

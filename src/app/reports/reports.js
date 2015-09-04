@@ -1,4 +1,4 @@
-import {Report} from './models/report';
+import {Report} from 'yi/shared/models';
 
 export class Reports {
     // search query property
